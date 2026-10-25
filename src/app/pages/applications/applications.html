@@ -1,1 +1,222 @@
-<p>applications works!</p>
+<section class="applications-page">
+
+    <!-- Page header -->
+    <div class="page-header">
+  
+      <div>
+        <h1>Applications</h1>
+        <p>Manage and track your job applications.</p>
+      </div>
+  
+      <button
+        class="add-button"
+        (click)="openAddForm()"
+      >
+        + Add Application
+      </button>
+  
+    </div>
+  
+  
+    <!-- Add Application form -->
+    @if (showAddForm) {
+  
+      <div class="form-card">
+  
+        <div class="form-header">
+  
+          <h2>Add Application</h2>
+  
+          <button
+            class="close-button"
+            (click)="closeAddForm()"
+          >
+            ×
+          </button>
+  
+        </div>
+  
+        <form
+  class="application-form"
+  #applicationForm="ngForm"
+  (ngSubmit)="addApplication(applicationForm)"
+>
+
+  <div class="form-grid">
+
+    <div class="form-group">
+      <label for="company">Company</label>
+    
+      <input
+        id="company"
+        type="text"
+        name="company"
+        [(ngModel)]="newApplication.company"
+        #company="ngModel"
+        placeholder="e.g. Nokia"
+        required
+      >
+    
+      @if (company.invalid && company.touched) {
+        <span class="error-message">
+          Company is required.
+        </span>
+      }
+    </div>
+
+
+    <div class="form-group">
+      <label for="position">Position</label>
+    
+      <input
+        id="position"
+        type="text"
+        name="position"
+        [(ngModel)]="newApplication.position"
+        #position="ngModel"
+        placeholder="e.g. Software Developer"
+        required
+      >
+    
+      @if (position.invalid && position.touched) {
+        <span class="error-message">
+          Position is required.
+        </span>
+      }
+    </div>
+
+
+    <div class="form-group">
+      <label for="location">Location</label>
+    
+      <input
+        id="location"
+        type="text"
+        name="location"
+        [(ngModel)]="newApplication.location"
+        #location="ngModel"
+        placeholder="e.g. Helsinki"
+        required
+      >
+    
+      @if (location.invalid && location.touched) {
+        <span class="error-message">
+          Location is required.
+        </span>
+      }
+    </div>
+
+
+    <div class="form-group">
+      <label for="status">Status</label>
+
+      <select
+        id="status"
+        name="status"
+        [(ngModel)]="newApplication.status"
+      >
+        <option value="Saved">Saved</option>
+        <option value="Applied">Applied</option>
+        <option value="Assessment">Assessment</option>
+        <option value="Interview">Interview</option>
+        <option value="Offer">Offer</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
+
+
+    <div class="form-group">
+      <label for="appliedDate">Applied Date</label>
+    
+      <input
+        id="appliedDate"
+        type="date"
+        name="appliedDate"
+        [(ngModel)]="newApplication.appliedDate"
+        #appliedDate="ngModel"
+        required
+      >
+    
+      @if (appliedDate.invalid && appliedDate.touched) {
+        <span class="error-message">
+          Applied date is required.
+        </span>
+      }
+    </div>
+
+  </div>
+
+
+  <div class="form-actions">
+
+    <button
+      type="button"
+      class="cancel-button"
+      (click)="cancelForm(applicationForm)"
+    >
+      Cancel
+    </button>
+
+    
+
+    <button
+      type="submit"
+      class="save-button"
+      [disabled]="applicationForm.invalid"
+    >
+      Save Application
+    </button>
+
+  </div>
+
+</form>
+  
+      </div>
+  
+    }
+
+    <section class="applications-page">
+
+      <div class="applications-list">
+
+        <div class="list-header">
+          <span>Company</span>
+          <span>Position</span>
+          <span>Location</span>
+          <span>Status</span>
+          <span>Applied</span>
+        </div>
+      
+        @for (application of applications; track application.id) {
+      
+          <div class="application-row">
+      
+            <span class="company-name">
+              {{ application.company }}
+            </span>
+      
+            <span>
+              {{ application.position }}
+            </span>
+      
+            <span>
+              {{ application.location }}
+            </span>
+      
+            <span>
+              {{ application.status }}
+            </span>
+      
+            <span>
+              {{ application.appliedDate }}
+            </span>
+      
+          </div>
+      
+        }
+      
+      </div>
+
+    </section>
+  
+  </section>
