@@ -22,3 +22,56 @@
     </div>
   
   </section>
+
+  <section class="recent-applications">
+
+    <div class="section-header">
+      <div>
+        <h2>Recent Applications</h2>
+        <p>Your latest job applications.</p>
+      </div>
+  
+      <a routerLink="/applications" class="view-all">
+        View all
+      </a>
+    </div>
+  
+    <div class="applications-table">
+  
+      <div class="table-header">
+        <span>Company</span>
+        <span>Position</span>
+        <span>Location</span>
+        <span>Status</span>
+        <span>Applied</span>
+      </div>
+  
+      @for (application of applications; track application.id) {
+  
+        <div class="application-row">
+  
+          <div class="company">
+            <div class="company-logo">
+              {{ application.company.charAt(0) }}
+            </div>
+  
+            <span>{{ application.company }}</span>
+          </div>
+  
+          <span>{{ application.position }}</span>
+  
+          <span>{{ application.location }}</span>
+  
+          <span class="status">
+            {{ application.status }}
+          </span>
+  
+          <span>{{ application.appliedDate }}</span>
+  
+        </div>
+  
+      }
+  
+    </div>
+  
+  </section>
