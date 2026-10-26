@@ -25,7 +25,9 @@
   
         <div class="form-header">
   
-          <h2>Add Application</h2>
+          <h2>
+            {{ editingApplicationId === null ? 'Add Application' : 'Edit Application' }}
+          </h2>
   
           <button
             class="close-button"
@@ -160,12 +162,12 @@
     
 
     <button
-      type="submit"
-      class="save-button"
-      [disabled]="applicationForm.invalid"
-    >
-      Save Application
-    </button>
+  type="submnit"
+  class="save-button"
+  [disabled]="applicationForm.invalid"
+>
+  {{ editingApplicationId === null ? 'Save Application' : 'Update Application' }}
+</button>
 
   </div>
 
@@ -213,12 +215,23 @@
               {{ application.appliedDate }}
             </span>
 
-            <button
-              type="button"
-              (click)="deleteApplication(application.id)"
-            >
-              Delete
-            </button>
+            <div class="action-buttons">
+              <button
+                type="button"
+                class="edit-button"
+                (click)="editApplication(application)"
+              >
+                Edit
+              </button>
+            
+              <button
+                type="button"
+                class="delete-button"
+                (click)="deleteApplication(application.id)"
+              >
+                Delete
+              </button>
+            </div>
       
           </div>
       

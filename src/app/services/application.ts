@@ -51,6 +51,15 @@ addApplication(application: JobApplication): void {
   this.applications.push(application);
 }
 
+updateApplication(updatedApplication: JobApplication): void {
+  this.applications = this.applications.map(
+    application =>
+      application.id === updatedApplication.id
+        ? updatedApplication
+        : application
+  );
+}
+
 deleteApplication(id: number): void {
   this.applications = this.applications.filter(
     application => application.id !== id

@@ -20,6 +20,8 @@ export class Applications {
 
   showAddForm = false;
 
+  editingApplicationId: number | null = null;
+
   newApplication = {
     company: '',
     position: '',
@@ -29,21 +31,22 @@ export class Applications {
   };
 
   openAddForm() {
+    this.editingApplicationId = null;
     this.showAddForm = true;
   }
 
   closeAddForm() {
     this.showAddForm = false;
+    this.editingApplicationId = null;
   }
 
   addApplication(form: NgForm) {
-
     if (form.invalid) {
       return;
     }
   
     const application: JobApplication = {
-      id: Date.now(),
+      id: this.editingApplicationId ?? Date.now(),
       company: this.newApplication.company,
       position: this.newApplication.position,
       location: this.newApplication.location,
@@ -51,10 +54,15 @@ export class Applications {
       appliedDate: this.newApplication.appliedDate
     };
   
-    this.applicationService.addApplication(application);
+    if (this.editingApplicationId === null) {
+      this.applicationService.addApplication(application);
+    } else {
+      this.applicationService.updateApplication(application);
+    }
+  
+    this.applications = this.applicationService.getApplications();
   
     this.resetForm(form);
-  
     this.closeAddForm();
   }
 
@@ -78,6 +86,22 @@ export class Applications {
 
   cancelForm(form: NgForm) {
     this.resetForm(form);
+    this.editingApplicationId = null;
     this.closeAddForm();
   }
+
+  editApplication(application: JobApplication) {
+    this.editingApplicationId = application.id;
+  
+    this.newApplication = {
+      company: application.company,
+      position: application.position,
+      location: application.location,
+      status: application.status,
+      appliedDate: application.appliedDate
+    };
+  
+    this.showAddForm = true;
+  }
+
 }
