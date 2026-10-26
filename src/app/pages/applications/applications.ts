@@ -58,6 +58,11 @@ export class Applications {
     this.closeAddForm();
   }
 
+  deleteApplication(id: number) {
+    this.applicationService.deleteApplication(id);
+    this.applications = this.applicationService.getApplications();
+  }
+
   resetForm(form: NgForm) {
 
     form.resetForm();

@@ -185,12 +185,14 @@
           <span>Location</span>
           <span>Status</span>
           <span>Applied</span>
+          <span>Actions</span>
         </div>
       
         @for (application of applications; track application.id) {
       
           <div class="application-row">
-      
+             
+            
             <span class="company-name">
               {{ application.company }}
             </span>
@@ -210,6 +212,13 @@
             <span>
               {{ application.appliedDate }}
             </span>
+
+            <button
+              type="button"
+              (click)="deleteApplication(application.id)"
+            >
+              Delete
+            </button>
       
           </div>
       

@@ -50,4 +50,11 @@ getApplications(): JobApplication[] {
 addApplication(application: JobApplication): void {
   this.applications.push(application);
 }
+
+deleteApplication(id: number): void {
+  this.applications = this.applications.filter(
+    application => application.id !== id
+  );
+}
+
 }
