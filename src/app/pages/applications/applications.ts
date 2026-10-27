@@ -14,6 +14,7 @@ export class Applications {
   applications: JobApplication[];
 
   selectedStatus = 'All'
+  searchTerm = '';
 
   constructor(private applicationService: Application){
     this.applications = this.applicationService.getApplications();
@@ -74,13 +75,24 @@ export class Applications {
   }
 
   get filteredApplications(): JobApplication[] {
-    if (this.selectedStatus === 'All') {
-      return this.applications;
-    }
+    const search = this.searchTerm.toLowerCase();
   
-    return this.applications.filter(
-      application => application.status === this.selectedStatus
-    );
+    return this.applications.filter(application => {
+  
+      const matchesStatus =
+        this.selectedStatus === 'All' ||
+        application.status === this.selectedStatus;
+  
+      const matchesSearch =
+        application.company.toLowerCase().includes(search) ||
+        application.position.toLowerCase().includes(search);
+  
+      return matchesStatus && matchesSearch;
+    });
+  }
+
+  get resultCount(): string {
+    return `Showing ${this.filteredApplications.length} of ${this.applications.length} applications`;
   }
 
 

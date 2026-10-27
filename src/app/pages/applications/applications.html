@@ -1,137 +1,36 @@
 <section class="applications-page">
-
-    <!-- Page header -->
-    <div class="page-header">
-      <div>
-        <h1>Applications</h1>
-        <p>Manage and track your job applications.</p>
-      </div>
-    
-      <div class="header-actions">
-    
-        <select
-          class="status-filter"
-          [(ngModel)]="selectedStatus"
-        >
-          <option value="All">All </option>
-          <option value="Saved">Saved</option>
-          <option value="Applied">Applied</option>
-          <option value="Assessment">Assessment</option>
-          <option value="Interview">Interview</option>
-          <option value="Offer">Offer</option>
-          <option value="Rejected">Rejected</option>
-        </select>
-    
-        <button
-          class="add-button"
-          (click)="openAddForm()"
-        >
-          + Add Application
-        </button>
-    
-      </div>
+<!-- Page header -->
+<div class="page-header">
+ <div>
+    <h1>Applications</h1>
+    <p>Manage and track your job applications.</p>
     </div>
-  
-  
-    <!-- Add Application form -->
-    @if (showAddForm) {
-  
-      <div class="form-card">
-  
-        <div class="form-header">
-  
-          <h2>
-            {{ editingApplicationId === null ? 'Add Application' : 'Edit Application' }}
-          </h2>
-  
+    <div class="header-actions">
+      <div class="search-wrapper"> 
+        <input
+        type="text"
+        class="search-input"
+        [(ngModel)]="searchTerm"
+        placeholder="Search applications..."
+        >
+        @if (searchTerm) {
           <button
-            class="close-button"
-            (click)="closeAddForm()"
+            type="button"
+            class="clear-search-button"
+            (click)="searchTerm = ''"
           >
             ×
           </button>
+        }
   
-        </div>
-  
-        <form
-  class="application-form"
-  #applicationForm="ngForm"
-  (ngSubmit)="addApplication(applicationForm)"
->
+      </div>
 
-  <div class="form-grid">
-
-    <div class="form-group">
-      <label for="company">Company</label>
-    
-      <input
-        id="company"
-        type="text"
-        name="company"
-        [(ngModel)]="newApplication.company"
-        #company="ngModel"
-        placeholder="e.g. Nokia"
-        required
-      >
-    
-      @if (company.invalid && company.touched) {
-        <span class="error-message">
-          Company is required.
-        </span>
-      }
-    </div>
-
-
-    <div class="form-group">
-      <label for="position">Position</label>
-    
-      <input
-        id="position"
-        type="text"
-        name="position"
-        [(ngModel)]="newApplication.position"
-        #position="ngModel"
-        placeholder="e.g. Software Developer"
-        required
-      >
-    
-      @if (position.invalid && position.touched) {
-        <span class="error-message">
-          Position is required.
-        </span>
-      }
-    </div>
-
-
-    <div class="form-group">
-      <label for="location">Location</label>
-    
-      <input
-        id="location"
-        type="text"
-        name="location"
-        [(ngModel)]="newApplication.location"
-        #location="ngModel"
-        placeholder="e.g. Helsinki"
-        required
-      >
-    
-      @if (location.invalid && location.touched) {
-        <span class="error-message">
-          Location is required.
-        </span>
-      }
-    </div>
-
-
-    <div class="form-group">
-      <label for="status">Status</label>
 
       <select
-        id="status"
-        name="status"
-        [(ngModel)]="newApplication.status"
+        class="status-filter"
+        [(ngModel)]="selectedStatus"
       >
+        <option value="All">All</option>
         <option value="Saved">Saved</option>
         <option value="Applied">Applied</option>
         <option value="Assessment">Assessment</option>
@@ -139,130 +38,264 @@
         <option value="Offer">Offer</option>
         <option value="Rejected">Rejected</option>
       </select>
-    </div>
 
-
-    <div class="form-group">
-      <label for="appliedDate">Applied Date</label>
-    
-      <input
-        id="appliedDate"
-        type="date"
-        name="appliedDate"
-        [(ngModel)]="newApplication.appliedDate"
-        #appliedDate="ngModel"
-        required
+      <button
+        class="add-button"
+        (click)="openAddForm()"
       >
-    
-      @if (appliedDate.invalid && appliedDate.touched) {
-        <span class="error-message">
-          Applied date is required.
-        </span>
-      }
+        + Add Application
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- Add / Edit Application form -->
+  @if (showAddForm) {
+
+    <div class="form-card">
+
+      <div class="form-header">
+        <h2>
+          {{ editingApplicationId === null ? 'Add Application' : 'Edit Application' }}
+        </h2>
+
+        <button
+          type="button"
+          class="close-button"
+          (click)="closeAddForm()"
+        >
+          ×
+        </button>
+      </div>
+
+
+      <form
+        class="application-form"
+        #applicationForm="ngForm"
+        (ngSubmit)="addApplication(applicationForm)"
+      >
+
+        <div class="form-grid">
+
+          <!-- Company -->
+          <div class="form-group">
+            <label for="company">Company</label>
+
+            <input
+              id="company"
+              type="text"
+              name="company"
+              [(ngModel)]="newApplication.company"
+              #company="ngModel"
+              placeholder="e.g. Nokia"
+              required
+            >
+
+            @if (company.invalid && company.touched) {
+              <span class="error-message">
+                Company is required.
+              </span>
+            }
+          </div>
+
+
+          <!-- Position -->
+          <div class="form-group">
+            <label for="position">Position</label>
+
+            <input
+              id="position"
+              type="text"
+              name="position"
+              [(ngModel)]="newApplication.position"
+              #position="ngModel"
+              placeholder="e.g. Software Developer"
+              required
+            >
+
+            @if (position.invalid && position.touched) {
+              <span class="error-message">
+                Position is required.
+              </span>
+            }
+          </div>
+
+
+          <!-- Location -->
+          <div class="form-group">
+            <label for="location">Location</label>
+
+            <input
+              id="location"
+              type="text"
+              name="location"
+              [(ngModel)]="newApplication.location"
+              #location="ngModel"
+              placeholder="e.g. Helsinki"
+              required
+            >
+
+            @if (location.invalid && location.touched) {
+              <span class="error-message">
+                Location is required.
+              </span>
+            }
+          </div>
+
+
+          <!-- Status -->
+          <div class="form-group">
+            <label for="status">Status</label>
+
+            <select
+              id="status"
+              name="status"
+              [(ngModel)]="newApplication.status"
+            >
+              <option value="Saved">Saved</option>
+              <option value="Applied">Applied</option>
+              <option value="Assessment">Assessment</option>
+              <option value="Interview">Interview</option>
+              <option value="Offer">Offer</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+
+
+          <!-- Applied Date -->
+          <div class="form-group">
+            <label for="appliedDate">Applied Date</label>
+
+            <input
+              id="appliedDate"
+              type="date"
+              name="appliedDate"
+              [(ngModel)]="newApplication.appliedDate"
+              #appliedDate="ngModel"
+              required
+            >
+
+            @if (appliedDate.invalid && appliedDate.touched) {
+              <span class="error-message">
+                Applied date is required.
+              </span>
+            }
+          </div>
+
+        </div>
+
+
+        <!-- Form actions -->
+        <div class="form-actions">
+
+          <button
+            type="button"
+            class="cancel-button"
+            (click)="cancelForm(applicationForm)"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="save-button"
+            [disabled]="applicationForm.invalid"
+          >
+            {{ editingApplicationId === null ? 'Save Application' : 'Update Application' }}
+          </button>
+
+        </div>
+
+      </form>
+
     </div>
 
+  }
+
+
+  <!-- Result count -->
+  <div class="result-count">
+    {{ resultCount }}
   </div>
 
 
-  <div class="form-actions">
+  <!-- Applications list -->
+  <div class="applications-list">
 
-    <button
-      type="button"
-      class="cancel-button"
-      (click)="cancelForm(applicationForm)"
-    >
-      Cancel
-    </button>
+    <div class="list-header">
+      <span>Company</span>
+      <span>Position</span>
+      <span>Location</span>
+      <span>Status</span>
+      <span>Applied</span>
+      <span>Actions</span>
+    </div>
 
-    
 
-    <button
-  type="submnit"
-  class="save-button"
-  [disabled]="applicationForm.invalid"
->
-  {{ editingApplicationId === null ? 'Save Application' : 'Update Application' }}
-</button>
+    @for (application of filteredApplications; track application.id) {
 
-  </div>
+      <div class="application-row">
 
-</form>
-  
+        <span class="company-name">
+          {{ application.company }}
+        </span>
+
+        <span>
+          {{ application.position }}
+        </span>
+
+        <span>
+          {{ application.location }}
+        </span>
+
+        <span
+          class="status-badge"
+          [class.status-saved]="application.status === 'Saved'"
+          [class.status-applied]="application.status === 'Applied'"
+          [class.status-assessment]="application.status === 'Assessment'"
+          [class.status-interview]="application.status === 'Interview'"
+          [class.status-offer]="application.status === 'Offer'"
+          [class.status-rejected]="application.status === 'Rejected'"
+        >
+          {{ application.status }}
+        </span>
+
+        <span>
+          {{ application.appliedDate }}
+        </span>
+
+        <div class="action-buttons">
+
+          <button
+            type="button"
+            class="edit-button"
+            (click)="editApplication(application)"
+          >
+            Edit
+          </button>
+
+          <button
+            type="button"
+            class="delete-button"
+            (click)="deleteApplication(application.id)"
+          >
+            Delete
+          </button>
+
+        </div>
+
       </div>
-  
+
+    } @empty {
+
+      <div class="empty-state">
+        <h3>No applications found</h3>
+        <p>Try changing your search or status filter.</p>
+      </div>
+
     }
 
-    <section class="applications-page">
+  </div>
 
-      <div class="applications-list">
-
-        <div class="list-header">
-          <span>Company</span>
-          <span>Position</span>
-          <span>Location</span>
-          <span>Status</span>
-          <span>Applied</span>
-          <span>Actions</span>
-        </div>
-      
-        @for (application of filteredApplications; track application.id) {
-      
-          <div class="application-row">
-             
-            
-            <span class="company-name">
-              {{ application.company }}
-            </span>
-      
-            <span>
-              {{ application.position }}
-            </span>
-      
-            <span>
-              {{ application.location }}
-            </span>
-      
-            <span
-              class="status-badge"
-              [class.status-saved]="application.status === 'Saved'"
-              [class.status-applied]="application.status === 'Applied'"
-              [class.status-assessment]="application.status === 'Assessment'"
-              [class.status-interview]="application.status === 'Interview'"
-              [class.status-offer]="application.status === 'Offer'"
-              [class.status-rejected]="application.status === 'Rejected'"
-            >
-          
-              {{ application.status }}
-            </span>
-      
-            <span>
-              {{ application.appliedDate }}
-            </span>
-
-            <div class="action-buttons">
-              <button
-                type="button"
-                class="edit-button"
-                (click)="editApplication(application)"
-              >
-                Edit
-              </button>
-            
-              <button
-                type="button"
-                class="delete-button"
-                (click)="deleteApplication(application.id)"
-              >
-                Delete
-              </button>
-            </div>
-      
-          </div>
-      
-        }
-      
-      </div>
-
-    </section>
-  
-  </section>
+</section>

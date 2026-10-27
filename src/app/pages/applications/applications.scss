@@ -278,3 +278,79 @@
     background-color: #fee2e2;
     color: #b91c1c;
   }
+
+  .search-input {
+    width: 220px;
+    padding: 11px 12px;
+  
+    background-color: white;
+    color: #374151;
+  
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+  
+    font-size: 14px;
+  
+    outline: none;
+  
+    &:focus {
+      border-color: #9c97ee;
+    }
+  }
+
+  .search-wrapper {
+    position: relative;
+  }
+  
+  .search-wrapper .search-input {
+    padding-right: 36px;
+  }
+  
+  .clear-search-button {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+  
+    transform: translateY(-50%);
+  
+    background: none;
+    border: none;
+  
+    color: #6b7280;
+  
+    font-size: 20px;
+    line-height: 1;
+  
+    cursor: pointer;
+  
+    &:hover {
+      color: #111827;
+    }
+  }
+
+
+
+  .result-count {
+    margin-bottom: 12px;
+  
+    color: #6b7280;
+    font-size: 13px;
+  }
+
+  .empty-state {
+    padding: 48px 24px;
+  
+    text-align: center;
+  
+    h3 {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+    }
+  
+    p {
+      margin: 8px 0 0;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  }
