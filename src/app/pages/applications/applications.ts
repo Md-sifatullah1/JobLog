@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { JobApplication } from '../../models/job-application';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Application } from '../../services/application';
 
+
 @Component({
   selector: 'app-applications',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './applications.html',
   styleUrl: './applications.scss',
 })

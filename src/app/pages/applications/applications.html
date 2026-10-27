@@ -237,9 +237,12 @@
 
       <div class="application-row">
 
-        <span class="company-name">
+        <a
+          class="company-name application-link"
+          [routerLink]="['/applications', application.id]"
+        >
           {{ application.company }}
-        </span>
+        </a>
 
         <span>
           {{ application.position }}

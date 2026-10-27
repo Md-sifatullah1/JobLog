@@ -46,6 +46,11 @@ export class Application {
 getApplications(): JobApplication[] {
   return this.applications;
 }
+getApplicationById(id: number): JobApplication | undefined {
+  return this.applications.find(
+    application => application.id === id
+  );
+}
 
 addApplication(application: JobApplication): void {
   this.applications.push(application);

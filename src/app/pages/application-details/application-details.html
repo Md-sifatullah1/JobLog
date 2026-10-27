@@ -1,0 +1,58 @@
+
+@if (application) {
+
+  <div class="details-page">
+
+    <a
+      class="back-link"
+      routerLink="/applications"
+    >
+      ← Back to Applications
+    </a>
+
+    <div class="details-card">
+
+      <div class="details-header">
+
+        <div>
+          <h1>{{ application.company }}</h1>
+          <p>{{ application.position }}</p>
+        </div>
+
+        <span class="status-badge">
+          {{ application.status }}
+        </span>
+
+      </div>
+
+      <div class="details-grid">
+
+        <div class="detail-item">
+          <span class="detail-label">Location</span>
+          <span>{{ application.location }}</span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Applied Date</span>
+          <span>{{ application.appliedDate }}</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+} @else {
+
+  <div class="not-found">
+
+    <h1>Application not found</h1>
+
+    <a routerLink="/applications">
+      Back to Applications
+    </a>
+
+  </div>
+
+}
