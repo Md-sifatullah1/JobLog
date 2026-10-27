@@ -2,19 +2,34 @@
 
     <!-- Page header -->
     <div class="page-header">
-  
       <div>
         <h1>Applications</h1>
         <p>Manage and track your job applications.</p>
       </div>
-  
-      <button
-        class="add-button"
-        (click)="openAddForm()"
-      >
-        + Add Application
-      </button>
-  
+    
+      <div class="header-actions">
+    
+        <select
+          class="status-filter"
+          [(ngModel)]="selectedStatus"
+        >
+          <option value="All">All </option>
+          <option value="Saved">Saved</option>
+          <option value="Applied">Applied</option>
+          <option value="Assessment">Assessment</option>
+          <option value="Interview">Interview</option>
+          <option value="Offer">Offer</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+    
+        <button
+          class="add-button"
+          (click)="openAddForm()"
+        >
+          + Add Application
+        </button>
+    
+      </div>
     </div>
   
   
@@ -190,7 +205,7 @@
           <span>Actions</span>
         </div>
       
-        @for (application of applications; track application.id) {
+        @for (application of filteredApplications; track application.id) {
       
           <div class="application-row">
              
@@ -207,7 +222,16 @@
               {{ application.location }}
             </span>
       
-            <span>
+            <span
+              class="status-badge"
+              [class.status-saved]="application.status === 'Saved'"
+              [class.status-applied]="application.status === 'Applied'"
+              [class.status-assessment]="application.status === 'Assessment'"
+              [class.status-interview]="application.status === 'Interview'"
+              [class.status-offer]="application.status === 'Offer'"
+              [class.status-rejected]="application.status === 'Rejected'"
+            >
+          
               {{ application.status }}
             </span>
       

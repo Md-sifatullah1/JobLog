@@ -13,6 +13,8 @@ export class Applications {
 
   applications: JobApplication[];
 
+  selectedStatus = 'All'
+
   constructor(private applicationService: Application){
     this.applications = this.applicationService.getApplications();
 
@@ -70,6 +72,17 @@ export class Applications {
     this.applicationService.deleteApplication(id);
     this.applications = this.applicationService.getApplications();
   }
+
+  get filteredApplications(): JobApplication[] {
+    if (this.selectedStatus === 'All') {
+      return this.applications;
+    }
+  
+    return this.applications.filter(
+      application => application.status === this.selectedStatus
+    );
+  }
+
 
   resetForm(form: NgForm) {
 
