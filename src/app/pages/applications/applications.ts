@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute,Router, RouterLink } from '@angular/router';
 import { JobApplication } from '../../models/job-application';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Application } from '../../services/application';
@@ -18,9 +18,21 @@ export class Applications {
   selectedStatus = 'All'
   searchTerm = '';
 
-  constructor(private applicationService: Application){
+  constructor(
+    private applicationService: Application,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.applications = this.applicationService.getApplications();
+    const editId = this.route.snapshot.queryParamMap.get('edit');
 
+    if (editId) {
+      const application =
+        this.applicationService.getApplicationById(Number(editId));
+      if (application) {
+        this.editApplication(application);
+      }
+    }
   }
 
   showAddForm = false;
@@ -58,6 +70,7 @@ export class Applications {
       status: this.newApplication.status,
       appliedDate: this.newApplication.appliedDate
     };
+    const wasEditing = this.editingApplicationId != null;
   
     if (this.editingApplicationId === null) {
       this.applicationService.addApplication(application);
@@ -69,6 +82,10 @@ export class Applications {
   
     this.resetForm(form);
     this.closeAddForm();
+
+    if (wasEditing) {
+      this.clearEditQueryParam();
+    }
   }
 
   deleteApplication(id: number) {
@@ -112,9 +129,12 @@ export class Applications {
   }
 
   cancelForm(form: NgForm) {
+    const wasEditing = this.editingApplicationId !== null;
     this.resetForm(form);
-    this.editingApplicationId = null;
     this.closeAddForm();
+    if (wasEditing) {
+      this.clearEditQueryParam();
+    }
   }
 
   editApplication(application: JobApplication) {
@@ -129,6 +149,10 @@ export class Applications {
     };
   
     this.showAddForm = true;
+  }
+
+  clearEditQueryParam() {
+    this.router.navigate(['/applications']);
   }
 
 }

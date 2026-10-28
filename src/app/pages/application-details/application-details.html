@@ -39,8 +39,17 @@
 
       </div>
 
-    </div>
+      <div class="details-actions">
 
+        <a
+          class="edit-application-button"
+          [routerLink]="['/applications']"
+          [queryParams]="{ edit: application.id }"
+        >
+          Edit Application
+        </a>
+      </div>
+    </div>
   </div>
 
 } @else {
