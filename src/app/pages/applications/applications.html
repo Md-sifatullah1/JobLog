@@ -183,6 +183,43 @@
             }
           </div>
 
+          <div class="form-group">
+            <label for="jobUrl">Job URL</label>
+          
+            <input
+              id="jobUrl"
+              type="url"
+              name="jobUrl"
+              [(ngModel)]="newApplication.jobUrl"
+              placeholder="https://..."
+            >
+          </div>
+
+          <div class="form-group full-width">
+            <label for="jobDescription">Job Description</label>
+          
+            <textarea
+              id="jobDescription"
+              name="jobDescription"
+              [(ngModel)]="newApplication.jobDescription"
+              rows="8"
+              placeholder="Paste the job description here..."
+            ></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="notes">Notes</label>
+          
+            <textarea
+              id="notes"
+              name="notes"
+              [(ngModel)]="newApplication.notes"
+              rows="5"
+              placeholder="Add notes about this application..."
+            ></textarea>
+          </div>
+
+
         </div>
 
 

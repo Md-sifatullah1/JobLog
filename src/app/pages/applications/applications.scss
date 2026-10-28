@@ -82,6 +82,23 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
+  .full-width {
+    grid-column: 1 / -1;
+  }
+  textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+  
+    &:focus {
+      outline: none;
+      border-color: #4f46e5;
+    }
+  }
   
   .form-group {
     display: flex;

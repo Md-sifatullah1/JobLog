@@ -44,7 +44,10 @@ export class Applications {
     position: '',
     location: '',
     status: 'Applied',
-    appliedDate: ''
+    appliedDate: '',
+    jobUrl: '',
+    jobDescription: '',
+    notes: ''
   };
 
   openAddForm() {
@@ -68,7 +71,10 @@ export class Applications {
       position: this.newApplication.position,
       location: this.newApplication.location,
       status: this.newApplication.status,
-      appliedDate: this.newApplication.appliedDate
+      appliedDate: this.newApplication.appliedDate,
+      jobUrl: this.newApplication.jobUrl,
+      jobDescription: this.newApplication.jobDescription,
+      notes: this.newApplication.notes
     };
     const wasEditing = this.editingApplicationId != null;
   
@@ -124,7 +130,10 @@ export class Applications {
       position: '',
       location: '',
       status: 'Applied',
-      appliedDate: ''
+      appliedDate: '',
+      jobUrl: '',
+      jobDescription: '',
+      notes: ''
     };
   }
 
@@ -145,7 +154,10 @@ export class Applications {
       position: application.position,
       location: application.location,
       status: application.status,
-      appliedDate: application.appliedDate
+      appliedDate: application.appliedDate,
+      jobUrl: application.jobUrl ?? '',
+      jobDescription: application.jobDescription ?? '',
+      notes: application.notes ?? ''
     };
   
     this.showAddForm = true;

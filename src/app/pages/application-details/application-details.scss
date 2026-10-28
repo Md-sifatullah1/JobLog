@@ -16,3 +16,31 @@
       background-color: #4338ca;
     }
   }
+
+  .detail-section {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .job-url {
+    display: block;
+    margin-top: 8px;
+    color: #4f46e5;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  .job-description,
+  .notes {
+    margin: 8px 0 0;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }

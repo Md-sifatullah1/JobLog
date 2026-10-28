@@ -15,33 +15,44 @@ export class Application {
       position: 'Software Engineer',
       location: 'Helsinki',
       status: 'Interview',
-      appliedDate: '2026-10-20'
-
-  }, 
-{
-  id: 2,
+      appliedDate: '2026-10-20',
+      jobUrl: '',
+      jobDescription: '',
+      notes: ''
+    }, 
+    {
+      id: 2,
       company: 'Microsoft',
       position: 'Junior Software Engineer',
       location: 'Espoo',
       status: 'Applied',
-      appliedDate: '2026-10-18'
-},
-{
-  id: 3,
-  company: 'Nokia',
-  position: 'Software Developer',
-  location: 'Espoo',
-  status: 'Assessment',
-  appliedDate: '2026-10-15'
-},
-{
-  id: 4,
-  company: 'KONE',
-  position: 'Full Stack Developer',
-  location: 'Helsinki',
-  status: 'Rejected',
-  appliedDate: '2026-10-10'
-}
+      appliedDate: '2026-10-18',
+      jobUrl: '',
+      jobDescription: '',
+      notes: ''
+    },
+    {
+      id: 3,
+      company: 'Nokia',
+      position: 'Software Developer',
+      location: 'Espoo',
+      status: 'Assessment',
+      appliedDate: '2026-10-15',
+      jobUrl: '',
+      jobDescription: '',
+      notes: ''
+    },
+    {
+      id: 4,
+      company: 'KONE',
+      position: 'Full Stack Developer',
+      location: 'Helsinki',
+      status: 'Rejected',
+      appliedDate: '2026-10-10',
+      jobUrl: '',
+      jobDescription: '',
+      notes: ''
+    }
 ];
 
 constructor() {

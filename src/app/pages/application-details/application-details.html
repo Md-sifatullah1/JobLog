@@ -31,13 +31,60 @@
           <span class="detail-label">Location</span>
           <span>{{ application.location }}</span>
         </div>
-
+      
         <div class="detail-item">
           <span class="detail-label">Applied Date</span>
           <span>{{ application.appliedDate }}</span>
         </div>
-
+      
       </div>
+      
+      @if (application.jobUrl) {
+      
+        <div class="detail-section">
+      
+          <span class="detail-label">Job Posting</span>
+      
+          <a
+            class="job-url"
+            [href]="application.jobUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ application.jobUrl }}
+          </a>
+      
+        </div>
+      
+      }
+      
+      @if (application.jobDescription) {
+      
+        <div class="detail-section">
+      
+          <span class="detail-label">Job Description</span>
+      
+          <p class="job-description">
+            {{ application.jobDescription }}
+          </p>
+      
+        </div>
+      
+      }
+      
+      @if (application.notes) {
+      
+        <div class="detail-section">
+      
+          <span class="detail-label">Notes</span>
+      
+          <p class="notes">
+            {{ application.notes }}
+          </p>
+      
+        </div>
+      
+      }
 
       <div class="details-actions">
 
