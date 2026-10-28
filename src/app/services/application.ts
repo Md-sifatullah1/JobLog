@@ -5,8 +5,9 @@ import { JobApplication } from '../models/job-application';
   providedIn: 'root',
 })
 export class Application {
-
   
+  private storageKey = 'joblog-applications';
+
   private applications: JobApplication[] = [
     {
       id: 1,
@@ -43,6 +44,10 @@ export class Application {
 }
 ];
 
+constructor() {
+  this.loadApplications();
+}
+
 getApplications(): JobApplication[] {
   return this.applications;
 }
@@ -54,6 +59,7 @@ getApplicationById(id: number): JobApplication | undefined {
 
 addApplication(application: JobApplication): void {
   this.applications.push(application);
+  this.saveApplications();
 }
 
 updateApplication(updatedApplication: JobApplication): void {
@@ -63,12 +69,36 @@ updateApplication(updatedApplication: JobApplication): void {
         ? updatedApplication
         : application
   );
+
+  this.saveApplications();
 }
 
 deleteApplication(id: number): void {
   this.applications = this.applications.filter(
     application => application.id !== id
   );
+  this.saveApplications();
 }
 
+private saveApplications(): void {
+  localStorage.setItem(
+    this.storageKey,
+    JSON.stringify(this.applications)
+  );
 }
+
+private loadApplications(): void {
+  const savedApplications = localStorage.getItem(this.storageKey);
+
+  if (savedApplications) {
+    try {
+      this.applications = JSON.parse(savedApplications);
+    } catch (error) {
+      console.error('Failed to load applications:', error);
+    }
+  } else {
+    this.saveApplications();
+  }
+}
+}
+
