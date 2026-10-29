@@ -19,7 +19,15 @@
           <p>{{ application.position }}</p>
         </div>
 
-        <span class="status-badge">
+        <span class="status-badge"
+          [class.status-saved]="application.status === 'Saved'"
+          [class.status-applied]="application.status === 'Applied'"
+          [class.status-assessment]="application.status === 'Assessment'"
+          [class.status-interview]="application.status === 'Interview'"
+          [class.status-offer]="application.status === 'Offer'"
+          [class.status-rejected]="application.status === 'Rejected'"
+      
+        >
           {{ application.status }}
         </span>
 

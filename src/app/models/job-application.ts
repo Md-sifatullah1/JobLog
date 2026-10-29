@@ -1,9 +1,12 @@
+
+import { ApplicationStatus } from './application-status';
+
 export interface JobApplication {
   id: number;
   company: string;
   position: string;
   location: string;
-  status: string;
+  status: ApplicationStatus;
   appliedDate: string;
   jobUrl: string;
   jobDescription: string;

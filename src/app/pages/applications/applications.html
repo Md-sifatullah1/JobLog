@@ -26,18 +26,18 @@
       </div>
 
 
-      <select
-        class="status-filter"
-        [(ngModel)]="selectedStatus"
-      >
-        <option value="All">All</option>
-        <option value="Saved">Saved</option>
-        <option value="Applied">Applied</option>
-        <option value="Assessment">Assessment</option>
-        <option value="Interview">Interview</option>
-        <option value="Offer">Offer</option>
-        <option value="Rejected">Rejected</option>
-      </select>
+  <select
+    class="status-filter"
+    [(ngModel)]="selectedStatus"
+  >
+    <option value="All">All</option>
+
+    @for (status of applicationStatuses; track status) {
+      <option [value]="status">
+      {{ status }}
+      </option>
+    }
+  </select>
 
       <button
         class="add-button"
@@ -153,12 +153,11 @@
               name="status"
               [(ngModel)]="newApplication.status"
             >
-              <option value="Saved">Saved</option>
-              <option value="Applied">Applied</option>
-              <option value="Assessment">Assessment</option>
-              <option value="Interview">Interview</option>
-              <option value="Offer">Offer</option>
-              <option value="Rejected">Rejected</option>
+              @for (status of applicationStatuses; track status) {
+                <option [value]="status">
+                  {{ status }}
+                </option>
+              }
             </select>
           </div>
 

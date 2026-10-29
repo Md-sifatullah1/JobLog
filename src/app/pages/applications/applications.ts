@@ -3,6 +3,7 @@ import { ActivatedRoute,Router, RouterLink } from '@angular/router';
 import { JobApplication } from '../../models/job-application';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Application } from '../../services/application';
+import { ApplicationStatus, applicationStatuses } from '../../models/application-status';
 
 
 @Component({
@@ -15,7 +16,9 @@ export class Applications {
 
   applications: JobApplication[];
 
-  selectedStatus = 'All'
+  applicationStatuses = applicationStatuses;
+
+  selectedStatus: ApplicationStatus | 'All' = 'All';
   searchTerm = '';
 
   constructor(
@@ -39,7 +42,16 @@ export class Applications {
 
   editingApplicationId: number | null = null;
 
-  newApplication = {
+  newApplication: {
+    company: string;
+    position: string;
+    location: string;
+    status: ApplicationStatus;
+    appliedDate: string;
+    jobUrl: string;
+    jobDescription: string;
+    notes: string;
+  } = {
     company: '',
     position: '',
     location: '',
