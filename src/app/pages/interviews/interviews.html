@@ -1,1 +1,85 @@
-<p>interviews works!</p>
+<div class="interviews-page">
+
+    <div class="page-header">
+  
+      <div>
+        <h1>Interviews</h1>
+        <p>Applications that have reached the interview stage.</p>
+      </div>
+  
+    </div>
+  
+  
+    @if (interviews.length > 0) {
+  
+      <div class="interview-list">
+  
+        @for (application of interviews; track application.id) {
+  
+          <div class="interview-card">
+  
+            <div class="interview-main">
+  
+              <h2>{{ application.company }}</h2>
+  
+              <p class="position">
+                {{ application.position }}
+              </p>
+  
+              <div class="interview-details">
+  
+                <span>
+                  📍 {{ application.location }}
+                </span>
+  
+                <span>
+                  Applied: {{ application.appliedDate }}
+                </span>
+  
+              </div>
+  
+            </div>
+  
+            <div class="interview-actions">
+  
+              <span class="status-badge status-interview">
+                Interview
+              </span>
+  
+              <a
+                class="view-button"
+                [routerLink]="['/applications', application.id]"
+              >
+                View Application
+              </a>
+  
+            </div>
+  
+          </div>
+  
+        }
+  
+      </div>
+  
+    } @else {
+  
+      <div class="empty-state">
+  
+        <h2>No interviews yet</h2>
+  
+        <p>
+          Applications will appear here when their status changes to Interview.
+        </p>
+  
+        <a
+          class="browse-button"
+          routerLink="/applications"
+        >
+          View Applications
+        </a>
+  
+      </div>
+  
+    }
+  
+  </div>

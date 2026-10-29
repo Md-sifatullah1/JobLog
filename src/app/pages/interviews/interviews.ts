@@ -1,9 +1,27 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+import { JobApplication } from '../../models/job-application';
+import { Application } from '../../services/application';
 
 @Component({
   selector: 'app-interviews',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './interviews.html',
   styleUrl: './interviews.scss',
 })
-export class Interviews {}
+export class Interviews {
+
+  interviews: JobApplication[] = [];
+
+  constructor(private applicationService: Application) {
+    this.loadInterviews();
+  }
+
+  private loadInterviews(): void {
+    this.interviews =
+      this.applicationService
+        .getApplications()
+        .filter(application => application.status === 'Interview');
+  }
+}
