@@ -15,10 +15,16 @@ export class Application {
       position: 'Software Engineer',
       location: 'Helsinki',
       status: 'Interview',
-      appliedDate: '2026-10-20',
+      appliedDate: '2026-10-10',
       jobUrl: '',
       jobDescription: '',
-      notes: ''
+      notes: '',
+      statusHistory: [
+        {
+          status: 'Interview',
+          changedAt: '2026-10-10T10:00:00'
+        }
+      ]
     }, 
     {
       id: 2,
@@ -29,7 +35,13 @@ export class Application {
       appliedDate: '2026-10-18',
       jobUrl: '',
       jobDescription: '',
-      notes: ''
+      notes: '',
+      statusHistory: [
+        {
+          status: 'Applied',
+          changedAt: '2026-10-12T10:00:00'
+        }
+      ]
     },
     {
       id: 3,
@@ -40,7 +52,13 @@ export class Application {
       appliedDate: '2026-10-15',
       jobUrl: '',
       jobDescription: '',
-      notes: ''
+      notes: '',
+      statusHistory: [
+        {
+          status: 'Assessment',
+          changedAt: '2026-10-12T10:00:00'
+        }
+      ]
     },
     {
       id: 4,
@@ -51,7 +69,13 @@ export class Application {
       appliedDate: '2026-10-10',
       jobUrl: '',
       jobDescription: '',
-      notes: ''
+      notes: '',
+      statusHistory: [
+        {
+          status: 'Rejected',
+          changedAt: '2026-10-12T10:00:00'
+        }
+      ]
     }
 ];
 
@@ -69,16 +93,42 @@ getApplicationById(id: number): JobApplication | undefined {
 }
 
 addApplication(application: JobApplication): void {
+
+  application.statusHistory = [
+    {
+      status: application.status,
+      changedAt: new Date().toISOString()
+    }
+  ];
+
   this.applications.push(application);
+
   this.saveApplications();
 }
 
 updateApplication(updatedApplication: JobApplication): void {
   this.applications = this.applications.map(
-    application =>
-      application.id === updatedApplication.id
-        ? updatedApplication
-        : application
+    application => {
+      if (application.id === updatedApplication.id) {
+
+        if (application.status !== updatedApplication.status) {
+          updatedApplication.statusHistory = [
+            ...(application.statusHistory ?? []),
+            {
+              status: updatedApplication.status,
+              changedAt: new Date().toISOString()
+            }
+          ];
+        } else {
+          updatedApplication.statusHistory =
+            application.statusHistory ?? [];
+        }
+
+        return updatedApplication;
+      }
+
+      return application;
+    }
   );
 
   this.saveApplications();

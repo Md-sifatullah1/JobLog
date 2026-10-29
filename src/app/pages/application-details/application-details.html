@@ -94,6 +94,48 @@
       
       }
 
+      @if (application.statusHistory && application.statusHistory.length > 0) {
+        <div class="detail-section status-history-section">
+      
+          <h2>Status History</h2>
+      
+          <div class="status-history">
+      
+            @for (history of application.statusHistory; track history.changedAt) {
+      
+              <div class="status-history-item">
+      
+                <div class="status-history-indicator"></div>
+      
+                <div class="status-history-content">
+      
+                  <span
+                    class="status-badge"
+                    [class.status-saved]="history.status === 'Saved'"
+                    [class.status-applied]="history.status === 'Applied'"
+                    [class.status-assessment]="history.status === 'Assessment'"
+                    [class.status-interview]="history.status === 'Interview'"
+                    [class.status-offer]="history.status === 'Offer'"
+                    [class.status-rejected]="history.status === 'Rejected'"
+                  >
+                    {{ history.status }}
+                  </span>
+      
+                  <span class="status-history-date">
+                    {{ history.changedAt | date:'MMM d, y, h:mm a' }}
+                  </span>
+      
+                </div>
+      
+              </div>
+      
+            }
+      
+          </div>
+      
+        </div>
+      }
+
       <div class="details-actions">
 
         <a
@@ -118,5 +160,6 @@
     </a>
 
   </div>
+  }
 
-}
+  

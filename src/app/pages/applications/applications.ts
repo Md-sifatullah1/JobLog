@@ -86,7 +86,10 @@ export class Applications {
       appliedDate: this.newApplication.appliedDate,
       jobUrl: this.newApplication.jobUrl,
       jobDescription: this.newApplication.jobDescription,
-      notes: this.newApplication.notes
+      notes: this.newApplication.notes,
+      statusHistory: this.editingApplicationId
+        ? this.applicationService.getApplicationById(this.editingApplicationId)?.statusHistory ?? []
+        : []
     };
     const wasEditing = this.editingApplicationId != null;
   

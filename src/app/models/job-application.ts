@@ -1,5 +1,6 @@
 
 import { ApplicationStatus } from './application-status';
+import { StatusHistory } from './status-history';
 
 export interface JobApplication {
   id: number;
@@ -11,4 +12,5 @@ export interface JobApplication {
   jobUrl: string;
   jobDescription: string;
   notes: string;
+  statusHistory: StatusHistory[];
 }
