@@ -1,1 +1,291 @@
-<p>analytics works!</p>
+<section class="analytics">
+
+    <div class="analytics-header">
+      <h1>Analytics</h1>
+      <p>
+        Understand how your job search is performing.
+      </p>
+    </div>
+  
+  
+    <!-- Key Metrics -->
+  
+    <div class="analytics-stats">
+  
+      <div class="analytics-card">
+        <p>Total Applications</p>
+        <h2>{{ totalApplications }}</h2>
+      </div>
+  
+      <div class="analytics-card">
+        <p>Response Rate</p>
+        <h2>{{ responseRate }}%</h2>
+      </div>
+  
+      <div class="analytics-card">
+        <p>Interview Rate</p>
+        <h2>{{ interviewRate }}%</h2>
+      </div>
+  
+      <div class="analytics-card">
+        <p>Offer Rate</p>
+        <h2>{{ offerRate }}%</h2>
+      </div>
+  
+      <div class="analytics-card">
+        <p>Rejection Rate</p>
+        <h2>{{ rejectionRate }}%</h2>
+      </div>
+  
+    </div>
+  
+  
+    <!-- Application Pipeline -->
+  
+    <section class="pipeline-section">
+  
+      <div class="section-header">
+        <h2>Application Pipeline</h2>
+  
+        <p>
+          Current distribution of your applications.
+        </p>
+      </div>
+  
+      <div class="pipeline-list">
+  
+        @for (
+          item of statusBreakdown;
+          track item.status
+        ) {
+  
+          <div class="pipeline-item">
+  
+            <div class="pipeline-header">
+  
+              <span
+                class="status-badge"
+                [class.status-saved]="
+                  item.status === 'Saved'
+                "
+                [class.status-applied]="
+                  item.status === 'Applied'
+                "
+                [class.status-assessment]="
+                  item.status === 'Assessment'
+                "
+                [class.status-interview]="
+                  item.status === 'Interview'
+                "
+                [class.status-offer]="
+                  item.status === 'Offer'
+                "
+                [class.status-rejected]="
+                  item.status === 'Rejected'
+                "
+              >
+                {{ item.status }}
+              </span>
+  
+              <span class="pipeline-count">
+                {{ item.count }}
+                ({{ item.percentage }}%)
+              </span>
+  
+            </div>
+  
+  
+            <div class="pipeline-bar">
+  
+              <div
+                class="pipeline-bar-fill"
+                [style.width.%]="item.percentage"
+                [class.pipeline-saved]="
+                  item.status === 'Saved'
+                "
+                [class.pipeline-applied]="
+                  item.status === 'Applied'
+                "
+                [class.pipeline-assessment]="
+                  item.status === 'Assessment'
+                "
+                [class.pipeline-interview]="
+                  item.status === 'Interview'
+                "
+                [class.pipeline-offer]="
+                  item.status === 'Offer'
+                "
+                [class.pipeline-rejected]="
+                  item.status === 'Rejected'
+                "
+              ></div>
+  
+            </div>
+  
+          </div>
+  
+        }
+  
+      </div>
+  
+    </section>
+  
+  
+    <!-- Conversion Funnel -->
+  
+    <section class="funnel-section">
+  
+      <div class="section-header">
+  
+        <h2>Conversion Funnel</h2>
+  
+        <p>
+          How applications progress through
+          the hiring process.
+        </p>
+  
+      </div>
+  
+  
+      <div class="funnel-list">
+  
+        @for (
+          stage of conversionFunnel;
+          track stage.status
+        ) {
+  
+          <div class="funnel-item">
+  
+            <div class="funnel-stage">
+  
+              <span
+                class="status-badge"
+                [class.status-applied]="
+                  stage.status === 'Applied'
+                "
+                [class.status-assessment]="
+                  stage.status === 'Assessment'
+                "
+                [class.status-interview]="
+                  stage.status === 'Interview'
+                "
+                [class.status-offer]="
+                  stage.status === 'Offer'
+                "
+              >
+                {{ stage.status }}
+              </span>
+  
+              <span class="funnel-count">
+                {{ stage.count }}
+              </span>
+  
+            </div>
+  
+  
+            <span class="funnel-percentage">
+  
+              {{ stage.conversionRate }}%
+  
+              @if (
+                stage.status === 'Applied'
+              ) {
+  
+                of applications
+  
+              } @else {
+  
+                from previous stage
+  
+              }
+  
+            </span>
+  
+          </div>
+  
+  
+          <div class="funnel-bar">
+  
+            <div
+              class="funnel-bar-fill"
+              [style.width.%]="
+                stage.conversionRate
+              "
+              [class.funnel-applied]="
+                stage.status === 'Applied'
+              "
+              [class.funnel-assessment]="
+                stage.status === 'Assessment'
+              "
+              [class.funnel-interview]="
+                stage.status === 'Interview'
+              "
+              [class.funnel-offer]="
+                stage.status === 'Offer'
+              "
+            ></div>
+  
+          </div>
+  
+        }
+  
+      </div>
+  
+    </section>
+  
+  
+    <!-- Application Activity -->
+  
+    <section class="activity-section">
+  
+      <div class="section-header">
+  
+        <h2>Application Activity</h2>
+  
+        <p>
+          Number of applications submitted
+          during the last six months.
+        </p>
+  
+      </div>
+  
+  
+      <div class="activity-list">
+  
+        @for (
+          item of monthlyApplications;
+          track item.month
+        ) {
+  
+          <div class="activity-item">
+  
+            <span class="activity-month">
+              {{ item.month }}
+            </span>
+  
+  
+            <div class="activity-bar-container">
+  
+              <div
+                class="activity-bar"
+                [style.width.%]="
+                  item.percentage
+                "
+              ></div>
+  
+            </div>
+  
+  
+            <span class="activity-count">
+              {{ item.count }}
+            </span>
+  
+          </div>
+  
+        }
+  
+      </div>
+  
+    </section>
+  
+  </section>
