@@ -51,6 +51,8 @@ export class Applications {
     jobUrl: string;
     jobDescription: string;
     notes: string;
+    interviewDate: string;
+    interviewNotes: string;
   } = {
     company: '',
     position: '',
@@ -59,7 +61,9 @@ export class Applications {
     appliedDate: '',
     jobUrl: '',
     jobDescription: '',
-    notes: ''
+    notes: '',
+    interviewDate: '',
+    interviewNotes: ''
   };
 
   openAddForm() {
@@ -87,6 +91,10 @@ export class Applications {
       jobUrl: this.newApplication.jobUrl,
       jobDescription: this.newApplication.jobDescription,
       notes: this.newApplication.notes,
+    
+      interviewDate: this.newApplication.interviewDate,
+      interviewNotes: this.newApplication.interviewNotes,
+    
       statusHistory: this.editingApplicationId
         ? this.applicationService.getApplicationById(this.editingApplicationId)?.statusHistory ?? []
         : []
@@ -148,7 +156,9 @@ export class Applications {
       appliedDate: '',
       jobUrl: '',
       jobDescription: '',
-      notes: ''
+      notes: '',
+      interviewDate: '',
+      interviewNotes: ''
     };
   }
 
@@ -172,7 +182,9 @@ export class Applications {
       appliedDate: application.appliedDate,
       jobUrl: application.jobUrl ?? '',
       jobDescription: application.jobDescription ?? '',
-      notes: application.notes ?? ''
+      notes: application.notes ?? '',
+      interviewDate: application.interviewDate ?? '',
+      interviewNotes: application.interviewNotes ?? ''
     };
   
     this.showAddForm = true;

@@ -13,4 +13,6 @@ export interface JobApplication {
   jobDescription: string;
   notes: string;
   statusHistory: StatusHistory[];
+  interviewDate: string;
+  interviewNotes: string;
 }

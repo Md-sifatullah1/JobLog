@@ -114,3 +114,44 @@
   .browse-button:hover {
     background-color: #4338ca;
   }
+
+  .interview-schedule {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  
+    margin-top: 16px;
+  }
+  
+  .schedule-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .schedule-date {
+    font-size: 14px;
+    color: #4f46e5;
+    font-weight: 600;
+  }
+  
+  .interview-notes {
+    margin-top: 16px;
+    padding: 12px 14px;
+  
+    background-color: #f9fafb;
+    border-radius: 8px;
+  }
+  
+  .notes-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .interview-notes p {
+    margin: 6px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6b7280;
+  }

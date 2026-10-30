@@ -24,8 +24,10 @@ export class Application {
           status: 'Interview',
           changedAt: '2026-10-10T10:00:00'
         }
-      ]
-    }, 
+      ],
+      interviewDate: '',
+      interviewNotes: ''
+    },
     {
       id: 2,
       company: 'Microsoft',
@@ -41,7 +43,9 @@ export class Application {
           status: 'Applied',
           changedAt: '2026-10-12T10:00:00'
         }
-      ]
+      ],
+      interviewDate: '',
+      interviewNotes: ''
     },
     {
       id: 3,
@@ -58,7 +62,9 @@ export class Application {
           status: 'Assessment',
           changedAt: '2026-10-12T10:00:00'
         }
-      ]
+      ],
+      interviewDate: '',
+      interviewNotes: ''
     },
     {
       id: 4,
@@ -75,7 +81,9 @@ export class Application {
           status: 'Rejected',
           changedAt: '2026-10-12T10:00:00'
         }
-      ]
+      ],
+      interviewDate: '',
+      interviewNotes: ''
     }
 ];
 
@@ -111,18 +119,40 @@ updateApplication(updatedApplication: JobApplication): void {
     application => {
       if (application.id === updatedApplication.id) {
 
+        let statusHistory = [
+          ...(application.statusHistory ?? [])
+        ];
+
+        // Case 1: the application status changed
         if (application.status !== updatedApplication.status) {
-          updatedApplication.statusHistory = [
-            ...(application.statusHistory ?? []),
-            {
-              status: updatedApplication.status,
-              changedAt: new Date().toISOString()
-            }
-          ];
-        } else {
-          updatedApplication.statusHistory =
-            application.statusHistory ?? [];
+
+          statusHistory.push({
+            status: updatedApplication.status,
+            changedAt: new Date().toISOString(),
+            interviewDate:
+              updatedApplication.status === 'Interview'
+                ? updatedApplication.interviewDate
+                : undefined
+          });
+
         }
+
+        // Case 2: application is still in Interview,
+        // but its interview date may have been changed
+        else if (updatedApplication.status === 'Interview') {
+
+          statusHistory = statusHistory.map(history =>
+            history.status === 'Interview'
+              ? {
+                  ...history,
+                  interviewDate: updatedApplication.interviewDate
+                }
+              : history
+          );
+
+        }
+
+        updatedApplication.statusHistory = statusHistory;
 
         return updatedApplication;
       }

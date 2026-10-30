@@ -124,6 +124,14 @@
                   <span class="status-history-date">
                     {{ history.changedAt | date:'MMM d, y, h:mm a' }}
                   </span>
+                  @if (history.status === 'Interview' && history.interviewDate) {
+
+                    <span class="status-history-date">
+                      Interview scheduled:
+                      {{ history.interviewDate | date:'MMM d, y, h:mm a' }}
+                    </span>
+                  
+                  }
       
                 </div>
       

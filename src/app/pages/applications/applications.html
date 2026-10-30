@@ -182,6 +182,37 @@
             }
           </div>
 
+          <!-- Interview information -->
+          @if (newApplication.status === 'Interview') {
+
+            <div class="form-group">
+              <label for="interviewDate">Interview Date & Time</label>
+
+              <input
+                  id="interviewDate"
+                  type="datetime-local"
+                  name="interviewDate"
+                  [(ngModel)]="newApplication.interviewDate"
+                >
+            </div>
+
+            <div class="form-group">
+              <label for="interviewNotes">Interview Notes</label>
+
+              <textarea
+                id="interviewNotes"
+                name="interviewNotes"
+                [(ngModel)]="newApplication.interviewNotes"
+                rows="3"
+                placeholder="e.g. Technical interview with the backend team"
+              ></textarea>
+            </div>
+
+          }
+
+
+          <!-- Job URL -->          
+
           <div class="form-group">
             <label for="jobUrl">Job URL</label>
           

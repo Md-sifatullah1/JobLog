@@ -37,6 +37,38 @@
                 </span>
   
               </div>
+
+              @if (application.interviewDate) {
+
+                <div class="interview-schedule">
+              
+                  <span class="schedule-label">
+                    Interview
+                  </span>
+              
+                  <span class="schedule-date">
+                    {{ application.interviewDate | date:'MMM d, y, h:mm a' }}
+                  </span>
+              
+                </div>
+              
+              }
+              
+              @if (application.interviewNotes) {
+              
+                <div class="interview-notes">
+              
+                  <span class="notes-label">
+                    Notes
+                  </span>
+              
+                  <p>
+                    {{ application.interviewNotes }}
+                  </p>
+              
+                </div>
+              
+              }
   
             </div>
   
