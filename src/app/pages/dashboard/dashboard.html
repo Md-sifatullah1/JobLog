@@ -6,19 +6,16 @@
     </div>
   
     <div class="stats-grid">
-  
-        <div class="stats-grid">
 
-            @for (stat of stats; track stat.label) {
-        
-              <div class="stat-card">
-                <p class="stat-label">{{ stat.label }}</p>
-                <h2>{{ stat.value }}</h2>
-              </div>
-  
-            }
+      @for (stat of stats; track stat.label) {
+    
+        <div class="stat-card">
+          <p class="stat-label">{{ stat.label }}</p>
+          <h2>{{ stat.value }}</h2>
         </div>
-  
+    
+      }
+    
     </div>
   
   </section>
@@ -36,42 +33,76 @@
       </a>
     </div>
   
-    <div class="applications-table">
-  
-      <div class="table-header">
-        <span>Company</span>
-        <span>Position</span>
-        <span>Location</span>
-        <span>Status</span>
-        <span>Applied</span>
-      </div>
-  
-      @for (application of applications; track application.id) {
-  
-        <div class="application-row">
-  
-          <div class="company">
-            <div class="company-logo">
-              {{ application.company.charAt(0) }}
-            </div>
-  
-            <span>{{ application.company }}</span>
-          </div>
-  
-          <span>{{ application.position }}</span>
-  
-          <span>{{ application.location }}</span>
-  
-          <span class="status">
-            {{ application.status }}
-          </span>
-  
-          <span>{{ application.appliedDate }}</span>
-  
+    @if (recentApplications.length > 0) {
+
+      <div class="applications-table">
+    
+        <div class="table-header">
+          <span>Company</span>
+          <span>Position</span>
+          <span>Location</span>
+          <span>Status</span>
+          <span>Applied</span>
         </div>
-  
-      }
-  
-    </div>
+    
+        @for (application of recentApplications; track application.id) {
+    
+          <div class="application-row">
+    
+            <a
+              class="company"
+              [routerLink]="['/applications', application.id]"
+            >
+              <div class="company-logo">
+                {{ application.company.charAt(0) }}
+              </div>
+    
+              <span>{{ application.company }}</span>
+            </a>
+    
+            <span>{{ application.position }}</span>
+    
+            <span>{{ application.location }}</span>
+    
+            <span
+              class="status-badge"
+              [class.status-saved]="application.status === 'Saved'"
+              [class.status-applied]="application.status === 'Applied'"
+              [class.status-assessment]="application.status === 'Assessment'"
+              [class.status-interview]="application.status === 'Interview'"
+              [class.status-offer]="application.status === 'Offer'"
+              [class.status-rejected]="application.status === 'Rejected'"
+            >
+              {{ application.status }}
+            </span>
+    
+            <span>{{ application.appliedDate }}</span>
+    
+          </div>
+    
+        }
+    
+      </div>
+    
+    } @else {
+    
+      <div class="empty-state">
+    
+        <h3>No applications yet</h3>
+    
+        <p>
+          Start tracking your job search by adding your first application.
+        </p>
+    
+        <a
+          routerLink="/applications"
+          class="add-application-link"
+        >
+          Add Application
+        </a>
+    
+      </div>
+    
+    }
   
   </section>

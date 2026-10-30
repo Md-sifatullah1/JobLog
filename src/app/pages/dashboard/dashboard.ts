@@ -1,11 +1,12 @@
 
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { JobApplication } from '../../models/job-application';
 import { Application } from '../../services/application';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -32,6 +33,24 @@ get totalOffers(): number {
     application => application.status === 'Offer'
   ).length;
 }
+
+get totalRejected(): number {
+  return this.applications.filter(
+    application => application.status === 'Rejected'
+  ).length;
+}
+
+get recentApplications(): JobApplication[] {
+  return this.applications
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.appliedDate).getTime() -
+        new Date(a.appliedDate).getTime()
+    )
+    .slice(0, 5);
+}
+
 get responseRate(): number {
 
   if (this.totalApplications === 0) {
@@ -64,6 +83,10 @@ get stats() {
     {
       label: 'Offers',
       value: this.totalOffers
+    },
+    {
+      label: 'Rejected',
+      value: this.totalRejected
     },
     {
       label: 'Response Rate',

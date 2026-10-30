@@ -127,7 +127,8 @@
     align-items: center;
     gap: 12px;
     font-weight: 600;
-    color: #111827;
+    color: inherit;
+    text-decoration: none;
   }
   
   .company-logo {
@@ -145,7 +146,10 @@
   
     font-weight: 700;
   }
-  
+  .company:hover {
+    text-decoration: underline;
+  }
+
   .status {
     display: inline-block;
     width: fit-content;
@@ -159,4 +163,39 @@
   
     font-size: 12px;
     font-weight: 600;
+  }
+
+  .empty-state {
+    padding: 48px 24px;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+  }
+  
+  .empty-state h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #111827;
+  }
+  
+  .empty-state p {
+    margin: 8px 0 20px;
+    color: #6b7280;
+  }
+  
+  .add-application-link {
+    display: inline-block;
+    padding: 10px 16px;
+  
+    background-color: #4f46e5;
+    color: #ffffff;
+  
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .add-application-link:hover {
+    opacity: 0.9;
   }
