@@ -1,1 +1,461 @@
-<p>documents works!</p>
+<section class="documents">
+
+    <!-- Page header -->
+  
+    <div class="documents-header">
+  
+      <div>
+        <h1>Documents</h1>
+  
+        <p>
+          Keep your job search documents organized
+          in one place.
+        </p>
+      </div>
+  
+      <button
+        class="add-button"
+        type="button"
+        [disabled]="hasReachedLimit"
+        (click)="openAddForm()"
+      >
+        + Add Document
+      </button>
+  
+    </div>
+  
+  
+    <!-- Document usage -->
+  
+    <div class="document-usage">
+  
+      <div class="usage-header">
+  
+        <div>
+          <strong>
+            {{ documentCount }} / {{ documentLimit }}
+            documents
+          </strong>
+  
+          <p>
+            {{ remainingSlots }}
+            document slots remaining
+          </p>
+        </div>
+  
+        @if (hasReachedLimit) {
+  
+          <span class="limit-message">
+            Document limit reached
+          </span>
+  
+        }
+  
+      </div>
+  
+      <div class="usage-bar">
+  
+        <div
+          class="usage-bar-fill"
+          [style.width.%]="
+            (documentCount / documentLimit) * 100
+          "
+        ></div>
+  
+      </div>
+  
+    </div>
+  
+  
+    <!-- Add / Edit form -->
+  
+    @if (showAddForm) {
+  
+      <div class="document-form-card">
+  
+        <div class="form-header">
+  
+          <h2>
+            @if (editingDocumentId !== null) {
+              Edit Document
+            } @else {
+              Add Document
+            }
+          </h2>
+  
+          <button
+            type="button"
+            class="close-button"
+            (click)="closeForm()"
+          >
+            ×
+          </button>
+  
+        </div>
+  
+  
+        <form
+          #documentForm="ngForm"
+          (ngSubmit)="saveDocument(documentForm)"
+        >
+  
+          <!-- Name and type -->
+  
+          <div class="form-grid">
+  
+            <div class="form-group">
+  
+              <label for="documentName">
+                Document Name
+              </label>
+  
+              <input
+                id="documentName"
+                type="text"
+                name="documentName"
+                [(ngModel)]="newDocument.name"
+                placeholder="e.g. Software Developer CV"
+                required
+              >
+  
+            </div>
+  
+  
+            <div class="form-group">
+  
+              <label for="documentType">
+                Type
+              </label>
+  
+              <select
+                id="documentType"
+                name="documentType"
+                [(ngModel)]="newDocument.type"
+                required
+              >
+  
+                @for (
+                  type of documentTypes;
+                  track type
+                ) {
+  
+                  <option [value]="type">
+                    {{ type }}
+                  </option>
+  
+                }
+  
+              </select>
+  
+            </div>
+  
+          </div>
+  
+  
+          <!-- File section -->
+  
+          @if (editingDocumentId !== null) {
+  
+            <!-- Existing file -->
+  
+            <div class="current-file">
+  
+              <span>Current file</span>
+  
+              <strong>
+                {{ newDocument.fileName }}
+              </strong>
+  
+              <small>
+                {{ formatFileSize(newDocument.fileSize) }}
+              </small>
+  
+            </div>
+  
+  
+            <!-- Optional replacement -->
+  
+            <div class="form-group">
+  
+              <label for="documentFile">
+                Replace File
+              </label>
+  
+              <input
+                id="documentFile"
+                type="file"
+                accept=".pdf,.doc,.docx"
+                (change)="onFileSelected($event)"
+              >
+  
+              <span class="field-help">
+                Optional. PDF, DOC or DOCX, maximum 5 MB.
+              </span>
+  
+              @if (selectedFileError) {
+  
+                <span class="file-error">
+                  {{ selectedFileError }}
+                </span>
+  
+              }
+  
+            </div>
+  
+          } @else {
+  
+            <!-- New file -->
+  
+            <div class="form-group">
+  
+              <label for="documentFile">
+                File
+              </label>
+  
+              <input
+                id="documentFile"
+                type="file"
+                accept=".pdf,.doc,.docx"
+                (change)="onFileSelected($event)"
+                required
+              >
+  
+              <span class="field-help">
+                PDF, DOC or DOCX, maximum 5 MB.
+              </span>
+  
+              @if (selectedFileError) {
+  
+                <span class="file-error">
+                  {{ selectedFileError }}
+                </span>
+  
+              }
+  
+            </div>
+  
+          }
+  
+  
+          <!-- Selected / replacement file -->
+  
+          @if (
+            newDocument.fileName &&
+            (
+              editingDocumentId === null ||
+              newDocument.fileName !==
+                getOriginalFileName()
+            )
+          ) {
+  
+            <div class="selected-file">
+  
+              <span>Selected file</span>
+  
+              <strong>
+                {{ newDocument.fileName }}
+              </strong>
+  
+              <small>
+                {{ formatFileSize(newDocument.fileSize) }}
+              </small>
+  
+            </div>
+  
+          }
+  
+  
+          <!-- Notes -->
+  
+          <div class="form-group">
+  
+            <label for="documentNotes">
+              Notes
+            </label>
+  
+            <textarea
+              id="documentNotes"
+              name="documentNotes"
+              [(ngModel)]="newDocument.notes"
+              rows="3"
+              placeholder="Optional notes about this document"
+            ></textarea>
+  
+          </div>
+  
+  
+          <!-- Form actions -->
+  
+          <div class="form-actions">
+  
+            <button
+              type="button"
+              class="secondary-button"
+              (click)="closeForm()"
+            >
+              Cancel
+            </button>
+  
+            <button
+              type="submit"
+              class="primary-button"
+              [disabled]="
+                documentForm.invalid ||
+                !newDocument.fileName
+              "
+            >
+  
+              @if (editingDocumentId !== null) {
+                Save Changes
+              } @else {
+                Add Document
+              }
+  
+            </button>
+  
+          </div>
+  
+        </form>
+  
+      </div>
+  
+    }
+  
+  
+    <!-- Document list -->
+  
+    <div class="documents-section">
+  
+      <div class="section-header">
+  
+        <div>
+  
+          <h2>Your Documents</h2>
+  
+          <p>
+            Documents available for your job search.
+          </p>
+  
+        </div>
+  
+      </div>
+  
+  
+      @if (documents.length > 0) {
+  
+        <div class="document-list">
+  
+          @for (
+            document of documents;
+            track document.id
+          ) {
+  
+            <article class="document-card">
+  
+              <div class="document-main">
+  
+                <div class="document-icon">
+                  📄
+                </div>
+  
+  
+                <div class="document-info">
+  
+                  <div class="document-title-row">
+  
+                    <h3>
+                      {{ document.name }}
+                    </h3>
+  
+                    <span class="document-type">
+                      {{ document.type }}
+                    </span>
+  
+                  </div>
+  
+  
+                  <p class="file-name">
+                    {{ document.fileName }}
+                  </p>
+  
+  
+                  <div class="document-meta">
+  
+                    <span>
+                      {{ formatFileSize(document.fileSize) }}
+                    </span>
+  
+                    <span>•</span>
+  
+                    <span>
+                      Added {{ document.dateAdded }}
+                    </span>
+  
+                  </div>
+  
+  
+                  @if (document.notes) {
+  
+                    <p class="document-notes">
+                      {{ document.notes }}
+                    </p>
+  
+                  }
+  
+                </div>
+  
+              </div>
+  
+  
+              <div class="document-actions">
+  
+                <button
+                  type="button"
+                  class="edit-button"
+                  (click)="editDocument(document)"
+                >
+                  Edit
+                </button>
+  
+                <button
+                  type="button"
+                  class="delete-button"
+                  (click)="deleteDocument(document.id)"
+                >
+                  Delete
+                </button>
+  
+              </div>
+  
+            </article>
+  
+          }
+  
+        </div>
+  
+      } @else {
+  
+        <div class="empty-state">
+  
+          <h3>No documents yet</h3>
+  
+          <p>
+            Add your CV, cover letters or certificates
+            to start building your document library.
+          </p>
+  
+          <button
+            type="button"
+            class="primary-button"
+            (click)="openAddForm()"
+          >
+            Add Your First Document
+          </button>
+  
+        </div>
+  
+      }
+  
+    </div>
+  
+  </section>
