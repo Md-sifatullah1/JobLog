@@ -1,19 +1,35 @@
 <section class="applications-page">
-<!-- Page header -->
-<div class="page-header">
- <div>
-    <h1>Applications</h1>
-    <p>Manage and track your job applications.</p>
+
+  <!-- Page header -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>Applications</h1>
+
+      <p>
+        Manage and track your job applications.
+      </p>
+
     </div>
+
+
     <div class="header-actions">
-      <div class="search-wrapper"> 
+
+      <!-- Search -->
+
+      <div class="search-wrapper">
+
         <input
-        type="text"
-        class="search-input"
-        [(ngModel)]="searchTerm"
-        placeholder="Search applications..."
+          type="text"
+          class="search-input"
+          [(ngModel)]="searchTerm"
+          placeholder="Search applications..."
         >
+
         @if (searchTerm) {
+
           <button
             type="button"
             class="clear-search-button"
@@ -21,25 +37,71 @@
           >
             ×
           </button>
+
         }
-  
+
       </div>
 
 
-  <select
-    class="status-filter"
-    [(ngModel)]="selectedStatus"
-  >
-    <option value="All">All</option>
+      <!-- Status filter -->
 
-    @for (status of applicationStatuses; track status) {
-      <option [value]="status">
-      {{ status }}
-      </option>
-    }
-  </select>
+      <select
+        class="status-filter"
+        [(ngModel)]="selectedStatus"
+      >
+
+        <option value="All">
+          All
+        </option>
+
+        @for (
+          status of applicationStatuses;
+          track status
+        ) {
+
+          <option [value]="status">
+            {{ status }}
+          </option>
+
+        }
+
+      </select>
+
+
+      <!-- Sort -->
+
+      <select
+        class="sort-filter"
+        [(ngModel)]="selectedSort"
+      >
+
+        <option value="newest">
+          Newest First
+        </option>
+
+        <option value="oldest">
+          Oldest First
+        </option>
+
+        <option value="company-az">
+          Company A-Z
+        </option>
+
+        <option value="company-za">
+          Company Z-A
+        </option>
+
+        <option value="status">
+          Status
+        </option>
+
+      </select>
+
+
+      <!-- Add application -->
 
       <button
+        type="button"
         class="add-button"
         (click)="openAddForm()"
       >
@@ -47,18 +109,26 @@
       </button>
 
     </div>
+
   </div>
 
 
   <!-- Add / Edit Application form -->
+
   @if (showAddForm) {
 
     <div class="form-card">
 
       <div class="form-header">
+
         <h2>
-          {{ editingApplicationId === null ? 'Add Application' : 'Edit Application' }}
+          {{
+            editingApplicationId === null
+              ? 'Add Application'
+              : 'Edit Application'
+          }}
         </h2>
+
 
         <button
           type="button"
@@ -67,6 +137,7 @@
         >
           ×
         </button>
+
       </div>
 
 
@@ -79,8 +150,12 @@
         <div class="form-grid">
 
           <!-- Company -->
+
           <div class="form-group">
-            <label for="company">Company</label>
+
+            <label for="company">
+              Company
+            </label>
 
             <input
               id="company"
@@ -92,17 +167,27 @@
               required
             >
 
-            @if (company.invalid && company.touched) {
+            @if (
+              company.invalid &&
+              company.touched
+            ) {
+
               <span class="error-message">
                 Company is required.
               </span>
+
             }
+
           </div>
 
 
           <!-- Position -->
+
           <div class="form-group">
-            <label for="position">Position</label>
+
+            <label for="position">
+              Position
+            </label>
 
             <input
               id="position"
@@ -114,17 +199,27 @@
               required
             >
 
-            @if (position.invalid && position.touched) {
+            @if (
+              position.invalid &&
+              position.touched
+            ) {
+
               <span class="error-message">
                 Position is required.
               </span>
+
             }
+
           </div>
 
 
           <!-- Location -->
+
           <div class="form-group">
-            <label for="location">Location</label>
+
+            <label for="location">
+              Location
+            </label>
 
             <input
               id="location"
@@ -136,35 +231,57 @@
               required
             >
 
-            @if (location.invalid && location.touched) {
+            @if (
+              location.invalid &&
+              location.touched
+            ) {
+
               <span class="error-message">
                 Location is required.
               </span>
+
             }
+
           </div>
 
 
           <!-- Status -->
+
           <div class="form-group">
-            <label for="status">Status</label>
+
+            <label for="status">
+              Status
+            </label>
 
             <select
               id="status"
               name="status"
               [(ngModel)]="newApplication.status"
             >
-              @for (status of applicationStatuses; track status) {
+
+              @for (
+                status of applicationStatuses;
+                track status
+              ) {
+
                 <option [value]="status">
                   {{ status }}
                 </option>
+
               }
+
             </select>
+
           </div>
 
 
           <!-- Applied Date -->
+
           <div class="form-group">
-            <label for="appliedDate">Applied Date</label>
+
+            <label for="appliedDate">
+              Applied Date
+            </label>
 
             <input
               id="appliedDate"
@@ -175,29 +292,47 @@
               required
             >
 
-            @if (appliedDate.invalid && appliedDate.touched) {
+            @if (
+              appliedDate.invalid &&
+              appliedDate.touched
+            ) {
+
               <span class="error-message">
                 Applied date is required.
               </span>
+
             }
+
           </div>
 
+
           <!-- Interview information -->
-          @if (newApplication.status === 'Interview') {
+
+          @if (
+            newApplication.status === 'Interview'
+          ) {
 
             <div class="form-group">
-              <label for="interviewDate">Interview Date & Time</label>
+
+              <label for="interviewDate">
+                Interview Date & Time
+              </label>
 
               <input
-                  id="interviewDate"
-                  type="datetime-local"
-                  name="interviewDate"
-                  [(ngModel)]="newApplication.interviewDate"
-                >
+                id="interviewDate"
+                type="datetime-local"
+                name="interviewDate"
+                [(ngModel)]="newApplication.interviewDate"
+              >
+
             </div>
 
+
             <div class="form-group">
-              <label for="interviewNotes">Interview Notes</label>
+
+              <label for="interviewNotes">
+                Interview Notes
+              </label>
 
               <textarea
                 id="interviewNotes"
@@ -206,16 +341,20 @@
                 rows="3"
                 placeholder="e.g. Technical interview with the backend team"
               ></textarea>
+
             </div>
 
           }
 
 
-          <!-- Job URL -->          
+          <!-- Job URL -->
 
           <div class="form-group">
-            <label for="jobUrl">Job URL</label>
-          
+
+            <label for="jobUrl">
+              Job URL
+            </label>
+
             <input
               id="jobUrl"
               type="url"
@@ -223,11 +362,18 @@
               [(ngModel)]="newApplication.jobUrl"
               placeholder="https://..."
             >
+
           </div>
 
+
+          <!-- Job description -->
+
           <div class="form-group full-width">
-            <label for="jobDescription">Job Description</label>
-          
+
+            <label for="jobDescription">
+              Job Description
+            </label>
+
             <textarea
               id="jobDescription"
               name="jobDescription"
@@ -235,11 +381,18 @@
               rows="8"
               placeholder="Paste the job description here..."
             ></textarea>
+
           </div>
 
+
+          <!-- Notes -->
+
           <div class="form-group full-width">
-            <label for="notes">Notes</label>
-          
+
+            <label for="notes">
+              Notes
+            </label>
+
             <textarea
               id="notes"
               name="notes"
@@ -247,13 +400,14 @@
               rows="5"
               placeholder="Add notes about this application..."
             ></textarea>
-          </div>
 
+          </div>
 
         </div>
 
 
         <!-- Form actions -->
+
         <div class="form-actions">
 
           <button
@@ -264,12 +418,19 @@
             Cancel
           </button>
 
+
           <button
             type="submit"
             class="save-button"
             [disabled]="applicationForm.invalid"
           >
-            {{ editingApplicationId === null ? 'Save Application' : 'Update Application' }}
+
+            {{
+              editingApplicationId === null
+                ? 'Save Application'
+                : 'Update Application'
+            }}
+
           </button>
 
         </div>
@@ -282,58 +443,114 @@
 
 
   <!-- Result count -->
+
   <div class="result-count">
     {{ resultCount }}
   </div>
 
 
   <!-- Applications list -->
+
   <div class="applications-list">
 
     <div class="list-header">
-      <span>Company</span>
-      <span>Position</span>
-      <span>Location</span>
-      <span>Status</span>
-      <span>Applied</span>
-      <span>Actions</span>
+
+      <span>
+        Company
+      </span>
+
+      <span>
+        Position
+      </span>
+
+      <span>
+        Location
+      </span>
+
+      <span>
+        Status
+      </span>
+
+      <span>
+        Applied
+      </span>
+
+      <span>
+        Actions
+      </span>
+
     </div>
 
 
-    @for (application of filteredApplications; track application.id) {
+    @for (
+      application of filteredApplications;
+      track application.id
+    ) {
 
       <div class="application-row">
 
+        <!-- Company -->
+
         <a
           class="company-name application-link"
-          [routerLink]="['/applications', application.id]"
+          [routerLink]="[
+            '/applications',
+            application.id
+          ]"
         >
           {{ application.company }}
         </a>
+
+
+        <!-- Position -->
 
         <span>
           {{ application.position }}
         </span>
 
+
+        <!-- Location -->
+
         <span>
           {{ application.location }}
         </span>
 
+
+        <!-- Status -->
+
         <span
           class="status-badge"
-          [class.status-saved]="application.status === 'Saved'"
-          [class.status-applied]="application.status === 'Applied'"
-          [class.status-assessment]="application.status === 'Assessment'"
-          [class.status-interview]="application.status === 'Interview'"
-          [class.status-offer]="application.status === 'Offer'"
-          [class.status-rejected]="application.status === 'Rejected'"
+          [class.status-saved]="
+            application.status === 'Saved'
+          "
+          [class.status-applied]="
+            application.status === 'Applied'
+          "
+          [class.status-assessment]="
+            application.status === 'Assessment'
+          "
+          [class.status-interview]="
+            application.status === 'Interview'
+          "
+          [class.status-offer]="
+            application.status === 'Offer'
+          "
+          [class.status-rejected]="
+            application.status === 'Rejected'
+          "
         >
           {{ application.status }}
         </span>
 
+
+        <!-- Applied date -->
+
         <span>
           {{ application.appliedDate }}
         </span>
+
+
+        <!-- Actions -->
 
         <div class="action-buttons">
 
@@ -344,6 +561,7 @@
           >
             Edit
           </button>
+
 
           <button
             type="button"
@@ -360,8 +578,15 @@
     } @empty {
 
       <div class="empty-state">
-        <h3>No applications found</h3>
-        <p>Try changing your search or status filter.</p>
+
+        <h3>
+          No applications found
+        </h3>
+
+        <p>
+          Try changing your search or status filter.
+        </p>
+
       </div>
 
     }
