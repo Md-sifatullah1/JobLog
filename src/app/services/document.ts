@@ -18,6 +18,7 @@ export class Document {
       type: 'Resume',
       fileName: 'software-developer-cv.pdf',
       fileSize: 1240000,
+      fileType: 'application/pdf',
       dateAdded: '2026-10-25',
       notes: 'Main CV for software development positions'
     },
@@ -27,6 +28,7 @@ export class Document {
       type: 'Certificate',
       fileName: 'degree-certificate.pdf',
       fileSize: 850000,
+      fileType: 'application/pdf',
       dateAdded: '2026-10-27',
       notes: 'Bachelor degree certificate'
     }

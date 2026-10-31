@@ -35,6 +35,7 @@ export class Documents {
     type: DocumentType;
     fileName: string;
     fileSize: number;
+    fileType: string;
     dateAdded: string;
     notes: string;
   } = this.createEmptyDocument();
@@ -88,6 +89,7 @@ export class Documents {
       type: document.type,
       fileName: document.fileName,
       fileSize: document.fileSize,
+      fileType: document.fileType,
       dateAdded: document.dateAdded,
       notes: document.notes
     };
@@ -182,6 +184,7 @@ export class Documents {
       type: 'Resume' as DocumentType,
       fileName: '',
       fileSize: 0,
+      fileType: '',
       dateAdded:
         new Date().toISOString().split('T')[0],
       notes: ''
@@ -225,6 +228,7 @@ export class Documents {
   
     this.newDocument.fileName = file.name;
     this.newDocument.fileSize = file.size;
+    this.newDocument.fileType = file.type;
   }
 
   getOriginalFileName(): string {

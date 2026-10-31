@@ -11,6 +11,7 @@ export interface JobDocument {
   type: DocumentType;
   fileName: string;
   fileSize: number;
+  fileType: string;
   dateAdded: string;
   notes: string;
 }
