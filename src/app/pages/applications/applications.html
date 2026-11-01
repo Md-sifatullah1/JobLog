@@ -25,6 +25,7 @@
           type="text"
           class="search-input"
           [(ngModel)]="searchTerm"
+          (ngModelChange)="currentPage = 1"
           placeholder="Search applications..."
         >
 
@@ -48,6 +49,7 @@
       <select
         class="status-filter"
         [(ngModel)]="selectedStatus"
+        (ngModelChange)="currentPage = 1"
       >
 
         <option value="All">
@@ -73,6 +75,7 @@
       <select
         class="sort-filter"
         [(ngModel)]="selectedSort"
+        (ngModelChange)="currentPage = 1"
       >
 
         <option value="newest">
@@ -483,7 +486,7 @@
 
 
     @for (
-      application of filteredApplications;
+      application of paginatedApplications;
       track application.id
     ) {
 
@@ -592,5 +595,48 @@
     }
 
   </div>
+
+  <!-- Pagination -->
+
+@if (totalPages > 1) {
+
+  <div class="pagination">
+
+    <button
+      type="button"
+      class="pagination-button"
+      [disabled]="currentPage === 1"
+      (click)="previousPage()"
+    >
+      Previous
+    </button>
+
+
+    @for (page of pageNumbers; track page) {
+
+      <button
+        type="button"
+        class="pagination-button"
+        [class.active]="currentPage === page"
+        (click)="changePage(page)"
+      >
+        {{ page }}
+      </button>
+
+    }
+
+
+    <button
+      type="button"
+      class="pagination-button"
+      [disabled]="currentPage === totalPages"
+      (click)="nextPage()"
+    >
+      Next
+    </button>
+
+  </div>
+
+}
 
 </section>

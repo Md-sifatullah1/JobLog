@@ -39,6 +39,8 @@ export class Applications {
   searchTerm = '';
 
   selectedSort: SortOption = 'newest';
+  pageSize = 10;
+  currentPage = 1;
 
   showAddForm = false;
 
@@ -214,19 +216,27 @@ export class Applications {
       window.confirm(
         'Are you sure you want to delete this application?'
       );
-
+  
     if (!confirmed) {
       return;
     }
-
-
-    this.applicationService
-      .deleteApplication(id);
-
-
+  
+    this.applicationService.deleteApplication(id);
+  
     this.applications =
-      this.applicationService
-        .getApplications();
+      this.applicationService.getApplications();
+  
+  
+    // Check whether the current page still exists
+    if (this.currentPage > this.totalPages) {
+  
+      this.currentPage = Math.max(
+        this.totalPages,
+        1
+      );
+  
+    }
+  
   }
 
 
@@ -343,6 +353,59 @@ export class Applications {
 
 
     return results;
+  }
+
+  get totalPages(): number {
+    return Math.ceil(
+      this.filteredApplications.length / this.pageSize
+    );
+  }
+  
+  
+  get paginatedApplications(): JobApplication[] {
+  
+    const startIndex =
+      (this.currentPage - 1) * this.pageSize;
+  
+    const endIndex =
+      startIndex + this.pageSize;
+  
+    return this.filteredApplications.slice(
+      startIndex,
+      endIndex
+    );
+  }
+  
+  
+  get pageNumbers(): number[] {
+  
+    const pages: number[] = [];
+  
+    for (let page = 1; page <= this.totalPages; page++) {
+      pages.push(page);
+    }
+  
+    return pages;
+  }
+  
+  
+  changePage(page: number): void {
+  
+    if (page < 1 || page > this.totalPages) {
+      return;
+    }
+  
+    this.currentPage = page;
+  }
+  
+  
+  previousPage(): void {
+    this.changePage(this.currentPage - 1);
+  }
+  
+  
+  nextPage(): void {
+    this.changePage(this.currentPage + 1);
   }
 
 
