@@ -45,3 +45,18 @@ Thumbs.db
 
 # Cursor
 .cursor/
+
+# Spring Boot / Maven
+/backend/target/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Local Spring Boot configuration
+application-local.properties
+application-local.yml
+
+# Maven Wrapper downloaded files
+/backend/.mvn/wrapper/maven-wrapper.jar
