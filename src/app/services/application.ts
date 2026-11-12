@@ -1,195 +1,187 @@
-import { Injectable } from '@angular/core';
+
+import { Injectable, inject, signal } from '@angular/core';
+import {
+  BehaviorSubject,
+  Observable,
+  forkJoin,
+  of,
+  switchMap,
+  map,
+  tap,
+  catchError,
+  throwError
+} from 'rxjs';
+
 import { JobApplication } from '../models/job-application';
+import { ApplicationApi, ApiJobApplication } from './application-api';
+import {
+  toJobApplication,
+  toApiRequest
+} from './application-mapper';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class Application {
-  
-  private storageKey = 'joblog-applications';
 
-  private applications: JobApplication[] = [
-    {
-      id: 1,
-      company: 'Google',
-      position: 'Software Engineer',
-      location: 'Helsinki',
-      status: 'Interview',
-      appliedDate: '2026-10-10',
-      jobUrl: '',
-      jobDescription: '',
-      notes: '',
-      statusHistory: [
-        {
-          status: 'Interview',
-          changedAt: '2026-10-10T10:00:00'
-        }
-      ],
-      interviewDate: '',
-      interviewNotes: ''
-    },
-    {
-      id: 2,
-      company: 'Microsoft',
-      position: 'Junior Software Engineer',
-      location: 'Espoo',
-      status: 'Applied',
-      appliedDate: '2026-10-18',
-      jobUrl: '',
-      jobDescription: '',
-      notes: '',
-      statusHistory: [
-        {
-          status: 'Applied',
-          changedAt: '2026-10-12T10:00:00'
-        }
-      ],
-      interviewDate: '',
-      interviewNotes: ''
-    },
-    {
-      id: 3,
-      company: 'Nokia',
-      position: 'Software Developer',
-      location: 'Espoo',
-      status: 'Assessment',
-      appliedDate: '2026-10-15',
-      jobUrl: '',
-      jobDescription: '',
-      notes: '',
-      statusHistory: [
-        {
-          status: 'Assessment',
-          changedAt: '2026-10-12T10:00:00'
-        }
-      ],
-      interviewDate: '',
-      interviewNotes: ''
-    },
-    {
-      id: 4,
-      company: 'KONE',
-      position: 'Full Stack Developer',
-      location: 'Helsinki',
-      status: 'Rejected',
-      appliedDate: '2026-10-10',
-      jobUrl: '',
-      jobDescription: '',
-      notes: '',
-      statusHistory: [
-        {
-          status: 'Rejected',
-          changedAt: '2026-10-12T10:00:00'
-        }
-      ],
-      interviewDate: '',
-      interviewNotes: ''
+  private readonly applicationApi = inject(ApplicationApi);
+
+  private applications: JobApplication[] = [];
+  readonly applicationsSignal = signal<JobApplication[]>([]);
+
+  private readonly applicationsSubject =
+    new BehaviorSubject<JobApplication[]>([]);
+
+  readonly applications$ =
+    this.applicationsSubject.asObservable();
+
+  private publishApplications(): void {
+    const updatedApplications = [...this.applications];
+    
+    this.applicationsSignal.set(updatedApplications);
+    this.applicationsSubject.next(updatedApplications);
     }
-];
 
-constructor() {
-  this.loadApplications();
-}
+  getApplications(): JobApplication[] {
+    return this.applications;
+  }
 
-getApplications(): JobApplication[] {
-  return this.applications;
-}
-getApplicationById(id: number): JobApplication | undefined {
-  return this.applications.find(
-    application => application.id === id
-  );
-}
+  getApplicationById(
+    id: number
+  ): JobApplication | undefined {
+    return this.applications.find(
+      application => application.id === id
+    );
+  }
 
-addApplication(application: JobApplication): void {
+  private loadHistory(
+    application: ApiJobApplication
+  ): Observable<JobApplication> {
+    return this.applicationApi
+      .getApplicationHistory(application.id)
+      .pipe(
+        map(history =>
+          toJobApplication(application, history)
+        )
+      );
+  }
 
-  application.statusHistory = [
-    {
-      status: application.status,
-      changedAt: new Date().toISOString()
-    }
-  ];
+  loadFromBackend(): void {
+    this.refreshApplications().subscribe({
+      error: error => {
+        console.error(
+          'Failed to load applications:',
+          error
+        );
+      }
+    });
+  }
 
-  this.applications.push(application);
-
-  this.saveApplications();
-}
-
-updateApplication(updatedApplication: JobApplication): void {
-  this.applications = this.applications.map(
-    application => {
-      if (application.id === updatedApplication.id) {
-
-        let statusHistory = [
-          ...(application.statusHistory ?? [])
-        ];
-
-        // Case 1: the application status changed
-        if (application.status !== updatedApplication.status) {
-
-          statusHistory.push({
-            status: updatedApplication.status,
-            changedAt: new Date().toISOString(),
-            interviewDate:
-              updatedApplication.status === 'Interview'
-                ? updatedApplication.interviewDate
-                : undefined
-          });
-
+  refreshApplications(): Observable<JobApplication[]> {
+    return this.applicationApi.getApplications().pipe(
+      switchMap(applications => {
+        if (applications.length === 0) {
+          return of([] as JobApplication[]);
         }
 
-        // Case 2: application is still in Interview,
-        // but its interview date may have been changed
-        else if (updatedApplication.status === 'Interview') {
+        return forkJoin(
+          applications.map(application =>
+            this.loadHistory(application)
+          )
+        );
+      }),
+      tap(applications => {
+        this.applications.splice(
+          0,
+          this.applications.length,
+          ...applications
+        );
 
-          statusHistory = statusHistory.map(history =>
-            history.status === 'Interview'
-              ? {
-                  ...history,
-                  interviewDate: updatedApplication.interviewDate
-                }
-              : history
+        this.publishApplications();
+      })
+    );
+  }
+
+  addApplication(
+    application: JobApplication
+  ): Observable<JobApplication> {
+    return this.applicationApi
+      .createApplication(toApiRequest(application))
+      .pipe(
+        switchMap(saved =>
+          this.loadHistory(saved)
+        ),
+        tap(saved => {
+          this.applications.push(saved);
+          this.publishApplications();
+        }),
+        catchError(error => {
+          console.error(
+            'Failed to create application:',
+            error
+          );
+          return throwError(() => error);
+        })
+      );
+  }
+
+  updateApplication(
+    application: JobApplication
+  ): Observable<JobApplication> {
+    return this.applicationApi
+      .updateApplication(
+        application.id,
+        toApiRequest(application)
+      )
+      .pipe(
+        switchMap(saved =>
+          this.loadHistory(saved)
+        ),
+        tap(saved => {
+          const index = this.applications.findIndex(
+            item => item.id === saved.id
           );
 
+          if (index !== -1) {
+            this.applications.splice(index, 1, saved);
+          } else {
+            this.applications.push(saved);
+          }
+
+          this.publishApplications();
+        }),
+        catchError(error => {
+          console.error(
+            'Failed to update application:',
+            error
+          );
+          return throwError(() => error);
+        })
+      );
+  }
+
+  deleteApplication(
+    id: number
+  ): Observable<void> {
+    return this.applicationApi.deleteApplication(id).pipe(
+      tap(() => {
+        const index = this.applications.findIndex(
+          application => application.id === id
+        );
+
+        if (index !== -1) {
+          this.applications.splice(index, 1);
         }
 
-        updatedApplication.statusHistory = statusHistory;
-
-        return updatedApplication;
-      }
-
-      return application;
-    }
-  );
-
-  this.saveApplications();
-}
-
-deleteApplication(id: number): void {
-  this.applications = this.applications.filter(
-    application => application.id !== id
-  );
-  this.saveApplications();
-}
-
-private saveApplications(): void {
-  localStorage.setItem(
-    this.storageKey,
-    JSON.stringify(this.applications)
-  );
-}
-
-private loadApplications(): void {
-  const savedApplications = localStorage.getItem(this.storageKey);
-
-  if (savedApplications) {
-    try {
-      this.applications = JSON.parse(savedApplications);
-    } catch (error) {
-      console.error('Failed to load applications:', error);
-    }
-  } else {
-    this.saveApplications();
+        this.publishApplications();
+      }),
+      catchError(error => {
+        console.error(
+          'Failed to delete application:',
+          error
+        );
+        return throwError(() => error);
+      })
+    );
   }
 }
-}
-

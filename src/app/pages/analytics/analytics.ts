@@ -1,10 +1,20 @@
-import { Component } from '@angular/core';
+
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef
+} from '@angular/core';
+
+import { Subscription } from 'rxjs';
 
 import { JobApplication } from '../../models/job-application';
+
 import {
   ApplicationStatus,
   applicationStatuses
 } from '../../models/application-status';
+
 import { Application } from '../../services/application';
 
 @Component({
@@ -13,13 +23,33 @@ import { Application } from '../../services/application';
   templateUrl: './analytics.html',
   styleUrl: './analytics.scss',
 })
-export class Analytics {
+export class Analytics implements OnInit, OnDestroy {
 
-  applications: JobApplication[];
+  applications: JobApplication[] = [];
 
-  constructor(private applicationService: Application) {
-    this.applications =
-      this.applicationService.getApplications();
+  private applicationsSubscription?: Subscription;
+
+  constructor(
+    private applicationService: Application,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  // Subscribe to PostgreSQL application updates
+  ngOnInit(): void {
+    this.applicationsSubscription =
+      this.applicationService.applications$.subscribe(
+        applications => {
+          this.applications = applications;
+
+          // Refresh the UI when data arrives asynchronously
+          this.cdr.markForCheck();
+        }
+      );
+  }
+
+  // Prevent memory leaks when leaving the page
+  ngOnDestroy(): void {
+    this.applicationsSubscription?.unsubscribe();
   }
 
   // -----------------------------
@@ -35,7 +65,7 @@ export class Analytics {
     if (this.totalApplications === 0) {
       return 0;
     }
-  
+
     const respondedApplications =
       this.applications.filter(
         application =>
@@ -47,7 +77,7 @@ export class Analytics {
               history.status === 'Rejected'
           )
       ).length;
-  
+
     return Math.round(
       (respondedApplications /
         this.totalApplications) * 100
@@ -166,8 +196,7 @@ export class Analytics {
               ? 0
               : Math.round(
                   (count /
-                    this.totalApplications) *
-                    100
+                    this.totalApplications) * 100
                 );
 
         } else {
@@ -180,8 +209,7 @@ export class Analytics {
               ? 0
               : Math.round(
                   (count /
-                    previousCount) *
-                    100
+                    previousCount) * 100
                 );
         }
 
@@ -277,8 +305,7 @@ export class Analytics {
         maxCount === 0
           ? 0
           : Math.round(
-              (item.count / maxCount) *
-                100
+              (item.count / maxCount) * 100
             )
     }));
   }

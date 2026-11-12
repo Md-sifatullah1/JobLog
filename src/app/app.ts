@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Sidebar } from './shared/sidebar/sidebar';
+import { Application } from './services/application';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +10,11 @@ import { Sidebar } from './shared/sidebar/sidebar';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {}
+export class App implements OnInit {
+
+  private readonly applicationService = inject(Application);
+
+  ngOnInit(): void {
+    this.applicationService.loadFromBackend();
+  }
+}
