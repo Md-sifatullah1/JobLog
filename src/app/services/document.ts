@@ -1,130 +1,86 @@
-import { Injectable } from '@angular/core';
 
-import { JobDocument } from '../models/job-document';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { JobDocument, DocumentType } from '../models/job-document';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Document {
 
-  private storageKey = 'joblog-documents';
+  private readonly http = inject(HttpClient);
+
+  private readonly apiUrl =
+    'http://127.0.0.1:8080/api/documents';
 
   readonly documentLimit = 10;
 
-  private documents: JobDocument[] = [
-    {
-      id: 1,
-      name: 'Software Developer CV',
-      type: 'Resume',
-      fileName: 'software-developer-cv.pdf',
-      fileSize: 1240000,
-      fileType: 'application/pdf',
-      dateAdded: '2026-10-25',
-      notes: 'Main CV for software development positions'
-    },
-    {
-      id: 2,
-      name: 'Degree Certificate',
-      type: 'Certificate',
-      fileName: 'degree-certificate.pdf',
-      fileSize: 850000,
-      fileType: 'application/pdf',
-      dateAdded: '2026-10-27',
-      notes: 'Bachelor degree certificate'
+  getDocuments(): Observable<JobDocument[]> {
+    return this.http.get<JobDocument[]>(this.apiUrl);
+  }
+
+  getDocumentById(id: number): Observable<JobDocument> {
+    return this.http.get<JobDocument>(
+      `${this.apiUrl}/${id}`
+    );
+  }
+
+  addDocument(
+    name: string,
+    type: DocumentType,
+    notes: string,
+    file: File
+  ): Observable<JobDocument> {
+
+    const formData = new FormData();
+
+    formData.append('name', name);
+    formData.append('type', type);
+    formData.append('notes', notes);
+    formData.append('file', file, file.name);
+
+    return this.http.post<JobDocument>(
+      this.apiUrl,
+      formData
+    );
+  }
+
+  updateDocument(
+    id: number,
+    name: string,
+    type: DocumentType,
+    notes: string,
+    file?: File
+  ): Observable<JobDocument> {
+
+    const formData = new FormData();
+
+    formData.append('name', name);
+    formData.append('type', type);
+    formData.append('notes', notes);
+
+    if (file) {
+      formData.append('file', file, file.name);
     }
-  ];
 
-  constructor() {
-    this.loadDocuments();
-  }
-
-  getDocuments(): JobDocument[] {
-    return this.documents;
-  }
-
-  getDocumentById(id: number): JobDocument | undefined {
-    return this.documents.find(
-      document => document.id === id
+    return this.http.put<JobDocument>(
+      `${this.apiUrl}/${id}`,
+      formData
     );
   }
 
-  addDocument(document: JobDocument): boolean {
-
-    if (this.hasReachedLimit()) {
-      return false;
-    }
-
-    this.documents.push(document);
-    this.saveDocuments();
-
-    return true;
-  }
-
-  updateDocument(updatedDocument: JobDocument): void {
-
-    this.documents = this.documents.map(
-      document =>
-        document.id === updatedDocument.id
-          ? updatedDocument
-          : document
-    );
-
-    this.saveDocuments();
-  }
-
-  deleteDocument(id: number): void {
-
-    this.documents = this.documents.filter(
-      document => document.id !== id
-    );
-
-    this.saveDocuments();
-  }
-
-  hasReachedLimit(): boolean {
-    return this.documents.length >= this.documentLimit;
-  }
-
-  getRemainingDocumentSlots(): number {
-    return Math.max(
-      this.documentLimit - this.documents.length,
-      0
+  deleteDocument(id: number): Observable<void> {
+    return this.http.delete<void>(
+      `${this.apiUrl}/${id}`
     );
   }
 
-  private saveDocuments(): void {
-
-    localStorage.setItem(
-      this.storageKey,
-      JSON.stringify(this.documents)
+  downloadDocument(id: number): Observable<Blob> {
+    return this.http.get(
+      `${this.apiUrl}/${id}/download`,
+      { responseType: 'blob' }
     );
-  }
-
-  private loadDocuments(): void {
-
-    const savedDocuments =
-      localStorage.getItem(this.storageKey);
-
-    if (savedDocuments) {
-
-      try {
-
-        this.documents =
-          JSON.parse(savedDocuments);
-
-      } catch (error) {
-
-        console.error(
-          'Failed to load documents:',
-          error
-        );
-
-      }
-
-    } else {
-
-      this.saveDocuments();
-
-    }
   }
 }
