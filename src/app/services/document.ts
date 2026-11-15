@@ -13,7 +13,7 @@ export class Document {
   private readonly http = inject(HttpClient);
 
   private readonly apiUrl =
-    'http://127.0.0.1:8080/api/documents';
+    '/api/documents';
 
   readonly documentLimit = 10;
 

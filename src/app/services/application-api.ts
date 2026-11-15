@@ -41,7 +41,7 @@ export class ApplicationApi {
   private readonly http = inject(HttpClient);
 
   private readonly apiUrl =
-    'http://127.0.0.1:8080/api/applications';
+    '/api/applications';
 
   // GET /api/applications
   getApplications(): Observable<ApiJobApplication[]> {
