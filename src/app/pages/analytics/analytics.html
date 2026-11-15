@@ -1,291 +1,301 @@
+
 <section class="analytics">
 
-    <div class="analytics-header">
-      <h1>Analytics</h1>
-      <p>
-        Understand how your job search is performing.
-      </p>
-    </div>
-  
-  
-    <!-- Key Metrics -->
-  
-    <div class="analytics-stats">
-  
-      <div class="analytics-card">
-        <p>Total Applications</p>
-        <h2>{{ totalApplications }}</h2>
+  <!-- Page Header -->
+  <header class="analytics-header">
+    <p class="page-eyebrow">
+      YOUR WORKSPACE / INSIGHTS
+    </p>
+
+    <h1>Analytics</h1>
+
+    <p class="page-description">
+      A closer look at your job search progress and performance.
+    </p>
+  </header>
+
+  <!-- Key Metrics -->
+  <div class="analytics-stats">
+
+    <article class="analytics-card featured-card">
+      <div class="card-top">
+        <span class="card-index">01 / OVERVIEW</span>
+        <span class="card-symbol" aria-hidden="true">↗</span>
       </div>
-  
-      <div class="analytics-card">
-        <p>Response Rate</p>
-        <h2>{{ responseRate }}%</h2>
-      </div>
-  
-      <div class="analytics-card">
-        <p>Interview Rate</p>
-        <h2>{{ interviewRate }}%</h2>
-      </div>
-  
-      <div class="analytics-card">
-        <p>Offer Rate</p>
-        <h2>{{ offerRate }}%</h2>
-      </div>
-  
-      <div class="analytics-card">
-        <p>Rejection Rate</p>
-        <h2>{{ rejectionRate }}%</h2>
-      </div>
-  
-    </div>
-  
-  
-    <!-- Application Pipeline -->
-  
-    <section class="pipeline-section">
-  
-      <div class="section-header">
+
+      <p>Total Applications</p>
+      <h2>{{ totalApplications }}</h2>
+
+      <span class="card-caption">
+        Applications tracked
+      </span>
+    </article>
+
+    <article class="analytics-card">
+      <span class="card-index">02 / RESPONSE</span>
+      <p>Response Rate</p>
+      <h2>{{ responseRate }}%</h2>
+      <span class="card-caption">
+        Applications with recorded responses
+      </span>
+    </article>
+
+    <article class="analytics-card">
+      <span class="card-index">03 / INTERVIEWS</span>
+      <p>Interview Rate</p>
+      <h2>{{ interviewRate }}%</h2>
+      <span class="card-caption">
+        Reached interview stage
+      </span>
+    </article>
+
+    <article class="analytics-card">
+      <span class="card-index">04 / OFFERS</span>
+      <p>Offer Rate</p>
+      <h2>{{ offerRate }}%</h2>
+      <span class="card-caption">
+        Reached offer stage
+      </span>
+    </article>
+
+    <article class="analytics-card">
+      <span class="card-index">05 / OUTCOMES</span>
+      <p>Rejection Rate</p>
+      <h2>{{ rejectionRate }}%</h2>
+      <span class="card-caption">
+        Recorded rejections
+      </span>
+    </article>
+
+  </div>
+
+  <!-- Application Pipeline -->
+  <section class="analytics-section pipeline-section">
+
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">
+          01 / CURRENT STATUS
+        </span>
+
         <h2>Application Pipeline</h2>
-  
+
         <p>
-          Current distribution of your applications.
+          Where your applications stand right now.
         </p>
       </div>
-  
-      <div class="pipeline-list">
-  
-        @for (
-          item of statusBreakdown;
-          track item.status
-        ) {
-  
-          <div class="pipeline-item">
-  
-            <div class="pipeline-header">
-  
-              <span
-                class="status-badge"
-                [class.status-saved]="
-                  item.status === 'Saved'
-                "
-                [class.status-applied]="
-                  item.status === 'Applied'
-                "
-                [class.status-assessment]="
-                  item.status === 'Assessment'
-                "
-                [class.status-interview]="
-                  item.status === 'Interview'
-                "
-                [class.status-offer]="
-                  item.status === 'Offer'
-                "
-                [class.status-rejected]="
-                  item.status === 'Rejected'
-                "
-              >
-                {{ item.status }}
-              </span>
-  
-              <span class="pipeline-count">
-                {{ item.count }}
-                ({{ item.percentage }}%)
-              </span>
-  
-            </div>
-  
-  
-            <div class="pipeline-bar">
-  
-              <div
-                class="pipeline-bar-fill"
-                [style.width.%]="item.percentage"
-                [class.pipeline-saved]="
-                  item.status === 'Saved'
-                "
-                [class.pipeline-applied]="
-                  item.status === 'Applied'
-                "
-                [class.pipeline-assessment]="
-                  item.status === 'Assessment'
-                "
-                [class.pipeline-interview]="
-                  item.status === 'Interview'
-                "
-                [class.pipeline-offer]="
-                  item.status === 'Offer'
-                "
-                [class.pipeline-rejected]="
-                  item.status === 'Rejected'
-                "
-              ></div>
-  
-            </div>
-  
+
+      <span class="section-total">
+        {{ totalApplications }} total
+      </span>
+    </div>
+
+    <div class="pipeline-list">
+
+      @for (item of statusBreakdown; track item.status) {
+
+        <div class="pipeline-item">
+
+          <div class="pipeline-header">
+
+            <span
+              class="status-badge"
+              [class.status-saved]="item.status === 'Saved'"
+              [class.status-applied]="item.status === 'Applied'"
+              [class.status-assessment]="item.status === 'Assessment'"
+              [class.status-interview]="item.status === 'Interview'"
+              [class.status-offer]="item.status === 'Offer'"
+              [class.status-rejected]="item.status === 'Rejected'"
+            >
+              {{ item.status }}
+            </span>
+
+            <span class="pipeline-count">
+              <strong>{{ item.count }}</strong>
+              <span> / {{ item.percentage }}%</span>
+            </span>
+
           </div>
-  
-        }
-  
-      </div>
-  
-    </section>
-  
-  
-    <!-- Conversion Funnel -->
-  
-    <section class="funnel-section">
-  
-      <div class="section-header">
-  
+
+          <div
+            class="pipeline-bar"
+            role="progressbar"
+            [attr.aria-label]="item.status + ' applications'"
+            [attr.aria-valuenow]="item.percentage"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            <div
+              class="pipeline-bar-fill"
+              [style.width.%]="item.percentage"
+              [class.pipeline-saved]="item.status === 'Saved'"
+              [class.pipeline-applied]="item.status === 'Applied'"
+              [class.pipeline-assessment]="item.status === 'Assessment'"
+              [class.pipeline-interview]="item.status === 'Interview'"
+              [class.pipeline-offer]="item.status === 'Offer'"
+              [class.pipeline-rejected]="item.status === 'Rejected'"
+            ></div>
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+  <!-- Conversion Funnel -->
+  <section class="analytics-section funnel-section">
+
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">
+          02 / HISTORICAL PROGRESS
+        </span>
+
         <h2>Conversion Funnel</h2>
-  
+
         <p>
-          How applications progress through
+          How applications have progressed through
           the hiring process.
         </p>
-  
       </div>
-  
-  
-      <div class="funnel-list">
-  
-        @for (
-          stage of conversionFunnel;
-          track stage.status
-        ) {
-  
+    </div>
+
+    <div class="funnel-list">
+
+      @for (stage of conversionFunnel; track stage.status) {
+
+        <div class="funnel-entry">
+
           <div class="funnel-item">
-  
+
             <div class="funnel-stage">
-  
+
               <span
                 class="status-badge"
-                [class.status-applied]="
-                  stage.status === 'Applied'
-                "
-                [class.status-assessment]="
-                  stage.status === 'Assessment'
-                "
-                [class.status-interview]="
-                  stage.status === 'Interview'
-                "
-                [class.status-offer]="
-                  stage.status === 'Offer'
-                "
+                [class.status-applied]="stage.status === 'Applied'"
+                [class.status-assessment]="stage.status === 'Assessment'"
+                [class.status-interview]="stage.status === 'Interview'"
+                [class.status-offer]="stage.status === 'Offer'"
               >
                 {{ stage.status }}
               </span>
-  
+
               <span class="funnel-count">
                 {{ stage.count }}
+                {{ stage.count === 1 ? 'application' : 'applications' }}
               </span>
-  
+
             </div>
-  
-  
+
             <span class="funnel-percentage">
-  
-              {{ stage.conversionRate }}%
-  
-              @if (
-                stage.status === 'Applied'
-              ) {
-  
+              <strong>{{ stage.conversionRate }}%</strong>
+
+              @if (stage.status === 'Applied') {
                 of applications
-  
               } @else {
-  
                 from previous stage
-  
               }
-  
             </span>
-  
+
           </div>
-  
-  
-          <div class="funnel-bar">
-  
+
+          <div
+            class="funnel-bar"
+            role="progressbar"
+            [attr.aria-label]="stage.status + ' conversion rate'"
+            [attr.aria-valuenow]="stage.conversionRate"
+            aria-valuemin="0"
+            [attr.aria-valuemax]="
+              stage.conversionRate > 100
+                ? stage.conversionRate
+                : 100
+            "
+          >
             <div
               class="funnel-bar-fill"
               [style.width.%]="
-                stage.conversionRate
+                stage.conversionRate > 100
+                  ? 100
+                  : stage.conversionRate
               "
-              [class.funnel-applied]="
-                stage.status === 'Applied'
-              "
-              [class.funnel-assessment]="
-                stage.status === 'Assessment'
-              "
-              [class.funnel-interview]="
-                stage.status === 'Interview'
-              "
-              [class.funnel-offer]="
-                stage.status === 'Offer'
-              "
+              [class.funnel-applied]="stage.status === 'Applied'"
+              [class.funnel-assessment]="stage.status === 'Assessment'"
+              [class.funnel-interview]="stage.status === 'Interview'"
+              [class.funnel-offer]="stage.status === 'Offer'"
             ></div>
-  
           </div>
-  
-        }
-  
-      </div>
-  
-    </section>
-  
-  
-    <!-- Application Activity -->
-  
-    <section class="activity-section">
-  
-      <div class="section-header">
-  
-        <h2>Application Activity</h2>
-  
-        <p>
-          Number of applications submitted
-          during the last six months.
-        </p>
-  
-      </div>
-  
-  
-      <div class="activity-list">
-  
-        @for (
-          item of monthlyApplications;
-          track item.month
-        ) {
-  
-          <div class="activity-item">
-  
-            <span class="activity-month">
-              {{ item.month }}
-            </span>
-  
-  
-            <div class="activity-bar-container">
-  
-              <div
-                class="activity-bar"
-                [style.width.%]="
-                  item.percentage
-                "
-              ></div>
-  
-            </div>
-  
-  
-            <span class="activity-count">
-              {{ item.count }}
-            </span>
-  
-          </div>
-  
-        }
-  
-      </div>
-  
-    </section>
-  
+
+        </div>
+
+      }
+
+    </div>
+
+    <p class="chart-note">
+      Based on recorded application status history.
+      Each stage is compared with the previous stage.
+    </p>
+
   </section>
+
+  <!-- Application Activity -->
+  <section class="analytics-section activity-section">
+
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">
+          03 / APPLICATION ACTIVITY
+        </span>
+
+        <h2>Application Activity</h2>
+
+        <p>
+          Applications submitted over the last six months.
+        </p>
+      </div>
+    </div>
+
+    <div class="activity-list">
+
+      @for (item of monthlyApplications; track item.month) {
+
+        <div class="activity-item">
+
+          <span class="activity-month">
+            {{ item.month }}
+          </span>
+
+          <div
+            class="activity-bar-container"
+            role="img"
+            [attr.aria-label]="
+              item.month + ': ' + item.count + ' applications'
+            "
+          >
+            <div
+              class="activity-bar"
+              [style.width.%]="item.percentage"
+            ></div>
+          </div>
+
+          <span class="activity-count">
+            {{ item.count }}
+          </span>
+
+        </div>
+
+      }
+
+    </div>
+
+    <p class="chart-note">
+      Bar lengths are relative to the busiest month
+      in this six-month period.
+    </p>
+
+  </section>
+
+</section>

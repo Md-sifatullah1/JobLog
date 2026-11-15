@@ -1,287 +1,458 @@
-.analytics {
+
+/* ==========================================
+   JOBLOG: ESPRESSO & BRASS
+   Analytics Page
+   ========================================== */
+
+   .analytics {
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    padding-bottom: 48px;
   }
+  
+  /* Page Header */
   
   .analytics-header {
     margin-bottom: 32px;
   }
   
-  .analytics-header h1 {
-    margin: 0;
-    font-size: 28px;
-    color: #111827;
+  .page-eyebrow,
+  .section-eyebrow {
+    display: block;
+    margin: 0 0 10px;
+    color: var(--color-brass-hover);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
   }
   
-  .analytics-header p {
-    margin: 8px 0 0;
-    color: #6b7280;
+  .analytics-header h1 {
+    margin: 0;
+    color: var(--color-espresso);
+    font-family: var(--font-heading);
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 600;
+    letter-spacing: -1px;
   }
+  
+  .page-description {
+    margin: 10px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  /* Metric Cards */
   
   .analytics-stats {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 32px;
   }
   
   .analytics-card {
-    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 190px;
+    padding: 22px;
   
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+  
+  .card-index {
+    display: block;
+    margin-bottom: 24px;
+    color: var(--color-brass-hover);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
   }
   
   .analytics-card p {
     margin: 0;
-    font-size: 14px;
-    color: #6b7280;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+    font-weight: 500;
   }
   
   .analytics-card h2 {
-    margin: 12px 0 0;
-    font-size: 30px;
-    color: #111827;
+    margin: 10px 0 8px;
+    color: var(--color-espresso);
+    font-family: var(--font-heading);
+    font-size: clamp(30px, 3vw, 42px);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -1px;
   }
-
-  .pipeline-section,
-.funnel-section,
-.activity-section {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-}
   
-  .pipeline-section {
-    margin-top: 32px;
-    padding: 24px;
+  .card-caption {
+    margin-top: auto;
+    color: var(--color-text-muted);
+    font-size: 11px;
+    line-height: 1.5;
+  }
   
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
+  .featured-card {
+    background: var(--color-espresso);
+    border-color: var(--color-espresso);
+  }
+  
+  .featured-card .card-index {
+    color: #d6b783;
+  }
+  
+  .featured-card p,
+  .featured-card .card-caption {
+    color: #e5d7c7;
+  }
+  
+  .featured-card h2 {
+    color: #fff8ee;
+  }
+  
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .card-symbol {
+    color: #d6b783;
+    font-size: 22px;
+    line-height: 1;
+  }
+  
+  /* Analytics Sections */
+  
+  .analytics-section {
+    padding: 30px;
+    margin-top: 24px;
+  
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
   }
   
   .section-header {
-    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+  
+    padding-bottom: 22px;
+    margin-bottom: 26px;
+  
+    border-bottom: 1px solid var(--color-border);
   }
   
   .section-header h2 {
     margin: 0;
-    font-size: 20px;
-    color: #111827;
+    color: var(--color-espresso);
+    font-family: var(--font-heading);
+    font-size: 25px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
   }
   
   .section-header p {
-    margin: 6px 0 0;
-    color: #6b7280;
+    margin: 8px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
   }
+  
+  .section-total {
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  
+  /* Pipeline */
   
   .pipeline-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 22px;
   }
   
   .pipeline-item {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
   }
   
-  .pipeline-item:not(:last-child) {
-    padding-bottom: 16px;
-    border-bottom: 1px solid #e5e7eb;
-  }
   .pipeline-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
   }
   
   .pipeline-count {
-    font-size: 14px;
-    font-weight: 600;
-    color: #374151;
+    color: var(--color-text-secondary);
+    font-size: 13px;
   }
-  .pipeline-bar {
+  
+  .pipeline-count strong {
+    color: var(--color-espresso);
+    font-size: 15px;
+  }
+  
+  .pipeline-bar,
+  .funnel-bar,
+  .activity-bar-container {
     width: 100%;
-    height: 8px;
-  
-    background-color: #f3f4f6;
-    border-radius: 999px;
+    height: 10px;
     overflow: hidden;
+  
+    background: #eee6dc;
+    border-radius: 999px;
   }
   
-  .pipeline-bar-fill {
+  .pipeline-bar-fill,
+  .funnel-bar-fill,
+  .activity-bar {
     height: 100%;
-  
-    background-color: #5c6b08;
-    border-radius: 999px;
-  
+    border-radius: inherit;
     transition: width 0.3s ease;
   }
+  
+  /* Status Colors */
+  
   .pipeline-saved {
-    background-color: #9ca3af;
+    background: #9c8f81;
   }
   
-  .pipeline-applied {
-    background-color: #3b82f6;
+  .pipeline-applied,
+  .funnel-applied {
+    background: #b68a45;
   }
   
-  .pipeline-assessment {
-    background-color: #f59e0b;
+  .pipeline-assessment,
+  .funnel-assessment {
+    background: #d0a25e;
   }
   
-  .pipeline-interview {
-    background-color: #8b5cf6;
+  .pipeline-interview,
+  .funnel-interview {
+    background: #65846a;
   }
   
-  .pipeline-offer {
-    background-color: #22c55e;
+  .pipeline-offer,
+  .funnel-offer {
+    background: #42684d;
   }
   
   .pipeline-rejected {
-    background-color: #ef4444;
+    background: #a4433d;
   }
   
-  @media (max-width: 1100px) {
-
-    .analytics-stats {
-      grid-template-columns: repeat(3, 1fr);
-    }
+  /* Status Badges */
   
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
   }
   
-  @media (max-width: 900px) {
-  
-    .analytics-stats {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  
+  .status-saved {
+    background: #e9e4dd;
+    color: #61564d;
   }
   
-  @media (max-width: 600px) {
-  
-    .analytics-stats {
-      grid-template-columns: 1fr;
-    }
-  
+  .status-applied {
+    background: #e9dcc9;
+    color: #76512b;
   }
-
-  .funnel-section {
-    margin-top: 32px;
-    padding: 24px;
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
+  
+  .status-assessment {
+    background: #f3e4c5;
+    color: #805b20;
   }
+  
+  .status-interview {
+    background: #e0e7dc;
+    color: #405d47;
+  }
+  
+  .status-offer {
+    background: #d9e9d7;
+    color: #315e3a;
+  }
+  
+  .status-rejected {
+    background: #f1deda;
+    color: #923d38;
+  }
+  
+  /* Conversion Funnel */
   
   .funnel-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
+  }
+  
+  .funnel-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
   }
   
   .funnel-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .funnel-item:last-of-type {
-    border-bottom: none;
+    gap: 18px;
   }
   
   .funnel-stage {
     display: flex;
     align-items: center;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 14px;
   }
   
   .funnel-count {
-    font-weight: 600;
-    color: #374151;
+    color: var(--color-text-secondary);
+    font-size: 13px;
   }
   
   .funnel-percentage {
-    font-size: 14px;
-    font-weight: 600;
-    color: #374151;
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    text-align: right;
   }
+  
+  .funnel-percentage strong {
+    color: var(--color-espresso);
+    font-size: 15px;
+  }
+  
   .funnel-bar {
-    width: 100%;
-    height: 10px;
-    margin-top: -8px;
-    margin-bottom: 16px;
-    background-color: #f3f4f6;
-    border-radius: 999px;
-    overflow: hidden;
+    height: 12px;
   }
   
-  .funnel-bar-fill {
-    height: 100%;
-    border-radius: 999px;
-    transition: width 0.3s ease;
-  }
-  
-  .funnel-applied {
-    background-color: #3b82f6;
-  }
-  
-  .funnel-assessment {
-    background-color: #f59e0b;
-  }
-  
-  .funnel-interview {
-    background-color: #8b5cf6;
-  }
-  
-  .funnel-offer {
-    background-color: #22c55e;
-  }
-
-  .activity-section {
-    margin-top: 32px;
-    padding: 24px;
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-  }
+  /* Application Activity */
   
   .activity-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
   }
   
   .activity-item {
     display: grid;
-    grid-template-columns: 100px 1fr 40px;
+    grid-template-columns: 100px minmax(0, 1fr) 42px;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
   }
   
   .activity-month {
-    font-size: 14px;
-    color: #374151;
-  }
-  
-  .activity-bar-container {
-    width: 100%;
-    height: 10px;
-    background-color: #f3f4f6;
-    border-radius: 999px;
-    overflow: hidden;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+    font-weight: 500;
   }
   
   .activity-bar {
-    height: 100%;
-    background-color: #4f46e5;
-    border-radius: 999px;
-    transition: width 0.3s ease;
+    background: var(--color-brass);
   }
   
   .activity-count {
+    color: var(--color-espresso);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     text-align: right;
-    color: #111827;
+    font-variant-numeric: tabular-nums;
   }
+  
+  /* Chart Notes */
+  
+  .chart-note {
+    margin: 24px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--color-border);
+  
+    color: var(--color-text-muted);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  
+  /* Responsive */
+  
+  @media (max-width: 1200px) {
+    .analytics-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .analytics-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  
+    .analytics-section {
+      padding: 24px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .analytics-stats {
+      grid-template-columns: 1fr;
+    }
+  
+    .analytics-card {
+      min-height: 155px;
+    }
+  
+    .card-index {
+      margin-bottom: 14px;
+    }
+  
+    .analytics-section {
+      padding: 20px 16px;
+    }
+  
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .funnel-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  
+    .funnel-percentage {
+      text-align: left;
+    }
+  
+    .activity-item {
+      grid-template-columns: 75px minmax(0, 1fr) 28px;
+      gap: 10px;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .pipeline-bar-fill,
+    .funnel-bar-fill,
+    .activity-bar {
+      transition: none;
+    }
+  }
+  

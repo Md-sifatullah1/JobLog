@@ -1,57 +1,77 @@
-<aside class="sidebar">
 
+<aside class="sidebar">
+  <div class="sidebar-top">
     <div class="logo">
-      <span class="logo-icon">J</span>
-      <span class="logo-text">JobLog</span>
+      <span class="logo-icon" aria-hidden="true">J</span>
+
+      <div class="logo-details">
+        <span class="logo-text">JobLog</span>
+        <span class="logo-subtitle">YOUR CAREER WORKSPACE</span>
+      </div>
     </div>
-  
-    <nav class="navigation">
-  
+
+    <div class="sidebar-divider"></div>
+
+    <p class="nav-label">WORKSPACE</p>
+
+    <nav class="navigation" aria-label="Main navigation">
       <a
         routerLink="/dashboard"
         routerLinkActive="active"
+        ariaCurrentWhenActive="page"
         class="nav-item"
       >
         <svg lucideLayoutDashboard [size]="20"></svg>
         <span>Dashboard</span>
       </a>
-  
+
       <a
         routerLink="/applications"
         routerLinkActive="active"
+        ariaCurrentWhenActive="page"
         class="nav-item"
       >
         <svg lucideBriefcaseBusiness [size]="20"></svg>
         <span>Applications</span>
       </a>
-  
+
       <a
         routerLink="/interviews"
         routerLinkActive="active"
+        ariaCurrentWhenActive="page"
         class="nav-item"
       >
         <svg lucideCalendarDays [size]="20"></svg>
         <span>Interviews</span>
       </a>
-  
+
       <a
         routerLink="/documents"
         routerLinkActive="active"
+        ariaCurrentWhenActive="page"
         class="nav-item"
       >
         <svg lucideFileText [size]="20"></svg>
         <span>Documents</span>
       </a>
-  
+
       <a
         routerLink="/analytics"
         routerLinkActive="active"
+        ariaCurrentWhenActive="page"
         class="nav-item"
       >
         <svg lucideChartNoAxesCombined [size]="20"></svg>
         <span>Analytics</span>
       </a>
-  
     </nav>
-  
-  </aside>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-divider"></div>
+    <div class="workspace-info">
+      <span class="workspace-indicator" aria-hidden="true"></span>
+      <span>Personal workspace</span>
+    </div>
+  </div>
+</aside>

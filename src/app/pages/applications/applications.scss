@@ -484,3 +484,238 @@ textarea {
     cursor: not-allowed;
   }
 }
+
+
+
+
+/* ==========================================
+   Espresso & Brass: Applications redesign
+   ========================================== */
+
+   .applications-page {
+    max-width: 1440px;
+  }
+  
+  .page-header {
+    gap: 24px;
+    margin-bottom: 36px;
+  
+    h1 {
+      color: var(--color-espresso);
+      font-family: var(--font-heading);
+      font-size: clamp(30px, 3vw, 42px);
+      letter-spacing: -1px;
+    }
+  
+    p {
+      color: var(--color-text-secondary);
+      font-size: 15px;
+    }
+  }
+  
+  .add-button,
+  .save-button {
+    background: var(--color-espresso);
+    color: #fff8ee;
+    border: 1px solid var(--color-espresso);
+    border-radius: var(--radius-md);
+    transition: background-color 0.2s ease;
+  
+    &:hover:not(:disabled) {
+      background: var(--color-espresso-light);
+    }
+  }
+  
+  .form-card,
+  .applications-list {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+  
+  .form-header h2,
+  .empty-state h3 {
+    color: var(--color-espresso);
+    font-family: var(--font-heading);
+  }
+  
+  .close-button {
+    color: var(--color-text-secondary);
+  
+    &:hover {
+      color: var(--color-espresso);
+    }
+  }
+  
+  .form-group label {
+    color: var(--color-text);
+  }
+  
+  .form-group input,
+  .form-group select,
+  textarea,
+  .status-filter,
+  .sort-filter,
+  .search-input {
+    background: #fffdf9;
+    color: var(--color-text);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+  
+    &:focus {
+      border-color: var(--color-brass-hover);
+      outline: 2px solid rgba(182, 138, 69, 0.22);
+      outline-offset: 1px;
+    }
+  }
+  
+  .cancel-button {
+    background: var(--color-surface);
+    color: var(--color-espresso);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+  
+    &:hover {
+      background: var(--color-surface-muted);
+    }
+  }
+  
+  .save-button:disabled {
+    background: #b8afa5;
+    border-color: #b8afa5;
+    color: #34231d;
+  }
+  
+  .list-header {
+    background: #f0e9df;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.8px;
+  }
+  
+  .application-row {
+    border-top: 1px solid #ece3d9;
+    color: var(--color-text);
+    transition: background-color 0.2s ease;
+  
+    &:hover {
+      background: #f8f3ed;
+    }
+  }
+  
+  .company-name {
+    color: var(--color-espresso);
+  }
+  
+  .application-link {
+    color: inherit;
+  
+    &:hover {
+      color: var(--color-brass-hover);
+    }
+  }
+  
+  .error-message {
+    color: var(--color-danger);
+  }
+  
+  .result-count,
+  .empty-state p {
+    color: var(--color-text-secondary);
+  }
+  
+  .clear-search-button {
+    color: var(--color-text-secondary);
+  
+    &:hover {
+      color: var(--color-espresso);
+    }
+  }
+  
+  /* Match the global status palette */
+  
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    border-radius: 999px;
+  }
+  
+  .status-saved {
+    background: #e9e4dd;
+    color: #61564d;
+  }
+  
+  .status-applied {
+    background: #e9dcc9;
+    color: #76512b;
+  }
+  
+  .status-assessment {
+    background: #f3e4c5;
+    color: #805b20;
+  }
+  
+  .status-interview {
+    background: #e0e7dc;
+    color: #405d47;
+  }
+  
+  .status-offer {
+    background: #d9e9d7;
+    color: #315e3a;
+  }
+  
+  .status-rejected {
+    background: #f1deda;
+    color: #923d38;
+  }
+  
+  /* Pagination */
+  
+  .pagination-button {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+  
+    &:hover:not(:disabled) {
+      background: var(--color-surface-muted);
+    }
+  
+    &.active {
+      background: var(--color-espresso);
+      color: #fff8ee;
+      border-color: var(--color-espresso);
+    }
+  }
+  
+  /* Responsive refinements */
+  
+  @media (max-width: 700px) {
+    .page-header {
+      align-items: stretch;
+    }
+  
+    .form-card {
+      padding: 20px;
+    }
+  
+    .form-actions {
+      flex-wrap: wrap;
+    }
+  
+    .pagination {
+      flex-wrap: wrap;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .add-button,
+    .save-button,
+    .application-row {
+      transition: none;
+    }
+  }
+  

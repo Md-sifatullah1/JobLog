@@ -1,117 +1,218 @@
-<div class="interviews-page">
 
-    <div class="page-header">
-  
-      <div>
-        <h1>Interviews</h1>
-        <p>Applications that have reached the interview stage.</p>
-      </div>
-  
+<section class="interviews-page">
+
+  <!-- Page Header -->
+  <header class="page-header">
+
+    <div>
+      <p class="page-eyebrow">
+        YOUR WORKSPACE / INTERVIEWS
+      </p>
+
+      <h1>Interviews</h1>
+
+      <p class="page-description">
+        Keep track of your interviews and upcoming conversations.
+      </p>
     </div>
-  
-  
-    @if (interviews.length > 0) {
-  
-      <div class="interview-list">
-  
-        @for (application of interviews; track application.id) {
-  
-          <div class="interview-card">
-  
-            <div class="interview-main">
-  
-              <h2>{{ application.company }}</h2>
-  
-              <p class="position">
-                {{ application.position }}
-              </p>
-  
-              <div class="interview-details">
-  
-                <span>
-                  📍 {{ application.location }}
-                </span>
-  
-                <span>
-                  Applied: {{ application.appliedDate }}
-                </span>
-  
+
+    <a
+      class="all-applications-link"
+      routerLink="/applications"
+    >
+      All Applications
+      <span aria-hidden="true">↗</span>
+    </a>
+
+  </header>
+
+  <!-- Interview Overview -->
+  <div class="interview-overview">
+
+    <div class="overview-content">
+      <span class="overview-label">
+        INTERVIEW STAGE
+      </span>
+
+      <div class="overview-number">
+        {{ interviews.length }}
+      </div>
+
+      <p>
+        {{
+          interviews.length === 1
+            ? 'Application currently in the interview stage'
+            : 'Applications currently in the interview stage'
+        }}
+      </p>
+    </div>
+
+    <div class="overview-decoration" aria-hidden="true">
+      <span>J</span>
+    </div>
+
+  </div>
+
+  <!-- Interview List -->
+  @if (interviews.length > 0) {
+
+    <div class="list-heading">
+      <div>
+        <p class="section-eyebrow">
+          YOUR OPPORTUNITIES
+        </p>
+
+        <h2>Interview Applications</h2>
+      </div>
+
+      <span class="interview-count">
+        {{ interviews.length }}
+        {{
+          interviews.length === 1
+            ? 'Interview'
+            : 'Interviews'
+        }}
+      </span>
+    </div>
+
+    <div class="interview-list">
+
+      @for (application of interviews; track application.id) {
+
+        <article class="interview-card">
+
+          <div class="interview-main">
+
+            <div class="company-heading">
+              <div class="company-avatar" aria-hidden="true">
+                {{ application.company.charAt(0).toUpperCase() }}
               </div>
 
-              @if (application.interviewDate) {
+              <div class="company-information">
+                <h3>{{ application.company }}</h3>
 
-                <div class="interview-schedule">
-              
-                  <span class="schedule-label">
-                    Interview
-                  </span>
-              
-                  <span class="schedule-date">
-                    {{ application.interviewDate | date:'MMM d, y, h:mm a' }}
-                  </span>
-              
-                </div>
-              
-              }
-              
-              @if (application.interviewNotes) {
-              
-                <div class="interview-notes">
-              
-                  <span class="notes-label">
-                    Notes
-                  </span>
-              
-                  <p>
-                    {{ application.interviewNotes }}
-                  </p>
-              
-                </div>
-              
-              }
-  
+                <p class="position">
+                  {{ application.position }}
+                </p>
+              </div>
             </div>
-  
-            <div class="interview-actions">
-  
-              <span class="status-badge status-interview">
-                Interview
+
+            <div class="interview-details">
+
+              <span class="detail-item">
+                <span class="detail-label">LOCATION</span>
+                <span class="detail-value">
+                  {{ application.location }}
+                </span>
               </span>
-  
-              <a
-                class="view-button"
-                [routerLink]="['/applications', application.id]"
-              >
-                View Application
-              </a>
-  
+
+              <span class="detail-item">
+                <span class="detail-label">APPLIED</span>
+                <span class="detail-value">
+                  {{ application.appliedDate }}
+                </span>
+              </span>
+
             </div>
-  
+
+            <!-- Interview Schedule -->
+            @if (application.interviewDate) {
+
+              <div class="interview-schedule">
+
+                <span class="schedule-icon" aria-hidden="true">
+                  ◷
+                </span>
+
+                <div class="schedule-content">
+                  <span class="schedule-label">
+                    INTERVIEW DATE & TIME
+                  </span>
+
+                  <span class="schedule-date">
+                    {{
+                      application.interviewDate
+                        | date:'MMM d, y, h:mm a'
+                    }}
+                  </span>
+                </div>
+
+              </div>
+
+            }
+
+            <!-- Interview Notes -->
+            @if (application.interviewNotes) {
+
+              <div class="interview-notes">
+
+                <span class="notes-label">
+                  INTERVIEW NOTES
+                </span>
+
+                <p>
+                  {{ application.interviewNotes }}
+                </p>
+
+              </div>
+
+            }
+
           </div>
-  
-        }
-  
+
+          <!-- Card Actions -->
+          <div class="interview-actions">
+
+            <span class="status-badge status-interview">
+              Interview
+            </span>
+
+            <a
+              class="view-button"
+              [routerLink]="['/applications', application.id]"
+            >
+              View Application
+              <span aria-hidden="true">↗</span>
+            </a>
+
+          </div>
+
+        </article>
+
+      }
+
+    </div>
+
+  } @else {
+
+    <!-- Empty State -->
+    <div class="empty-state">
+
+      <div class="empty-icon" aria-hidden="true">
+        ◷
       </div>
-  
-    } @else {
-  
-      <div class="empty-state">
-  
-        <h2>No interviews yet</h2>
-  
-        <p>
-          Applications will appear here when their status changes to Interview.
-        </p>
-  
-        <a
-          class="browse-button"
-          routerLink="/applications"
-        >
-          View Applications
-        </a>
-  
-      </div>
-  
-    }
-  
-  </div>
+
+      <p class="section-eyebrow">
+        YOUR INTERVIEW PIPELINE
+      </p>
+
+      <h2>No interviews yet</h2>
+
+      <p>
+        Applications will appear here when their
+        status changes to Interview.
+      </p>
+
+      <a
+        class="browse-button"
+        routerLink="/applications"
+      >
+        View Applications
+        <span aria-hidden="true">↗</span>
+      </a>
+
+    </div>
+
+  }
+
+</section>
