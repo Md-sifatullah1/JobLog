@@ -49,6 +49,9 @@ Thumbs.db
 # Spring Boot / Maven
 /backend/target/
 
+# Angular production files copied into Spring Boot
+/backend/src/main/resources/static/
+
 # Environment variables and secrets
 .env
 .env.*

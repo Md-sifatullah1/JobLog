@@ -1,9 +1,16 @@
-import { Component } from '@angular/core';
+
+import {
+  Component,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
+
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { Subscription } from 'rxjs';
+
 import { JobApplication } from '../../models/job-application';
 import { Application } from '../../services/application';
-
 
 @Component({
   selector: 'app-interviews',
@@ -11,18 +18,29 @@ import { Application } from '../../services/application';
   templateUrl: './interviews.html',
   styleUrl: './interviews.scss',
 })
-export class Interviews {
+export class Interviews implements OnInit, OnDestroy {
 
   interviews: JobApplication[] = [];
 
-  constructor(private applicationService: Application) {
-    this.loadInterviews();
+  private subscription?: Subscription;
+
+  constructor(
+    private applicationService: Application
+  ) {}
+
+  ngOnInit(): void {
+    this.subscription =
+      this.applicationService.applications$.subscribe(
+        applications => {
+          this.interviews = applications.filter(
+            application =>
+              application.status === 'Interview'
+          );
+        }
+      );
   }
 
-  private loadInterviews(): void {
-    this.interviews =
-      this.applicationService
-        .getApplications()
-        .filter(application => application.status === 'Interview');
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }
