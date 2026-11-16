@@ -1,130 +1,86 @@
+
 <section class="applications-page">
 
-  <!-- Page header -->
-
-  <div class="page-header">
-
+  <!-- Page Header -->
+  <header class="page-header">
     <div>
-
-      <h1>Applications</h1>
-
-      <p>
-        Manage and track your job applications.
-      </p>
-
+      <p class="page-eyebrow">YOUR WORKSPACE / OPPORTUNITIES</p>
+      <h1 class="page-title">Applications</h1>
+      <p>Manage and track your job applications.</p>
     </div>
 
+    <button
+      type="button"
+      class="btn btn-primary add-button"
+      (click)="openAddForm()"
+    >
+      + Add Application
+    </button>
+  </header>
 
+  <!-- Search, Filter and Sort Toolbar -->
+  <div class="filters-toolbar">
     <div class="header-actions">
 
-      <!-- Search -->
-
       <div class="search-wrapper">
-
         <input
           type="text"
-          class="search-input"
+          class="form-control search-input"
           [(ngModel)]="searchTerm"
           (ngModelChange)="currentPage = 1"
           placeholder="Search applications..."
+          aria-label="Search applications"
         >
 
         @if (searchTerm) {
-
           <button
             type="button"
             class="clear-search-button"
-            (click)="searchTerm = ''"
+            aria-label="Clear search"
+            (click)="searchTerm = ''; currentPage = 1"
           >
             ×
           </button>
-
         }
-
       </div>
 
-
-      <!-- Status filter -->
-
       <select
-        class="status-filter"
+        class="form-control status-filter"
         [(ngModel)]="selectedStatus"
         (ngModelChange)="currentPage = 1"
+        aria-label="Filter by status"
       >
+        <option value="All">All Statuses</option>
 
-        <option value="All">
-          All
-        </option>
-
-        @for (
-          status of applicationStatuses;
-          track status
-        ) {
-
+        @for (status of applicationStatuses; track status) {
           <option [value]="status">
             {{ status }}
           </option>
-
         }
-
       </select>
-
-
-      <!-- Sort -->
 
       <select
-        class="sort-filter"
+        class="form-control sort-filter"
         [(ngModel)]="selectedSort"
         (ngModelChange)="currentPage = 1"
+        aria-label="Sort applications"
       >
-
-        <option value="newest">
-          Newest First
-        </option>
-
-        <option value="oldest">
-          Oldest First
-        </option>
-
-        <option value="company-az">
-          Company A-Z
-        </option>
-
-        <option value="company-za">
-          Company Z-A
-        </option>
-
-        <option value="status">
-          Status
-        </option>
-
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="company-az">Company A-Z</option>
+        <option value="company-za">Company Z-A</option>
+        <option value="status">Status</option>
       </select>
 
-
-      <!-- Add application -->
-
-      <button
-        type="button"
-        class="add-button"
-        (click)="openAddForm()"
-      >
-        + Add Application
-      </button>
-
     </div>
-
   </div>
 
-
-  <!-- Add / Edit Application form -->
-
+  <!-- Add / Edit Application Form -->
   @if (showAddForm) {
-
-    <div class="form-card">
+    <div class="card form-card">
 
       <div class="form-header">
-
-        <h2>
+        <h2 class="section-title">
           {{
             editingApplicationId === null
               ? 'Add Application'
@@ -132,17 +88,15 @@
           }}
         </h2>
 
-
         <button
           type="button"
           class="close-button"
+          aria-label="Close application form"
           (click)="cancelForm(applicationForm)"
         >
           ×
         </button>
-
       </div>
-
 
       <form
         class="application-form"
@@ -153,14 +107,11 @@
         <div class="form-grid">
 
           <!-- Company -->
-
-          <div class="form-group">
-
-            <label for="company">
-              Company
-            </label>
+          <div class="form-field form-group">
+            <label class="form-label" for="company">Company</label>
 
             <input
+              class="form-control"
               id="company"
               type="text"
               name="company"
@@ -170,29 +121,19 @@
               required
             >
 
-            @if (
-              company.invalid &&
-              company.touched
-            ) {
-
+            @if (company.invalid && company.touched) {
               <span class="error-message">
                 Company is required.
               </span>
-
             }
-
           </div>
 
-
           <!-- Position -->
-
-          <div class="form-group">
-
-            <label for="position">
-              Position
-            </label>
+          <div class="form-field form-group">
+            <label class="form-label" for="position">Position</label>
 
             <input
+              class="form-control"
               id="position"
               type="text"
               name="position"
@@ -202,29 +143,19 @@
               required
             >
 
-            @if (
-              position.invalid &&
-              position.touched
-            ) {
-
+            @if (position.invalid && position.touched) {
               <span class="error-message">
                 Position is required.
               </span>
-
             }
-
           </div>
 
-
           <!-- Location -->
-
-          <div class="form-group">
-
-            <label for="location">
-              Location
-            </label>
+          <div class="form-field form-group">
+            <label class="form-label" for="location">Location</label>
 
             <input
+              class="form-control"
               id="location"
               type="text"
               name="location"
@@ -234,59 +165,37 @@
               required
             >
 
-            @if (
-              location.invalid &&
-              location.touched
-            ) {
-
+            @if (location.invalid && location.touched) {
               <span class="error-message">
                 Location is required.
               </span>
-
             }
-
           </div>
 
-
           <!-- Status -->
-
-          <div class="form-group">
-
-            <label for="status">
-              Status
-            </label>
+          <div class="form-field form-group">
+            <label class="form-label" for="status">Status</label>
 
             <select
+              class="form-control"
               id="status"
               name="status"
               [(ngModel)]="newApplication.status"
             >
-
-              @for (
-                status of applicationStatuses;
-                track status
-              ) {
-
+              @for (status of applicationStatuses; track status) {
                 <option [value]="status">
                   {{ status }}
                 </option>
-
               }
-
             </select>
-
           </div>
 
-
           <!-- Applied Date -->
-
-          <div class="form-group">
-
-            <label for="appliedDate">
-              Applied Date
-            </label>
+          <div class="form-field form-group">
+            <label class="form-label" for="appliedDate">Applied Date</label>
 
             <input
+              class="form-control"
               id="appliedDate"
               type="date"
               name="appliedDate"
@@ -295,348 +204,249 @@
               required
             >
 
-            @if (
-              appliedDate.invalid &&
-              appliedDate.touched
-            ) {
-
+            @if (appliedDate.invalid && appliedDate.touched) {
               <span class="error-message">
                 Applied date is required.
               </span>
-
             }
-
           </div>
 
+          <!-- Interview Information -->
+          @if (newApplication.status === 'Interview') {
 
-          <!-- Interview information -->
-
-          @if (
-            newApplication.status === 'Interview'
-          ) {
-
-            <div class="form-group">
-
-              <label for="interviewDate">
+            <div class="form-field form-group">
+              <label class="form-label" for="interviewDate">
                 Interview Date & Time
               </label>
 
               <input
+                class="form-control"
                 id="interviewDate"
                 type="datetime-local"
                 name="interviewDate"
                 [(ngModel)]="newApplication.interviewDate"
               >
-
             </div>
 
-
-            <div class="form-group">
-
-              <label for="interviewNotes">
+            <div class="form-field form-group full-width">
+              <label class="form-label" for="interviewNotes">
                 Interview Notes
               </label>
 
               <textarea
+                class="form-control"
                 id="interviewNotes"
                 name="interviewNotes"
                 [(ngModel)]="newApplication.interviewNotes"
                 rows="3"
                 placeholder="e.g. Technical interview with the backend team"
               ></textarea>
-
             </div>
 
           }
 
-
           <!-- Job URL -->
-
-          <div class="form-group">
-
-            <label for="jobUrl">
-              Job URL
-            </label>
+          <div class="form-field form-group full-width">
+            <label class="form-label" for="jobUrl">Job URL</label>
 
             <input
+              class="form-control"
               id="jobUrl"
               type="url"
               name="jobUrl"
               [(ngModel)]="newApplication.jobUrl"
               placeholder="https://..."
             >
-
           </div>
 
-
-          <!-- Job description -->
-
-          <div class="form-group full-width">
-
-            <label for="jobDescription">
+          <!-- Job Description -->
+          <div class="form-field form-group full-width">
+            <label class="form-label" for="jobDescription">
               Job Description
             </label>
 
             <textarea
+              class="form-control"
               id="jobDescription"
               name="jobDescription"
               [(ngModel)]="newApplication.jobDescription"
               rows="8"
               placeholder="Paste the job description here..."
             ></textarea>
-
           </div>
 
-
           <!-- Notes -->
-
-          <div class="form-group full-width">
-
-            <label for="notes">
-              Notes
-            </label>
+          <div class="form-field form-group full-width">
+            <label class="form-label" for="notes">Notes</label>
 
             <textarea
+              class="form-control"
               id="notes"
               name="notes"
               [(ngModel)]="newApplication.notes"
               rows="5"
               placeholder="Add notes about this application..."
             ></textarea>
-
           </div>
 
         </div>
 
-
-        <!-- Form actions -->
-
+        <!-- Form Actions -->
         <div class="form-actions">
-
           <button
             type="button"
-            class="cancel-button"
+            class="btn btn-secondary cancel-button"
             (click)="cancelForm(applicationForm)"
           >
             Cancel
           </button>
 
-
           <button
             type="submit"
-            class="save-button"
-            [disabled]="applicationForm.invalid"
+            class="btn btn-primary save-button"
+            [disabled]="applicationForm.invalid || isSaving"
           >
-
-            {{
-              editingApplicationId === null
-                ? 'Save Application'
-                : 'Update Application'
-            }}
-
+            @if (isSaving) {
+              Saving...
+            } @else {
+              {{
+                editingApplicationId === null
+                  ? 'Save Application'
+                  : 'Update Application'
+              }}
+            }
           </button>
-
         </div>
 
       </form>
-
     </div>
-
   }
 
-
-  <!-- Result count -->
-
+  <!-- Result Count -->
   <div class="result-count">
     {{ resultCount }}
   </div>
 
+  <!-- Applications Table -->
+  <div class="applications-table-scroll">
+    <div class="card applications-list">
 
-  <!-- Applications list -->
+      <div class="list-header">
+        <span>Company</span>
+        <span>Position</span>
+        <span>Location</span>
+        <span>Status</span>
+        <span>Applied</span>
+        <span>Actions</span>
+      </div>
 
-  <div class="applications-list">
+      @for (
+        application of paginatedApplications;
+        track application.id
+      ) {
+        <div class="application-row">
 
-    <div class="list-header">
-
-      <span>
-        Company
-      </span>
-
-      <span>
-        Position
-      </span>
-
-      <span>
-        Location
-      </span>
-
-      <span>
-        Status
-      </span>
-
-      <span>
-        Applied
-      </span>
-
-      <span>
-        Actions
-      </span>
-
-    </div>
-
-
-    @for (
-      application of paginatedApplications;
-      track application.id
-    ) {
-
-      <div class="application-row">
-
-        <!-- Company -->
-
-        <a
-          class="company-name application-link"
-          [routerLink]="[
-            '/applications',
-            application.id
-          ]"
-        >
-          {{ application.company }}
-        </a>
-
-
-        <!-- Position -->
-
-        <span>
-          {{ application.position }}
-        </span>
-
-
-        <!-- Location -->
-
-        <span>
-          {{ application.location }}
-        </span>
-
-
-        <!-- Status -->
-
-        <span
-          class="status-badge"
-          [class.status-saved]="
-            application.status === 'Saved'
-          "
-          [class.status-applied]="
-            application.status === 'Applied'
-          "
-          [class.status-assessment]="
-            application.status === 'Assessment'
-          "
-          [class.status-interview]="
-            application.status === 'Interview'
-          "
-          [class.status-offer]="
-            application.status === 'Offer'
-          "
-          [class.status-rejected]="
-            application.status === 'Rejected'
-          "
-        >
-          {{ application.status }}
-        </span>
-
-
-        <!-- Applied date -->
-
-        <span>
-          {{ application.appliedDate }}
-        </span>
-
-
-        <!-- Actions -->
-
-        <div class="action-buttons">
-
-          <button
-            type="button"
-            class="edit-button"
-            (click)="editApplication(application)"
+          <!-- Company -->
+          <a
+            class="company-name application-link"
+            [routerLink]="['/applications', application.id]"
           >
-            Edit
-          </button>
+            {{ application.company }}
+          </a>
 
+          <!-- Position -->
+          <span>{{ application.position }}</span>
 
-          <button
-            type="button"
-            class="delete-button"
-            (click)="deleteApplication(application.id)"
+          <!-- Location -->
+          <span>{{ application.location }}</span>
+
+          <!-- Status -->
+          <span
+            class="status-badge"
+            [class.status-saved]="application.status === 'Saved'"
+            [class.status-applied]="application.status === 'Applied'"
+            [class.status-assessment]="application.status === 'Assessment'"
+            [class.status-interview]="application.status === 'Interview'"
+            [class.status-offer]="application.status === 'Offer'"
+            [class.status-rejected]="application.status === 'Rejected'"
           >
-            Delete
-          </button>
+            {{ application.status }}
+          </span>
 
+          <!-- Applied Date -->
+          <span>{{ application.appliedDate }}</span>
+
+          <!-- Actions -->
+          <div class="action-buttons">
+
+            <button
+              type="button"
+              class="btn btn-secondary edit-button"
+              (click)="editApplication(application)"
+            >
+              Edit
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-danger delete-button"
+              [disabled]="isDeleting"
+              (click)="deleteApplication(application.id)"
+            >
+              Delete
+            </button>
+
+          </div>
         </div>
 
-      </div>
+      } @empty {
+        <div class="empty-state">
+          <h3>No applications found</h3>
 
-    } @empty {
+          <p>
+            Try changing your search or status filter.
+          </p>
+        </div>
+      }
 
-      <div class="empty-state">
-
-        <h3>
-          No applications found
-        </h3>
-
-        <p>
-          Try changing your search or status filter.
-        </p>
-
-      </div>
-
-    }
-
+    </div>
   </div>
 
   <!-- Pagination -->
-
-@if (totalPages > 1) {
-
-  <div class="pagination">
-
-    <button
-      type="button"
-      class="pagination-button"
-      [disabled]="currentPage === 1"
-      (click)="previousPage()"
-    >
-      Previous
-    </button>
-
-
-    @for (page of pageNumbers; track page) {
+  @if (totalPages > 1) {
+    <div class="pagination">
 
       <button
         type="button"
-        class="pagination-button"
-        [class.active]="currentPage === page"
-        (click)="changePage(page)"
+        class="btn btn-secondary pagination-button"
+        [disabled]="currentPage === 1"
+        (click)="previousPage()"
       >
-        {{ page }}
+        Previous
       </button>
 
-    }
+      @for (page of pageNumbers; track page) {
+        <button
+          type="button"
+          class="btn btn-secondary pagination-button"
+          [class.active]="currentPage === page"
+          [attr.aria-current]="currentPage === page ? 'page' : null"
+          (click)="changePage(page)"
+        >
+          {{ page }}
+        </button>
+      }
 
+      <button
+        type="button"
+        class="btn btn-secondary pagination-button"
+        [disabled]="currentPage === totalPages"
+        (click)="nextPage()"
+      >
+        Next
+      </button>
 
-    <button
-      type="button"
-      class="pagination-button"
-      [disabled]="currentPage === totalPages"
-      (click)="nextPage()"
-    >
-      Next
-    </button>
-
-  </div>
-
-}
+    </div>
+  }
 
 </section>

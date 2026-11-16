@@ -1,74 +1,95 @@
 
 <section class="documents">
 
-  <div class="documents-header">
+  <!-- Page Header -->
+  <header class="documents-header">
     <div>
-      <h1>Documents</h1>
-      <p>
-        Keep your job search documents organized in one place.
-      </p>
+      <p class="page-eyebrow">YOUR WORKSPACE / DOCUMENTS</p>
+      <h1 class="page-title">Documents</h1>
+      <p>Keep your resumes, cover letters and certificates organized.</p>
     </div>
 
     <button
-      class="add-button"
       type="button"
-      [disabled]="hasReachedLimit || isLoading"
+      class="btn btn-primary add-button"
+      [disabled]="hasReachedLimit || isLoading || isSaving"
       (click)="openAddForm()"
     >
       + Add Document
     </button>
-  </div>
+  </header>
 
-  <div class="document-usage">
+  <!-- Error Feedback -->
+  @if (errorMessage) {
+    <div class="page-error" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <!-- Storage Usage -->
+  <div class="card document-usage">
     <div class="usage-header">
       <div>
-        <strong>
-          {{ documentCount }} / {{ documentLimit }} documents
-        </strong>
-
+        <span class="section-eyebrow">DOCUMENT LIBRARY</span>
+        <h2 class="section-title">Library Capacity</h2>
         <p>
-          {{ remainingSlots }} document slots remaining
+          {{ documentCount }} of {{ documentLimit }}
+          document slots used
         </p>
       </div>
 
-      @if (hasReachedLimit) {
-        <span class="limit-message">
-          Document limit reached
-        </span>
-      }
+      <div class="usage-count">
+        <strong>{{ remainingSlots }}</strong>
+        <span>Remaining</span>
+      </div>
     </div>
 
-    <div class="usage-bar">
+    <div
+      class="usage-bar"
+      role="progressbar"
+      aria-label="Document slots used"
+      [attr.aria-valuenow]="documentCount"
+      aria-valuemin="0"
+      [attr.aria-valuemax]="documentLimit"
+    >
       <div
         class="usage-bar-fill"
         [style.width.%]="
-          (documentCount / documentLimit) * 100
+          documentLimit > 0
+            ? (documentCount / documentLimit) * 100
+            : 0
         "
       ></div>
     </div>
+
+    @if (hasReachedLimit) {
+      <p class="limit-message">
+        Your document library is full. Delete an existing
+        document to add another.
+      </p>
+    }
   </div>
 
-  @if (errorMessage) {
-    <p class="file-error" role="alert">
-      {{ errorMessage }}
-    </p>
-  }
-
+  <!-- Add / Edit Document Form -->
   @if (showAddForm) {
-    <div class="document-form-card">
+    <div class="card document-form-card">
 
       <div class="form-header">
-        <h2>
-          @if (editingDocumentId !== null) {
-            Edit Document
-          } @else {
-            Add Document
-          }
-        </h2>
+        <div>
+          <span class="section-eyebrow">DOCUMENT DETAILS</span>
+          <h2 class="section-title">
+            {{
+              editingDocumentId === null
+                ? 'Add a Document'
+                : 'Edit Document'
+            }}
+          </h2>
+        </div>
 
         <button
           type="button"
           class="close-button"
+          aria-label="Close document form"
           [disabled]="isSaving"
           (click)="closeForm()"
         >
@@ -82,12 +103,15 @@
       >
 
         <div class="form-grid">
-          <div class="form-group">
-            <label for="documentName">
+
+          <!-- Document Name -->
+          <div class="form-field form-group">
+            <label class="form-label" for="documentName">
               Document Name
             </label>
 
             <input
+              class="form-control"
               id="documentName"
               type="text"
               name="documentName"
@@ -98,34 +122,32 @@
             >
           </div>
 
-          <div class="form-group">
-            <label for="documentType">
-              Type
+          <!-- Document Type -->
+          <div class="form-field form-group">
+            <label class="form-label" for="documentType">
+              Document Type
             </label>
 
             <select
+              class="form-control"
               id="documentType"
               name="documentType"
               [(ngModel)]="newDocument.type"
               required
             >
               @for (type of documentTypes; track type) {
-                <option [value]="type">
-                  {{ type }}
-                </option>
+                <option [value]="type">{{ type }}</option>
               }
             </select>
           </div>
+
         </div>
 
+        <!-- Existing File -->
         @if (editingDocumentId !== null) {
           <div class="current-file">
-            <span>Current file</span>
-
-            <strong>
-              {{ originalFileName }}
-            </strong>
-
+            <span class="file-info-label">CURRENT FILE</span>
+            <strong>{{ originalFileName }}</strong>
             <small>
               @if (selectedFile) {
                 Replacement selected
@@ -136,29 +158,34 @@
           </div>
         }
 
-        <div class="form-group">
-          <label for="documentFile">
-            @if (editingDocumentId !== null) {
-              Replace File
-            } @else {
-              File
-            }
+        <!-- File Selection -->
+        <div class="form-field form-group file-field">
+          <label class="form-label" for="documentFile">
+            {{
+              editingDocumentId !== null
+                ? 'Replace File'
+                : 'Upload File'
+            }}
           </label>
 
-          <input
-            id="documentFile"
-            type="file"
-            accept=".pdf,.doc,.docx"
-            [disabled]="isSaving"
-            (change)="onFileSelected($event)"
-          >
+          <div class="file-upload-area">
+            <span class="upload-symbol" aria-hidden="true">↑</span>
 
-          <span class="field-help">
-            @if (editingDocumentId !== null) {
-              Optional replacement.
-            }
-            PDF, DOC or DOCX, maximum 5 MB.
-          </span>
+            <input
+              id="documentFile"
+              type="file"
+              accept=".pdf,.doc,.docx"
+              [disabled]="isSaving"
+              (change)="onFileSelected($event)"
+            >
+
+            <span class="field-help">
+              @if (editingDocumentId !== null) {
+                File replacement is optional.
+              }
+              PDF, DOC or DOCX. Maximum 5 MB.
+            </span>
+          </div>
 
           @if (selectedFileError) {
             <span class="file-error" role="alert">
@@ -167,38 +194,36 @@
           }
         </div>
 
+        <!-- Selected File -->
         @if (selectedFile) {
           <div class="selected-file">
-            <span>Selected file</span>
-
-            <strong>
-              {{ selectedFile.name }}
-            </strong>
-
+            <span class="file-info-label">SELECTED FILE</span>
+            <strong>{{ selectedFile.name }}</strong>
             <small>
               {{ formatFileSize(selectedFile.size) }}
             </small>
           </div>
         }
 
-        <div class="form-group">
-          <label for="documentNotes">
-            Notes
-          </label>
+        <!-- Notes -->
+        <div class="form-field form-group notes-field">
+          <label class="form-label" for="documentNotes">Notes</label>
 
           <textarea
+            class="form-control"
             id="documentNotes"
             name="documentNotes"
             [(ngModel)]="newDocument.notes"
-            rows="3"
+            rows="4"
             placeholder="Optional notes about this document"
           ></textarea>
         </div>
 
+        <!-- Form Actions -->
         <div class="form-actions">
           <button
             type="button"
-            class="secondary-button"
+            class="btn btn-secondary"
             [disabled]="isSaving"
             (click)="closeForm()"
           >
@@ -207,7 +232,7 @@
 
           <button
             type="submit"
-            class="primary-button"
+            class="btn btn-primary"
             [disabled]="
               documentForm.invalid ||
               isSaving ||
@@ -229,32 +254,39 @@
     </div>
   }
 
-  <div class="documents-section">
+  <!-- Document Library -->
+  <div class="card documents-section">
 
     <div class="section-header">
       <div>
-        <h2>Your Documents</h2>
-
-        <p>
-          Documents available for your job search.
-        </p>
+        <span class="section-eyebrow">YOUR FILES</span>
+        <h2 class="section-title">Your Documents</h2>
+        <p>Documents available for your job search.</p>
       </div>
+
+      <span class="document-total">
+        {{ documentCount }}
+        {{ documentCount === 1 ? 'Document' : 'Documents' }}
+      </span>
     </div>
 
     @if (isLoading) {
-      <div class="empty-state">
+
+      <div class="empty-state" role="status">
         <p>Loading documents...</p>
       </div>
+
     } @else if (documents.length > 0) {
 
       <div class="document-list">
 
         @for (document of documents; track document.id) {
+
           <article class="document-card">
 
             <div class="document-main">
-              <div class="document-icon">
-                📄
+              <div class="document-icon" aria-hidden="true">
+                <span>▤</span>
               </div>
 
               <div class="document-info">
@@ -275,7 +307,7 @@
                     {{ formatFileSize(document.fileSize) }}
                   </span>
 
-                  <span>•</span>
+                  <span aria-hidden="true">•</span>
 
                   <span>
                     Added {{ document.dateAdded }}
@@ -294,7 +326,7 @@
 
               <button
                 type="button"
-                class="edit-button"
+                class="btn btn-primary download-button"
                 [disabled]="downloadingId !== null"
                 (click)="downloadDocument(document)"
               >
@@ -307,7 +339,7 @@
 
               <button
                 type="button"
-                class="edit-button"
+                class="btn btn-secondary edit-button"
                 [disabled]="isDeleting || isSaving"
                 (click)="editDocument(document)"
               >
@@ -316,7 +348,7 @@
 
               <button
                 type="button"
-                class="delete-button"
+                class="btn btn-danger delete-button"
                 [disabled]="isDeleting || isSaving"
                 (click)="deleteDocument(document.id)"
               >
@@ -328,7 +360,9 @@
               </button>
 
             </div>
+
           </article>
+
         }
 
       </div>
@@ -336,6 +370,8 @@
     } @else if (!errorMessage) {
 
       <div class="empty-state">
+        <div class="empty-icon" aria-hidden="true">▤</div>
+
         <h3>No documents yet</h3>
 
         <p>
@@ -345,7 +381,8 @@
 
         <button
           type="button"
-          class="primary-button"
+          class="btn btn-primary"
+          [disabled]="hasReachedLimit"
           (click)="openAddForm()"
         >
           Add Your First Document
@@ -353,6 +390,7 @@
       </div>
 
     }
+
   </div>
 
 </section>

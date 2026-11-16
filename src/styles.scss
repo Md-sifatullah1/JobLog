@@ -1,53 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
-* {
-    box-sizing: border-box;
-  }
-  
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f8fafc;
-  }
 
-  .status-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-  
-  .status-saved {
-    background-color: #f3f4f6;
-    color: #4b5563;
-  }
-  
-  .status-applied {
-    background-color: #dbeafe;
-    color: #1d4ed8;
-  }
-  
-  .status-assessment {
-    background-color: #fef3c7;
-    color: #92400e;
-  }
-  
-  .status-interview {
-    background-color: #ede9fe;
-    color: #6d28d9;
-  }
-  
-  .status-offer {
-    background-color: #dcfce7;
-    color: #166534;
-  }
-  
-  .status-rejected {
-    background-color: #fee2e2;
-    color: #991b1b;
-  }
+/* JobLog Design System */
+
+@use './styles/tokens';
+@use './styles/base';
+@use './styles/typography';
+@use './styles/buttons';
+@use './styles/cards';
+@use './styles/forms';
+@use './styles/badges';
+@use './styles/charts';
+@use './styles/file-management';

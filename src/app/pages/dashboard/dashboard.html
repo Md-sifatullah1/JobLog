@@ -1,108 +1,173 @@
+
 <section class="dashboard">
 
-    <div class="dashboard-header">
-      <h1>Dashboard</h1>
-      <p>Track your job search progress.</p>
-    </div>
-  
-    <div class="stats-grid">
+  <!-- Dashboard Header -->
+  <header class="dashboard-header">
+    <div>
+      <p class="page-eyebrow">YOUR WORKSPACE / OVERVIEW</p>
 
-      @for (stat of stats; track stat.label) {
-    
-        <div class="stat-card">
-          <p class="stat-label">{{ stat.label }}</p>
-          <h2>{{ stat.value }}</h2>
+      <h1 class="page-title">
+        A glance of what's going on.
+      </h1>
+
+      <p class="page-description dashboard-subtitle">
+        Every application is a step forward.
+      </p>
+    </div>
+
+    <a
+      routerLink="/applications"
+      class="btn btn-primary new-application-btn"
+    >
+      <span aria-hidden="true">+</span>
+      New Application
+    </a>
+  </header>
+
+  <!-- Statistics -->
+  <div class="stats-grid">
+
+    @for (stat of stats; track stat.label; let i = $index) {
+
+      <article
+        class="card stat-card"
+        [class.stat-card-featured]="i === 0"
+      >
+        <div class="stat-card-top">
+          <p class="stat-label">
+            {{ stat.label }}
+          </p>
+
+          <span class="stat-index">
+            {{ (i + 1).toString().padStart(2, '0') }}
+          </span>
         </div>
-    
-      }
-    
-    </div>
-  
-  </section>
 
-  <section class="recent-applications">
+        <h2>{{ stat.value }}</h2>
+
+        <div class="stat-accent" aria-hidden="true"></div>
+      </article>
+
+    }
+
+  </div>
+
+  <!-- Recent Applications -->
+  <section class="card recent-applications">
 
     <div class="section-header">
       <div>
-        <h2>Recent Applications</h2>
+        <p class="page-eyebrow">ACTIVITY</p>
+
+        <h2 class="section-title">
+          Recent Applications
+        </h2>
+
         <p>Your latest job applications.</p>
       </div>
-  
+
       <a routerLink="/applications" class="view-all">
-        View all
+        View all <span aria-hidden="true">→</span>
       </a>
     </div>
-  
+
     @if (recentApplications.length > 0) {
 
-      <div class="applications-table">
-    
-        <div class="table-header">
-          <span>Company</span>
-          <span>Position</span>
-          <span>Location</span>
-          <span>Status</span>
-          <span>Applied</span>
-        </div>
-    
-        @for (application of recentApplications; track application.id) {
-    
-          <div class="application-row">
-    
-            <a
-              class="company"
-              [routerLink]="['/applications', application.id]"
-            >
-              <div class="company-logo">
-                {{ application.company.charAt(0) }}
-              </div>
-    
-              <span>{{ application.company }}</span>
-            </a>
-    
-            <span>{{ application.position }}</span>
-    
-            <span>{{ application.location }}</span>
-    
-            <span
-              class="status-badge"
-              [class.status-saved]="application.status === 'Saved'"
-              [class.status-applied]="application.status === 'Applied'"
-              [class.status-assessment]="application.status === 'Assessment'"
-              [class.status-interview]="application.status === 'Interview'"
-              [class.status-offer]="application.status === 'Offer'"
-              [class.status-rejected]="application.status === 'Rejected'"
-            >
-              {{ application.status }}
-            </span>
-    
-            <span>{{ application.appliedDate }}</span>
-    
+      <div class="table-scroll">
+        <div class="applications-table">
+
+          <!-- Table Header -->
+          <div class="table-header">
+            <span>Company</span>
+            <span>Position</span>
+            <span>Location</span>
+            <span>Status</span>
+            <span>Applied</span>
           </div>
-    
-        }
-    
+
+          <!-- Table Rows -->
+          @for (
+            application of recentApplications;
+            track application.id
+          ) {
+
+            <div class="application-row">
+
+              <!-- Company -->
+              <a
+                class="company"
+                [routerLink]="['/applications', application.id]"
+              >
+                <span class="company-logo" aria-hidden="true">
+                  {{ application.company.charAt(0) }}
+                </span>
+
+                <span class="company-name">
+                  {{ application.company }}
+                </span>
+              </a>
+
+              <!-- Position -->
+              <span class="cell-text">
+                {{ application.position }}
+              </span>
+
+              <!-- Location -->
+              <span class="cell-text">
+                {{ application.location }}
+              </span>
+
+              <!-- Status -->
+              <span>
+                <span
+                  class="status-badge"
+                  [class.status-saved]="application.status === 'Saved'"
+                  [class.status-applied]="application.status === 'Applied'"
+                  [class.status-assessment]="application.status === 'Assessment'"
+                  [class.status-interview]="application.status === 'Interview'"
+                  [class.status-offer]="application.status === 'Offer'"
+                  [class.status-rejected]="application.status === 'Rejected'"
+                >
+                  {{ application.status }}
+                </span>
+              </span>
+
+              <!-- Applied Date -->
+              <span class="cell-date">
+                {{ application.appliedDate }}
+              </span>
+
+            </div>
+
+          }
+
+        </div>
       </div>
-    
+
     } @else {
-    
+
+      <!-- Empty State -->
       <div class="empty-state">
-    
-        <h3>No applications yet</h3>
-    
+
+        <div class="empty-icon" aria-hidden="true">✦</div>
+
+        <h3>Your next chapter starts here.</h3>
+
         <p>
-          Start tracking your job search by adding your first application.
+          Add your first job application to start tracking your progress.
         </p>
-    
+
         <a
           routerLink="/applications"
-          class="add-application-link"
+          class="btn btn-primary add-application-link"
         >
           Add Application
         </a>
-    
+
       </div>
-    
+
     }
-  
+
   </section>
+
+</section>

@@ -1,58 +1,85 @@
 
 @if (application) {
 
-  <div class="details-page">
+  <section class="details-page">
 
+    <!-- Breadcrumb -->
     <a
       class="back-link"
       routerLink="/applications"
     >
-      ← Back to Applications
+      <span aria-hidden="true">←</span>
+      Back to Applications
     </a>
 
-    <div class="details-card">
+    <!-- Application Header -->
+    <header class="details-header">
 
-      <div class="details-header">
+      <div class="heading-content">
+        <p class="page-eyebrow">
+          YOUR WORKSPACE / APPLICATION DETAILS
+        </p>
 
-        <div>
-          <h1>{{ application.company }}</h1>
-          <p>{{ application.position }}</p>
-        </div>
+        <h1 class="page-title">
+          {{ application.company }}
+        </h1>
 
-        <span class="status-badge"
-          [class.status-saved]="application.status === 'Saved'"
-          [class.status-applied]="application.status === 'Applied'"
-          [class.status-assessment]="application.status === 'Assessment'"
-          [class.status-interview]="application.status === 'Interview'"
-          [class.status-offer]="application.status === 'Offer'"
-          [class.status-rejected]="application.status === 'Rejected'"
-      
-        >
-          {{ application.status }}
-        </span>
+        <p class="position-title">
+          {{ application.position }}
+        </p>
+      </div>
 
+      <span
+        class="status-badge"
+        [class.status-saved]="application.status === 'Saved'"
+        [class.status-applied]="application.status === 'Applied'"
+        [class.status-assessment]="application.status === 'Assessment'"
+        [class.status-interview]="application.status === 'Interview'"
+        [class.status-offer]="application.status === 'Offer'"
+        [class.status-rejected]="application.status === 'Rejected'"
+      >
+        {{ application.status }}
+      </span>
+
+    </header>
+
+    <!-- Main Details Card -->
+    <div class="card details-card">
+
+      <!-- Overview -->
+      <div class="section-heading">
+        <span class="section-number">01</span>
+        <h2 class="section-title">Application Overview</h2>
       </div>
 
       <div class="details-grid">
 
         <div class="detail-item">
-          <span class="detail-label">Location</span>
-          <span>{{ application.location }}</span>
+          <span class="detail-label">LOCATION</span>
+          <span class="detail-value">
+            {{ application.location }}
+          </span>
         </div>
-      
+
         <div class="detail-item">
-          <span class="detail-label">Applied Date</span>
-          <span>{{ application.appliedDate }}</span>
+          <span class="detail-label">APPLIED DATE</span>
+          <span class="detail-value">
+            {{ application.appliedDate }}
+          </span>
         </div>
-      
+
       </div>
-      
+
+      <!-- Job Posting -->
       @if (application.jobUrl) {
-      
+
         <div class="detail-section">
-      
-          <span class="detail-label">Job Posting</span>
-      
+
+          <div class="section-heading">
+            <span class="section-number">02</span>
+            <h2 class="section-title">Job Posting</h2>
+          </div>
+
           <a
             class="job-url"
             [href]="application.jobUrl"
@@ -60,55 +87,82 @@
             rel="noopener noreferrer"
           >
             {{ application.jobUrl }}
+            <span aria-hidden="true">↗</span>
           </a>
-      
+
         </div>
-      
+
       }
-      
+
+      <!-- Job Description -->
       @if (application.jobDescription) {
-      
+
         <div class="detail-section">
-      
-          <span class="detail-label">Job Description</span>
-      
+
+          <div class="section-heading">
+            <span class="section-number">03</span>
+            <h2 class="section-title">Job Description</h2>
+          </div>
+
           <p class="job-description">
             {{ application.jobDescription }}
           </p>
-      
+
         </div>
-      
+
       }
-      
+
+      <!-- Notes -->
       @if (application.notes) {
-      
+
         <div class="detail-section">
-      
-          <span class="detail-label">Notes</span>
-      
+
+          <div class="section-heading">
+            <span class="section-number">04</span>
+            <h2 class="section-title">Personal Notes</h2>
+          </div>
+
           <p class="notes">
             {{ application.notes }}
           </p>
-      
+
         </div>
-      
+
       }
 
-      @if (application.statusHistory && application.statusHistory.length > 0) {
+      <!-- Status History -->
+      @if (
+        application.statusHistory &&
+        application.statusHistory.length > 0
+      ) {
+
         <div class="detail-section status-history-section">
-      
-          <h2>Status History</h2>
-      
+
+          <div class="section-heading">
+            <span class="section-number">05</span>
+            <h2 class="section-title">Status History</h2>
+          </div>
+
+          <p class="section-description">
+            A timeline of this application's progress.
+          </p>
+
           <div class="status-history">
-      
-            @for (history of application.statusHistory; track history.changedAt) {
-      
+
+            @for (
+              history of application.statusHistory;
+              track history.changedAt
+            ) {
+
               <div class="status-history-item">
-      
-                <div class="status-history-indicator"></div>
-      
+
+                <div
+                  class="status-history-indicator"
+                  aria-hidden="true"
+                ></div>
+
                 <div class="status-history-content">
-      
+
                   <span
                     class="status-badge"
                     [class.status-saved]="history.status === 'Saved'"
@@ -120,54 +174,85 @@
                   >
                     {{ history.status }}
                   </span>
-      
+
                   <span class="status-history-date">
                     {{ history.changedAt | date:'MMM d, y, h:mm a' }}
                   </span>
-                  @if (history.status === 'Interview' && history.interviewDate) {
 
-                    <span class="status-history-date">
+                  @if (
+                    history.status === 'Interview' &&
+                    history.interviewDate
+                  ) {
+
+                    <span class="interview-schedule">
                       Interview scheduled:
-                      {{ history.interviewDate | date:'MMM d, y, h:mm a' }}
+                      {{
+                        history.interviewDate
+                          | date:'MMM d, y, h:mm a'
+                      }}
                     </span>
-                  
+
                   }
-      
+
                 </div>
-      
+
               </div>
-      
+
             }
-      
+
           </div>
-      
+
         </div>
+
       }
 
+      <!-- Actions -->
       <div class="details-actions">
 
         <a
-          class="edit-application-button"
+          class="btn btn-primary edit-application-button"
           [routerLink]="['/applications']"
           [queryParams]="{ edit: application.id }"
         >
           Edit Application
+          <span aria-hidden="true">↗</span>
         </a>
+
       </div>
+
     </div>
-  </div>
+
+  </section>
 
 } @else {
 
-  <div class="not-found">
+  <!-- Application Not Found -->
+  <section class="not-found">
 
-    <h1>Application not found</h1>
+    <div class="card not-found-card">
 
-    <a routerLink="/applications">
-      Back to Applications
-    </a>
+      <p class="page-eyebrow">
+        APPLICATION DETAILS
+      </p>
 
-  </div>
-  }
+      <h1 class="page-title">
+        Application not found
+      </h1>
 
-  
+      <p>
+        This application may have been deleted
+        or the link may be incorrect.
+      </p>
+
+      <a
+        class="btn btn-primary back-to-applications"
+        routerLink="/applications"
+      >
+        Back to Applications
+      </a>
+
+    </div>
+
+  </section>
+
+}

@@ -1,0 +1,42 @@
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+  
+  .status-saved {
+    background: #e9e4dd;
+    color: #61564d;
+  }
+  
+  .status-applied {
+    background: #e9dcc9;
+    color: #76512b;
+  }
+  
+  .status-assessment {
+    background: #f3e4c5;
+    color: #805b20;
+  }
+  
+  .status-interview {
+    background: #e0e7dc;
+    color: #405d47;
+  }
+  
+  .status-offer {
+    background: #d9e9d7;
+    color: #315e3a;
+  }
+  
+  .status-rejected {
+    background: #f1deda;
+    color: #923d38;
+  }
+  

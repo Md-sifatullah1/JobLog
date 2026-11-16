@@ -1,0 +1,27 @@
+/* Shared chart bar styling */
+
+.pipeline-bar,
+.funnel-bar,
+.activity-bar-container {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  background: #eee6dc;
+  border-radius: 999px;
+}
+
+.pipeline-bar-fill,
+.funnel-bar-fill,
+.activity-bar {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pipeline-bar-fill,
+  .funnel-bar-fill,
+  .activity-bar {
+    transition: none;
+  }
+}
