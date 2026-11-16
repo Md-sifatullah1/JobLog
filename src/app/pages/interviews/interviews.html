@@ -9,7 +9,7 @@
         YOUR WORKSPACE / INTERVIEWS
       </p>
 
-      <h1>Interviews</h1>
+      <h1 class="page-title">Interviews</h1>
 
       <p class="page-description">
         Keep track of your interviews and upcoming conversations.
@@ -17,7 +17,7 @@
     </div>
 
     <a
-      class="all-applications-link"
+      class="btn btn-secondary all-applications-link"
       routerLink="/applications"
     >
       All Applications
@@ -47,10 +47,6 @@
       </p>
     </div>
 
-    <div class="overview-decoration" aria-hidden="true">
-      <span>J</span>
-    </div>
-
   </div>
 
   <!-- Interview List -->
@@ -58,11 +54,13 @@
 
     <div class="list-heading">
       <div>
-        <p class="section-eyebrow">
+        <p class="page-eyebrow">
           YOUR OPPORTUNITIES
         </p>
 
-        <h2>Interview Applications</h2>
+        <h2 class="section-title">
+          Interview Applications
+        </h2>
       </div>
 
       <span class="interview-count">
@@ -79,10 +77,11 @@
 
       @for (application of interviews; track application.id) {
 
-        <article class="interview-card">
+        <article class="card interview-card">
 
           <div class="interview-main">
 
+            <!-- Company Information -->
             <div class="company-heading">
               <div class="company-avatar" aria-hidden="true">
                 {{ application.company.charAt(0).toUpperCase() }}
@@ -97,6 +96,7 @@
               </div>
             </div>
 
+            <!-- Application Details -->
             <div class="interview-details">
 
               <span class="detail-item">
@@ -168,7 +168,7 @@
             </span>
 
             <a
-              class="view-button"
+              class="btn btn-primary view-button"
               [routerLink]="['/applications', application.id]"
             >
               View Application
@@ -186,17 +186,19 @@
   } @else {
 
     <!-- Empty State -->
-    <div class="empty-state">
+    <div class="card empty-state">
 
       <div class="empty-icon" aria-hidden="true">
         ◷
       </div>
 
-      <p class="section-eyebrow">
+      <p class="page-eyebrow">
         YOUR INTERVIEW PIPELINE
       </p>
 
-      <h2>No interviews yet</h2>
+      <h2 class="section-title">
+        No interviews yet
+      </h2>
 
       <p>
         Applications will appear here when their
@@ -204,7 +206,7 @@
       </p>
 
       <a
-        class="browse-button"
+        class="btn btn-primary browse-button"
         routerLink="/applications"
       >
         View Applications

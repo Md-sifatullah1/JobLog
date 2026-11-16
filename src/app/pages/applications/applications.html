@@ -5,13 +5,13 @@
   <header class="page-header">
     <div>
       <p class="page-eyebrow">YOUR WORKSPACE / OPPORTUNITIES</p>
-      <h1>Applications</h1>
+      <h1 class="page-title">Applications</h1>
       <p>Manage and track your job applications.</p>
     </div>
 
     <button
       type="button"
-      class="add-button"
+      class="btn btn-primary add-button"
       (click)="openAddForm()"
     >
       + Add Application
@@ -25,7 +25,7 @@
       <div class="search-wrapper">
         <input
           type="text"
-          class="search-input"
+          class="form-control search-input"
           [(ngModel)]="searchTerm"
           (ngModelChange)="currentPage = 1"
           placeholder="Search applications..."
@@ -45,7 +45,7 @@
       </div>
 
       <select
-        class="status-filter"
+        class="form-control status-filter"
         [(ngModel)]="selectedStatus"
         (ngModelChange)="currentPage = 1"
         aria-label="Filter by status"
@@ -60,7 +60,7 @@
       </select>
 
       <select
-        class="sort-filter"
+        class="form-control sort-filter"
         [(ngModel)]="selectedSort"
         (ngModelChange)="currentPage = 1"
         aria-label="Sort applications"
@@ -77,10 +77,10 @@
 
   <!-- Add / Edit Application Form -->
   @if (showAddForm) {
-    <div class="form-card">
+    <div class="card form-card">
 
       <div class="form-header">
-        <h2>
+        <h2 class="section-title">
           {{
             editingApplicationId === null
               ? 'Add Application'
@@ -107,10 +107,11 @@
         <div class="form-grid">
 
           <!-- Company -->
-          <div class="form-group">
-            <label for="company">Company</label>
+          <div class="form-field form-group">
+            <label class="form-label" for="company">Company</label>
 
             <input
+              class="form-control"
               id="company"
               type="text"
               name="company"
@@ -128,10 +129,11 @@
           </div>
 
           <!-- Position -->
-          <div class="form-group">
-            <label for="position">Position</label>
+          <div class="form-field form-group">
+            <label class="form-label" for="position">Position</label>
 
             <input
+              class="form-control"
               id="position"
               type="text"
               name="position"
@@ -149,10 +151,11 @@
           </div>
 
           <!-- Location -->
-          <div class="form-group">
-            <label for="location">Location</label>
+          <div class="form-field form-group">
+            <label class="form-label" for="location">Location</label>
 
             <input
+              class="form-control"
               id="location"
               type="text"
               name="location"
@@ -170,10 +173,11 @@
           </div>
 
           <!-- Status -->
-          <div class="form-group">
-            <label for="status">Status</label>
+          <div class="form-field form-group">
+            <label class="form-label" for="status">Status</label>
 
             <select
+              class="form-control"
               id="status"
               name="status"
               [(ngModel)]="newApplication.status"
@@ -187,10 +191,11 @@
           </div>
 
           <!-- Applied Date -->
-          <div class="form-group">
-            <label for="appliedDate">Applied Date</label>
+          <div class="form-field form-group">
+            <label class="form-label" for="appliedDate">Applied Date</label>
 
             <input
+              class="form-control"
               id="appliedDate"
               type="date"
               name="appliedDate"
@@ -209,12 +214,13 @@
           <!-- Interview Information -->
           @if (newApplication.status === 'Interview') {
 
-            <div class="form-group">
-              <label for="interviewDate">
+            <div class="form-field form-group">
+              <label class="form-label" for="interviewDate">
                 Interview Date & Time
               </label>
 
               <input
+                class="form-control"
                 id="interviewDate"
                 type="datetime-local"
                 name="interviewDate"
@@ -222,12 +228,13 @@
               >
             </div>
 
-            <div class="form-group full-width">
-              <label for="interviewNotes">
+            <div class="form-field form-group full-width">
+              <label class="form-label" for="interviewNotes">
                 Interview Notes
               </label>
 
               <textarea
+                class="form-control"
                 id="interviewNotes"
                 name="interviewNotes"
                 [(ngModel)]="newApplication.interviewNotes"
@@ -239,10 +246,11 @@
           }
 
           <!-- Job URL -->
-          <div class="form-group full-width">
-            <label for="jobUrl">Job URL</label>
+          <div class="form-field form-group full-width">
+            <label class="form-label" for="jobUrl">Job URL</label>
 
             <input
+              class="form-control"
               id="jobUrl"
               type="url"
               name="jobUrl"
@@ -252,12 +260,13 @@
           </div>
 
           <!-- Job Description -->
-          <div class="form-group full-width">
-            <label for="jobDescription">
+          <div class="form-field form-group full-width">
+            <label class="form-label" for="jobDescription">
               Job Description
             </label>
 
             <textarea
+              class="form-control"
               id="jobDescription"
               name="jobDescription"
               [(ngModel)]="newApplication.jobDescription"
@@ -267,10 +276,11 @@
           </div>
 
           <!-- Notes -->
-          <div class="form-group full-width">
-            <label for="notes">Notes</label>
+          <div class="form-field form-group full-width">
+            <label class="form-label" for="notes">Notes</label>
 
             <textarea
+              class="form-control"
               id="notes"
               name="notes"
               [(ngModel)]="newApplication.notes"
@@ -285,7 +295,7 @@
         <div class="form-actions">
           <button
             type="button"
-            class="cancel-button"
+            class="btn btn-secondary cancel-button"
             (click)="cancelForm(applicationForm)"
           >
             Cancel
@@ -293,7 +303,7 @@
 
           <button
             type="submit"
-            class="save-button"
+            class="btn btn-primary save-button"
             [disabled]="applicationForm.invalid || isSaving"
           >
             @if (isSaving) {
@@ -319,7 +329,7 @@
 
   <!-- Applications Table -->
   <div class="applications-table-scroll">
-    <div class="applications-list">
+    <div class="card applications-list">
 
       <div class="list-header">
         <span>Company</span>
@@ -371,7 +381,7 @@
 
             <button
               type="button"
-              class="edit-button"
+              class="btn btn-secondary edit-button"
               (click)="editApplication(application)"
             >
               Edit
@@ -379,7 +389,7 @@
 
             <button
               type="button"
-              class="delete-button"
+              class="btn btn-danger delete-button"
               [disabled]="isDeleting"
               (click)="deleteApplication(application.id)"
             >
@@ -408,7 +418,7 @@
 
       <button
         type="button"
-        class="pagination-button"
+        class="btn btn-secondary pagination-button"
         [disabled]="currentPage === 1"
         (click)="previousPage()"
       >
@@ -418,7 +428,7 @@
       @for (page of pageNumbers; track page) {
         <button
           type="button"
-          class="pagination-button"
+          class="btn btn-secondary pagination-button"
           [class.active]="currentPage === page"
           [attr.aria-current]="currentPage === page ? 'page' : null"
           (click)="changePage(page)"
@@ -429,7 +439,7 @@
 
       <button
         type="button"
-        class="pagination-button"
+        class="btn btn-secondary pagination-button"
         [disabled]="currentPage === totalPages"
         (click)="nextPage()"
       >

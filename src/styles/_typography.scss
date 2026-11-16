@@ -1,0 +1,30 @@
+
+.page-title {
+    margin: 0;
+    color: var(--color-espresso);
+    font-family: var(--font-heading);
+    font-size: clamp(30px, 3vw, 42px);
+    letter-spacing: -1px;
+  }
+  
+  .section-title {
+    margin: 0;
+    color: var(--color-espresso);
+    font-family: var(--font-heading);
+    font-size: 24px;
+  }
+  
+  .page-description {
+    color: var(--color-text-secondary);
+    font-size: 14px;
+  }
+  
+  .page-eyebrow {
+    display: block;
+    margin: 0 0 9px;
+    color: var(--color-brass-hover);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+  

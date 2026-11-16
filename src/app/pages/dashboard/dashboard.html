@@ -1,29 +1,43 @@
 
 <section class="dashboard">
 
+  <!-- Dashboard Header -->
   <header class="dashboard-header">
     <div>
-      <p class="eyebrow">YOUR WORKSPACE / OVERVIEW</p>
-      <h1>A glance of what's going on.</h1>
-      <p class="dashboard-subtitle">
+      <p class="page-eyebrow">YOUR WORKSPACE / OVERVIEW</p>
+
+      <h1 class="page-title">
+        A glance of what's going on.
+      </h1>
+
+      <p class="page-description dashboard-subtitle">
         Every application is a step forward.
       </p>
     </div>
 
-    <a routerLink="/applications" class="new-application-btn">
+    <a
+      routerLink="/applications"
+      class="btn btn-primary new-application-btn"
+    >
       <span aria-hidden="true">+</span>
       New Application
     </a>
   </header>
 
+  <!-- Statistics -->
   <div class="stats-grid">
+
     @for (stat of stats; track stat.label; let i = $index) {
+
       <article
-        class="stat-card"
+        class="card stat-card"
         [class.stat-card-featured]="i === 0"
       >
         <div class="stat-card-top">
-          <p class="stat-label">{{ stat.label }}</p>
+          <p class="stat-label">
+            {{ stat.label }}
+          </p>
+
           <span class="stat-index">
             {{ (i + 1).toString().padStart(2, '0') }}
           </span>
@@ -33,14 +47,22 @@
 
         <div class="stat-accent" aria-hidden="true"></div>
       </article>
+
     }
+
   </div>
 
-  <section class="recent-applications">
+  <!-- Recent Applications -->
+  <section class="card recent-applications">
+
     <div class="section-header">
       <div>
-        <p class="section-eyebrow">ACTIVITY</p>
-        <h2>Recent Applications</h2>
+        <p class="page-eyebrow">ACTIVITY</p>
+
+        <h2 class="section-title">
+          Recent Applications
+        </h2>
+
         <p>Your latest job applications.</p>
       </div>
 
@@ -50,8 +72,11 @@
     </div>
 
     @if (recentApplications.length > 0) {
+
       <div class="table-scroll">
         <div class="applications-table">
+
+          <!-- Table Header -->
           <div class="table-header">
             <span>Company</span>
             <span>Position</span>
@@ -60,8 +85,15 @@
             <span>Applied</span>
           </div>
 
-          @for (application of recentApplications; track application.id) {
+          <!-- Table Rows -->
+          @for (
+            application of recentApplications;
+            track application.id
+          ) {
+
             <div class="application-row">
+
+              <!-- Company -->
               <a
                 class="company"
                 [routerLink]="['/applications', application.id]"
@@ -69,14 +101,23 @@
                 <span class="company-logo" aria-hidden="true">
                   {{ application.company.charAt(0) }}
                 </span>
+
                 <span class="company-name">
                   {{ application.company }}
                 </span>
               </a>
 
-              <span class="cell-text">{{ application.position }}</span>
-              <span class="cell-text">{{ application.location }}</span>
+              <!-- Position -->
+              <span class="cell-text">
+                {{ application.position }}
+              </span>
 
+              <!-- Location -->
+              <span class="cell-text">
+                {{ application.location }}
+              </span>
+
+              <!-- Status -->
               <span>
                 <span
                   class="status-badge"
@@ -91,26 +132,42 @@
                 </span>
               </span>
 
+              <!-- Applied Date -->
               <span class="cell-date">
                 {{ application.appliedDate }}
               </span>
+
             </div>
+
           }
+
         </div>
       </div>
+
     } @else {
+
+      <!-- Empty State -->
       <div class="empty-state">
+
         <div class="empty-icon" aria-hidden="true">✦</div>
 
         <h3>Your next chapter starts here.</h3>
+
         <p>
           Add your first job application to start tracking your progress.
         </p>
 
-        <a routerLink="/applications" class="add-application-link">
+        <a
+          routerLink="/applications"
+          class="btn btn-primary add-application-link"
+        >
           Add Application
         </a>
+
       </div>
+
     }
+
   </section>
+
 </section>

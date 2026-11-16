@@ -5,13 +5,13 @@
   <header class="documents-header">
     <div>
       <p class="page-eyebrow">YOUR WORKSPACE / DOCUMENTS</p>
-      <h1>Documents</h1>
+      <h1 class="page-title">Documents</h1>
       <p>Keep your resumes, cover letters and certificates organized.</p>
     </div>
 
     <button
       type="button"
-      class="add-button"
+      class="btn btn-primary add-button"
       [disabled]="hasReachedLimit || isLoading || isSaving"
       (click)="openAddForm()"
     >
@@ -27,11 +27,11 @@
   }
 
   <!-- Storage Usage -->
-  <div class="document-usage">
+  <div class="card document-usage">
     <div class="usage-header">
       <div>
         <span class="section-eyebrow">DOCUMENT LIBRARY</span>
-        <h2>Library Capacity</h2>
+        <h2 class="section-title">Library Capacity</h2>
         <p>
           {{ documentCount }} of {{ documentLimit }}
           document slots used
@@ -72,12 +72,12 @@
 
   <!-- Add / Edit Document Form -->
   @if (showAddForm) {
-    <div class="document-form-card">
+    <div class="card document-form-card">
 
       <div class="form-header">
         <div>
           <span class="section-eyebrow">DOCUMENT DETAILS</span>
-          <h2>
+          <h2 class="section-title">
             {{
               editingDocumentId === null
                 ? 'Add a Document'
@@ -104,9 +104,14 @@
 
         <div class="form-grid">
 
-          <div class="form-group">
-            <label for="documentName">Document Name</label>
+          <!-- Document Name -->
+          <div class="form-field form-group">
+            <label class="form-label" for="documentName">
+              Document Name
+            </label>
+
             <input
+              class="form-control"
               id="documentName"
               type="text"
               name="documentName"
@@ -117,9 +122,14 @@
             >
           </div>
 
-          <div class="form-group">
-            <label for="documentType">Document Type</label>
+          <!-- Document Type -->
+          <div class="form-field form-group">
+            <label class="form-label" for="documentType">
+              Document Type
+            </label>
+
             <select
+              class="form-control"
               id="documentType"
               name="documentType"
               [(ngModel)]="newDocument.type"
@@ -149,8 +159,8 @@
         }
 
         <!-- File Selection -->
-        <div class="form-group">
-          <label for="documentFile">
+        <div class="form-field form-group file-field">
+          <label class="form-label" for="documentFile">
             {{
               editingDocumentId !== null
                 ? 'Replace File'
@@ -196,9 +206,11 @@
         }
 
         <!-- Notes -->
-        <div class="form-group">
-          <label for="documentNotes">Notes</label>
+        <div class="form-field form-group notes-field">
+          <label class="form-label" for="documentNotes">Notes</label>
+
           <textarea
+            class="form-control"
             id="documentNotes"
             name="documentNotes"
             [(ngModel)]="newDocument.notes"
@@ -207,10 +219,11 @@
           ></textarea>
         </div>
 
+        <!-- Form Actions -->
         <div class="form-actions">
           <button
             type="button"
-            class="secondary-button"
+            class="btn btn-secondary"
             [disabled]="isSaving"
             (click)="closeForm()"
           >
@@ -219,7 +232,7 @@
 
           <button
             type="submit"
-            class="primary-button"
+            class="btn btn-primary"
             [disabled]="
               documentForm.invalid ||
               isSaving ||
@@ -242,12 +255,12 @@
   }
 
   <!-- Document Library -->
-  <div class="documents-section">
+  <div class="card documents-section">
 
     <div class="section-header">
       <div>
         <span class="section-eyebrow">YOUR FILES</span>
-        <h2>Your Documents</h2>
+        <h2 class="section-title">Your Documents</h2>
         <p>Documents available for your job search.</p>
       </div>
 
@@ -313,7 +326,7 @@
 
               <button
                 type="button"
-                class="download-button"
+                class="btn btn-primary download-button"
                 [disabled]="downloadingId !== null"
                 (click)="downloadDocument(document)"
               >
@@ -326,7 +339,7 @@
 
               <button
                 type="button"
-                class="edit-button"
+                class="btn btn-secondary edit-button"
                 [disabled]="isDeleting || isSaving"
                 (click)="editDocument(document)"
               >
@@ -335,7 +348,7 @@
 
               <button
                 type="button"
-                class="delete-button"
+                class="btn btn-danger delete-button"
                 [disabled]="isDeleting || isSaving"
                 (click)="deleteDocument(document.id)"
               >
@@ -368,7 +381,7 @@
 
         <button
           type="button"
-          class="primary-button"
+          class="btn btn-primary"
           [disabled]="hasReachedLimit"
           (click)="openAddForm()"
         >

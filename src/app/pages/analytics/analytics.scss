@@ -1,8 +1,7 @@
 
-/* ==========================================
-   JOBLOG: ESPRESSO & BRASS
-   Analytics Page
-   ========================================== */
+/* Analytics-specific styles.
+   Shared cards, headings, badges, chart bars and
+   design tokens are defined in src/styles/. */
 
    .analytics {
     width: 100%;
@@ -11,39 +10,47 @@
     padding-bottom: 48px;
   }
   
-  /* Page Header */
+  /* Page header */
   
   .analytics-header {
     margin-bottom: 32px;
+  
+    .page-description {
+      margin: 10px 0 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
   }
   
-  .page-eyebrow,
-  .section-eyebrow {
-    display: block;
-    margin: 0 0 10px;
-    color: var(--color-brass-hover);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.6px;
+  /* Shared layouts */
+  
+  .analytics-card,
+  .pipeline-list,
+  .pipeline-item,
+  .funnel-list,
+  .funnel-entry,
+  .activity-list {
+    display: flex;
+    flex-direction: column;
   }
   
-  .analytics-header h1 {
-    margin: 0;
-    color: var(--color-espresso);
-    font-family: var(--font-heading);
-    font-size: clamp(32px, 4vw, 44px);
-    font-weight: 600;
-    letter-spacing: -1px;
+  .card-top,
+  .section-header,
+  .pipeline-header,
+  .funnel-item,
+  .funnel-stage {
+    display: flex;
+    align-items: center;
   }
   
-  .page-description {
-    margin: 10px 0 0;
-    color: var(--color-text-secondary);
-    font-size: 15px;
-    line-height: 1.6;
+  .card-top,
+  .section-header,
+  .pipeline-header,
+  .funnel-item {
+    justify-content: space-between;
   }
   
-  /* Metric Cards */
+  /* Metric cards */
   
   .analytics-stats {
     display: grid;
@@ -53,16 +60,26 @@
   }
   
   .analytics-card {
-    display: flex;
-    flex-direction: column;
     min-width: 0;
     min-height: 190px;
     padding: 22px;
   
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
+    p {
+      margin: 0;
+      color: var(--color-text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+    }
+  
+    h2 {
+      margin: 10px 0 8px;
+      color: var(--color-espresso);
+      font-family: var(--font-heading);
+      font-size: clamp(30px, 3vw, 42px);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
   }
   
   .card-index {
@@ -74,23 +91,6 @@
     letter-spacing: 1px;
   }
   
-  .analytics-card p {
-    margin: 0;
-    color: var(--color-text-secondary);
-    font-size: 13px;
-    font-weight: 500;
-  }
-  
-  .analytics-card h2 {
-    margin: 10px 0 8px;
-    color: var(--color-espresso);
-    font-family: var(--font-heading);
-    font-size: clamp(30px, 3vw, 42px);
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -1px;
-  }
-  
   .card-caption {
     margin-top: auto;
     color: var(--color-text-muted);
@@ -98,75 +98,66 @@
     line-height: 1.5;
   }
   
+  /* Featured metric */
+  
   .featured-card {
     background: var(--color-espresso);
     border-color: var(--color-espresso);
-  }
   
-  .featured-card .card-index {
-    color: #d6b783;
-  }
+    .card-index,
+    .card-symbol {
+      color: #d6b783;
+    }
   
-  .featured-card p,
-  .featured-card .card-caption {
-    color: #e5d7c7;
-  }
+    p,
+    .card-caption {
+      color: #e5d7c7;
+    }
   
-  .featured-card h2 {
-    color: #fff8ee;
+    h2 {
+      color: #fff8ee;
+    }
   }
   
   .card-top {
-    display: flex;
     align-items: flex-start;
-    justify-content: space-between;
     gap: 10px;
   }
   
   .card-symbol {
-    color: #d6b783;
     font-size: 22px;
     line-height: 1;
   }
   
-  /* Analytics Sections */
+  /* Analytics sections */
   
   .analytics-section {
     padding: 30px;
     margin-top: 24px;
-  
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
   }
   
   .section-header {
-    display: flex;
-    justify-content: space-between;
     align-items: flex-end;
     gap: 20px;
-  
     padding-bottom: 22px;
     margin-bottom: 26px;
-  
     border-bottom: 1px solid var(--color-border);
-  }
   
-  .section-header h2 {
-    margin: 0;
-    color: var(--color-espresso);
-    font-family: var(--font-heading);
-    font-size: 25px;
-    font-weight: 600;
-    letter-spacing: -0.5px;
-  }
+    .page-eyebrow {
+      margin-bottom: 10px;
+    }
   
-  .section-header p {
-    margin: 8px 0 0;
-    color: var(--color-text-secondary);
-    font-size: 13px;
-    line-height: 1.6;
+    .section-title {
+      font-size: 25px;
+      letter-spacing: -0.5px;
+    }
+  
+    p {
+      margin: 8px 0 0;
+      color: var(--color-text-secondary);
+      font-size: 13px;
+      line-height: 1.6;
+    }
   }
   
   .section-total {
@@ -176,65 +167,61 @@
     white-space: nowrap;
   }
   
-  /* Pipeline */
+  /* Application pipeline */
   
   .pipeline-list {
-    display: flex;
-    flex-direction: column;
     gap: 22px;
   }
   
   .pipeline-item {
-    display: flex;
-    flex-direction: column;
     gap: 12px;
   }
   
   .pipeline-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     gap: 12px;
   }
   
-  .pipeline-count {
+  /* Shared secondary text */
+  
+  .pipeline-count,
+  .funnel-count,
+  .funnel-percentage,
+  .activity-month {
     color: var(--color-text-secondary);
     font-size: 13px;
   }
   
-  .pipeline-count strong {
+  .pipeline-count strong,
+  .funnel-percentage strong {
     color: var(--color-espresso);
     font-size: 15px;
   }
   
-  .pipeline-bar,
-  .funnel-bar,
-  .activity-bar-container {
-    width: 100%;
-    height: 10px;
-    overflow: hidden;
-  
-    background: #eee6dc;
-    border-radius: 999px;
+  .funnel-percentage {
+    font-size: 12px;
+    text-align: right;
   }
   
-  .pipeline-bar-fill,
-  .funnel-bar-fill,
-  .activity-bar {
-    height: 100%;
-    border-radius: inherit;
-    transition: width 0.3s ease;
+  .activity-month {
+    font-weight: 500;
   }
   
-  /* Status Colors */
+  /* Chart-specific styling */
+  
+  .funnel-bar {
+    height: 12px;
+  }
+  
+  /* Chart status colors */
   
   .pipeline-saved {
     background: #9c8f81;
   }
   
   .pipeline-applied,
-  .funnel-applied {
-    background: #b68a45;
+  .funnel-applied,
+  .activity-bar {
+    background: var(--color-brass);
   }
   
   .pipeline-assessment,
@@ -249,109 +236,35 @@
   
   .pipeline-offer,
   .funnel-offer {
-    background: #42684d;
+    background: var(--color-success);
   }
   
   .pipeline-rejected {
-    background: #a4433d;
+    background: var(--color-danger);
   }
   
-  /* Status Badges */
-  
-  .status-badge {
-    display: inline-flex;
-    align-items: center;
-    width: fit-content;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-  
-  .status-saved {
-    background: #e9e4dd;
-    color: #61564d;
-  }
-  
-  .status-applied {
-    background: #e9dcc9;
-    color: #76512b;
-  }
-  
-  .status-assessment {
-    background: #f3e4c5;
-    color: #805b20;
-  }
-  
-  .status-interview {
-    background: #e0e7dc;
-    color: #405d47;
-  }
-  
-  .status-offer {
-    background: #d9e9d7;
-    color: #315e3a;
-  }
-  
-  .status-rejected {
-    background: #f1deda;
-    color: #923d38;
-  }
-  
-  /* Conversion Funnel */
+  /* Conversion funnel */
   
   .funnel-list {
-    display: flex;
-    flex-direction: column;
     gap: 24px;
   }
   
   .funnel-entry {
-    display: flex;
-    flex-direction: column;
     gap: 13px;
   }
   
   .funnel-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     gap: 18px;
   }
   
   .funnel-stage {
-    display: flex;
-    align-items: center;
     flex-wrap: wrap;
     gap: 14px;
   }
   
-  .funnel-count {
-    color: var(--color-text-secondary);
-    font-size: 13px;
-  }
-  
-  .funnel-percentage {
-    color: var(--color-text-secondary);
-    font-size: 12px;
-    text-align: right;
-  }
-  
-  .funnel-percentage strong {
-    color: var(--color-espresso);
-    font-size: 15px;
-  }
-  
-  .funnel-bar {
-    height: 12px;
-  }
-  
-  /* Application Activity */
+  /* Application activity */
   
   .activity-list {
-    display: flex;
-    flex-direction: column;
     gap: 20px;
   }
   
@@ -362,16 +275,6 @@
     gap: 20px;
   }
   
-  .activity-month {
-    color: var(--color-text-secondary);
-    font-size: 13px;
-    font-weight: 500;
-  }
-  
-  .activity-bar {
-    background: var(--color-brass);
-  }
-  
   .activity-count {
     color: var(--color-espresso);
     font-size: 14px;
@@ -380,19 +283,18 @@
     font-variant-numeric: tabular-nums;
   }
   
-  /* Chart Notes */
+  /* Chart notes */
   
   .chart-note {
     margin: 24px 0 0;
     padding-top: 18px;
     border-top: 1px solid var(--color-border);
-  
     color: var(--color-text-muted);
     font-size: 12px;
     line-height: 1.6;
   }
   
-  /* Responsive */
+  /* Responsive layout */
   
   @media (max-width: 1200px) {
     .analytics-stats {
@@ -427,14 +329,13 @@
       padding: 20px 16px;
     }
   
-    .section-header {
+    .section-header,
+    .funnel-item {
       flex-direction: column;
       align-items: flex-start;
     }
   
     .funnel-item {
-      flex-direction: column;
-      align-items: flex-start;
       gap: 8px;
     }
   
@@ -445,14 +346,6 @@
     .activity-item {
       grid-template-columns: 75px minmax(0, 1fr) 28px;
       gap: 10px;
-    }
-  }
-  
-  @media (prefers-reduced-motion: reduce) {
-    .pipeline-bar-fill,
-    .funnel-bar-fill,
-    .activity-bar {
-      transition: none;
     }
   }
   
