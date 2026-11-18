@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:backend": "npm run build && node scripts/sync-frontend.mjs",
+    "package:backend": "npm run build:backend && cd backend && ./mvnw clean package"
   },
   "private": true,
   "packageManager": "npm@11.8.0",
