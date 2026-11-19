@@ -289,3 +289,19 @@ The application does not require cloud hosting or a remote database. Authenticat
 ## Author
 
 Developed by [Md-sifatullah1](https://github.com/Md-sifatullah1).
+
+
+## Screenshots
+
+### Dashboard
+![JobLog Dashboard](docs/screenshots/dashboard.png)
+
+### Application Management
+![JobLog Applications](docs/screenshots/applications.png)
+
+### Interviews
+![JobLog Applications](docs/screenshots/interviews.png)
+
+### Analytics
+![JobLog Analytics](docs/screenshots/analytics.png)
+
