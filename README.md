@@ -1,6 +1,6 @@
 # JobLog
 
-**A full-stack job application organizing system built with Angular, Spring Boot, and PostgreSQL.**
+**A full-stack job application organizing platform built with Angular, Spring Boot, and PostgreSQL.**
 
 JobLog helps users organize job applications, track recruitment progress, manage interviews, store documents, and analyze job search activity.
 
@@ -117,8 +117,6 @@ spring.datasource.password=${DB_PASSWORD}
 ```
 
 Set the `DB_PASSWORD` environment variable to the database user's password before starting Spring Boot.
-
-Database credentials should never be committed to Git.
 
 ## Running JobLog
 
